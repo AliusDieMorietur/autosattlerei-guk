@@ -1,6 +1,34 @@
 {
   "label": {
     "Test": "Test",
-    "NotFound": "Not Found UA"
+    "NotFound": "Not Found",
+    "AutosattlereiGuk": "Autosattlerei Guk",
+    "autosattlereiGukMail": "info@autosattlerei-guk.de",
+    "autosattlereiGukPhone": "+49 123 456789",
+    "Contacts": "Contact Us",
+    "Impressum": "Legal Notice",
+    "slide1Title": "Autoinnenraum-Restaurierung",
+    "slide1Description": "Professionelle Restaurierung von Oldtimer-Innenräumen",
+    "slide2Title": "Maßgefertigte Ledersitze",
+    "slide2Description": "Handgefertigte Lederpolsterung für Ihr Fahrzeug",
+    "slide3Title": "Oldtimer-Expertise",
+    "slide3Description": "Spezialisiert auf Klassiker und Oldtimer-Innenausstattungen",
+    "slide4Title": "Moderne Fahrzeugpolsterung",
+    "slide4Description": "Zeitgemäße Designs für moderne Fahrzeuge",
+    "slide5Title": "Qualitätsmaterialien",
+    "slide5Description": "Premium Leder- und Stoffauswahl",
+    "slide6Title": "Individuelles Design",
+    "slide6Description": "Personalisierte Innenraumlösungen für Ihr Auto",
+    "slide7Title": "Professioneller Service",
+    "slide7Description": "Fachkundige Handwerkskunst und Liebe zum Detail",
+    "slide8Title": "Komplettrestaurierung",
+    "slide8Description": "Umfassende Innenraumrenovierung",
+    "slide9Title": "Luxuriöse Ausführung",
+    "slide9Description": "Hochwertige Materialien und erstklassige Verarbeitung",
+    "slide10Title": "Kundenzufriedenheit",
+    "slide10Description": "Wir übertreffen Ihre Erwartungen",
+    "WorkHours": "Work hours",
+    "Address": "Address",
+    "PhoneNumber": "Phone number"
   }
 }

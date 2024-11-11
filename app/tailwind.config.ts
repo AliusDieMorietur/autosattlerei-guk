@@ -10,9 +10,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        c1: "#1C1C1C",
-        c2: "#E83151",
-        c3: "#FAFAFF",
+        c1: "#000000",
+        c2: "#1C1C1C",
+        c3: "#434343",
+        c4: "#6d6d6d",
+        c5: "#9b9b9b",
+        c6: "#cccccc",
+        c7: "#FAFAFF",
+        c8: "#FFFFFF",
+        c9: "#E83151",
       },
       screens: {
         desktop: "1200px",
@@ -22,6 +28,9 @@ export default {
       },
       maxWidth: {
         desktop: "1200px",
+      },
+      boxShadow: {
+        line: "rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px",
       },
     },
   },
