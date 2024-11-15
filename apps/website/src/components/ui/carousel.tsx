@@ -4,10 +4,11 @@ import * as React from "react";
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { ArrowLeftSvg } from "../icons/ArrowLeftSvg";
+import { ArrowRightSvg } from "../icons/ArrowRightSvg";
 
 type CarouselApi = UseEmblaCarouselType[1];
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
@@ -206,17 +207,23 @@ const CarouselPrevious = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        "absolute h-8 w-8 rounded-full text-c7",
+        "absolute h-10 w-10 rounded-full text-c7 border-none",
         orientation === "horizontal"
           ? "left-4 top-1/2 -translate-y-1/2"
-          : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
+          : // "-left-12 top-1/2 -translate-y-1/2"
+            "-top-12 left-1/2 -translate-x-1/2 rotate-90",
         className
       )}
       disabled={!canScrollPrev}
       onClick={scrollPrev}
       {...props}
     >
-      <ArrowLeft className="h-4 w-4" />
+      <ArrowLeftSvg
+        style={{
+          width: "32px",
+          height: "32px",
+        }}
+      />
       <span className="sr-only">Previous slide</span>
     </Button>
   );
@@ -235,17 +242,23 @@ const CarouselNext = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        "absolute h-8 w-8 rounded-full text-c7",
+        "absolute h-10 w-10 rounded-full text-c7 border-none",
         orientation === "horizontal"
           ? "right-4 top-1/2 -translate-y-1/2"
-          : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
+          : // "-right-12 top-1/2 -translate-y-1/2"
+            "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
         className
       )}
       disabled={!canScrollNext}
       onClick={scrollNext}
       {...props}
     >
-      <ArrowRight className="h-4 w-4" />
+      <ArrowRightSvg
+        style={{
+          width: "32px",
+          height: "32px",
+        }}
+      />
       <span className="sr-only">Next slide</span>
     </Button>
   );

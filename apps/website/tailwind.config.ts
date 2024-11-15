@@ -16,9 +16,9 @@ export default {
         c4: "#6d6d6d",
         c5: "#9b9b9b",
         c6: "#cccccc",
-        c7: "#FAFAFF",
+        c7: "#F9F6EE",
         c8: "#FFFFFF",
-        c9: "#E83151",
+        c9: "#523A34",
       },
       screens: {
         desktop: "1200px",
@@ -30,7 +30,7 @@ export default {
         desktop: "1200px",
       },
       boxShadow: {
-        line: "rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px",
+        line: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
       },
     },
   },
