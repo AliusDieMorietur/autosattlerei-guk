@@ -124,7 +124,7 @@ export default function Home() {
       <Header />
       <div className="pt-[136px] w-full h-full flex flex-col max-w-desktop">
         <div className="relative">
-          <div className="max-w-[350px] absolute bottom-[64px] left-[64px] z-[999] flex flex-col gap-2">
+          <div className="w-[250px] tablet:w-[450px] desktop:w-[350px] absolute left-1/2 -translate-x-1/2 bottom-1/2 translate-y-1/2  desktop:bottom-[64px] desktop:left-[64px] desktop:translate-x-0 desktop:translate-y-0 z-[999] flex flex-col gap-2">
             <div className="text-c7 text-2xl font-bold">
               {t(SLIDES[currentSlide].title)}
             </div>
@@ -140,11 +140,11 @@ export default function Home() {
             />
           </div>
         </div>
-        <div className="my-5 rounded flex justify-center gap-4 bg-c3 opacity-80 p-4">
+        <div className="my-5 rounded flex flex-col tablet:flex-row justify-center gap-4 bg-c3 opacity-80 p-4">
           {ITEMS.map(({ title, icon, value }, index) => (
             <div
               key={index}
-              className="w-[150px] flex gap-2 items-center text-c7"
+              className="m-auto w-[175px] flex gap-2 items-center text-c7"
             >
               {icon}
               <div className="flex flex-col">
@@ -154,7 +154,7 @@ export default function Home() {
             </div>
           ))}
         </div>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-3 gap-4">
           {CARDS.map(({ title, description, button }, index) => (
             <div key={index} className="flex flex-col rounded-xl p-4 gap-3">
               <div className="text-c7 text-xl font-bold">{t(title)}</div>

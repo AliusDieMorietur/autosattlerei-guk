@@ -19,15 +19,19 @@ export default {
         c7: "#F9F6EE",
         c8: "#FFFFFF",
         c9: "#523A34",
+        c10: "#cc0000",
       },
       screens: {
-        desktop: "1200px",
+        desktop: "1024px",
+        tablet: "768px",
       },
       width: {
-        desktop: "1200px",
+        desktop: "1024px",
+        tablet: "768px",
       },
       maxWidth: {
-        desktop: "1200px",
+        desktop: "1024px",
+        tablet: "768px",
       },
       boxShadow: {
         line: "rgba(0, 0, 0, 0.24) 0px 3px 8px",

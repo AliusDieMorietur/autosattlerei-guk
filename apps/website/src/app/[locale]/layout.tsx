@@ -117,16 +117,10 @@ export default async function RootLayout(
 ) {
   const params = await props.params;
 
-  const {
-    locale
-  } = params;
+  const { locale } = params;
 
-  const {
-    children
-  } = props;
+  const { children } = props;
 
-  console.log("routing.locales", routing.locales);
-  console.log("locale", locale);
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   if (!routing.locales.includes(locale)) {

@@ -50,7 +50,7 @@ export const Slider = ({ images, onSelect }: SliderProps): JSX.Element => {
       <CarouselContent>
         {images.map(({ src }) => (
           <CarouselItem key={src}>
-            <div className="h-[500px] rounded-xl overflow-hidden relative select-none">
+            <div className="h-[250px] desktop:h-[500px] rounded-xl overflow-hidden relative select-none">
               <img src={src} alt={src} />
               <div className="absolute bg-c1 opacity-70  top-0 left-0 bottom-0 right-0"></div>
             </div>
