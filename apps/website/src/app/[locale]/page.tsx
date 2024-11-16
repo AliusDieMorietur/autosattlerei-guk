@@ -122,7 +122,7 @@ export default function Home() {
   return (
     <div className="w-full h-full flex justify-center">
       <Header />
-      <div className="pt-[136px] w-full h-full flex flex-col max-w-desktop">
+      <div className="pt-[140px] tablet:pt-[120px] w-full h-full flex flex-col max-w-desktop ">
         <div className="relative">
           <div className="w-[250px] tablet:w-[450px] desktop:w-[350px] absolute left-1/2 -translate-x-1/2 bottom-1/2 translate-y-1/2  desktop:bottom-[64px] desktop:left-[64px] desktop:translate-x-0 desktop:translate-y-0 z-[999] flex flex-col gap-2">
             <div className="text-c7 text-2xl font-bold">
