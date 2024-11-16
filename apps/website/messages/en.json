@@ -59,7 +59,8 @@
     "card4": "Contact us",
     "card5": "Contact us",
     "card6": "Contact us",
-    "Submit": "Submit"
+    "Submit": "Submit",
+    "GoNext": "Go next"
   },
   "error": {
     "NameMin2": "Name must be at least 2 characters.",

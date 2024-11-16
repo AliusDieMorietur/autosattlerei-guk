@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { BurgerSvg } from "@/components/icons/BurgerSvg";
 import { useState } from "react";
 import { XSvg } from "@/components/icons/XSvg";
+import { PhoneSvg } from "@/components/icons/PhoneSvg";
 
 export type HeaderProps = {};
 
@@ -14,13 +15,15 @@ export const Header = ({}: HeaderProps): JSX.Element => {
   const [open, setOpen] = useState(false);
   return (
     <>
-      {/* // max-w-[calc(theme(screens.desktop)-32px)] */}
       <div className="px-4 tablet:px-0 w-full max-w-desktop fixed z-[9999] left-1/2  -translate-x-1/2 flex flex-col gap-2 bg-c2 py-4 border-b border-c3">
         <div className="flex flex-col desktop:flex-row desktop:items-center gap-2 text-c7">
           <h1>{t("label.AutosattlereiGuk")}</h1>
           <div className="grow hidden desktop:block" />
           <div>{EMAIL}</div>
-          <div>{PHONE}</div>
+          <div className="text-c11 flex items-center">
+            <PhoneSvg className="size-4" />
+            <div className="text-lg">{PHONE}</div>
+          </div>
         </div>
         <div className="tablet:hidden fixed right-4 text-c7">
           {open && <XSvg onClick={() => setOpen(false)} />}

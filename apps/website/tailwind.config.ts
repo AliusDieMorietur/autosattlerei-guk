@@ -20,6 +20,7 @@ export default {
         c8: "#FFFFFF",
         c9: "#523A34",
         c10: "#cc0000",
+        c11: "#32DE8A",
       },
       screens: {
         desktop: "1024px",
