@@ -9,7 +9,7 @@ import { HomeSvg } from "@/components/icons/HomeSvg";
 import { ClockSvg } from "@/components/icons/ClockSvg";
 import { ADDRESS, PHONE, WORK_HOURS } from "@/constants";
 import { UserSvg } from "@/components/icons/UserSvg";
-import { PhotoForm } from "./PhotoForm";
+import { ContactForm } from "./ContactForm";
 
 const ITEMS = [
   {
@@ -87,7 +87,7 @@ export default function Home() {
             </div>
           ))}
         </div>
-        <PhotoForm />
+        <ContactForm />
       </div>
     </div>
   );

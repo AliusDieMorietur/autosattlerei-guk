@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -17,10 +16,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { useTranslations } from "next-intl";
 import { useRef } from "react";
-import { fileListToArray } from "@/lib/utils";
 import { X } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
 
-export const PhotoForm = () => {
+export const ContactForm = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const t = useTranslations();
   const formSchema = z.object({
@@ -33,20 +32,21 @@ export const PhotoForm = () => {
         t("error.InvalidPhone")
       )
       .or(z.string().max(0)),
-    photos: z.array(z.any()).refine((data) => {
-      console.log("data", data);
-      return true;
-    }),
-    // .instanceof(File)
-    // .refine((file) => file.size <= 5 * 1024 * 1024, {
-    //   message: "File size must be under 5MB",
-    // })
-    // .refine(
-    //   (file) => ["image/png", "image/jpeg", "image/jpg"].includes(file.type),
-    //   {
-    //     message: "Only PNG, JPG or JPEG files are allowed",
-    //   }
-    // ),
+    description: z.string().max(500, t("error.Max500Description")),
+    photos: z
+      .array(z.any())
+      .refine((photos: File[]) => photos.length <= 2, t("error.Max2Photos"))
+      .refine((photos: File[]) => {
+        for (const photo of photos) {
+          if (photo.size > 5 * 1024 * 1024) {
+            return false;
+          }
+          if (!["image/png", "image/jpeg", "image/jpg"].includes(photo.type)) {
+            return false;
+          }
+        }
+        return true;
+      }, t("error.InvalidPhotoTypes")),
   });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -54,21 +54,30 @@ export const PhotoForm = () => {
       name: "",
       email: "",
       phone: "",
+      description: "",
       photos: [],
     },
   });
 
   const photos = form.watch("photos");
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const formData = new FormData();
     formData.append("name", values.name);
     formData.append("email", values.email);
     formData.append("phone", values.phone);
+    formData.append("description", values.description);
     for (const photo of values.photos) {
       formData.append("photos", photo);
     }
-  }
+
+    const data = await fetch("/api/contact/submit", {
+      method: "POST",
+      body: formData,
+    });
+
+    console.log("data", await data.text());
+  };
 
   return (
     <div className="p-4 my-4 bg-c9 rounded text-c7">
@@ -110,6 +119,25 @@ export const PhotoForm = () => {
                 </FormLabel>
                 <FormControl>
                   <Input placeholder={t("placeholder.EnterPhone")} {...field} />
+                </FormControl>
+                <FormMessage className="text-c10" />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>
+                  {t("label.Description")} ({t("label.Optional")})
+                </FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder={t("placeholder.EnterDescription")}
+                    className="resize-none h-[100px]"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage className="text-c10" />
               </FormItem>

@@ -46,7 +46,8 @@
     "Email": "Email",
     "Phone": "Phone",
     "Optional": "Optional",
-    "Photos": "Photos"
+    "Photos": "Photos",
+    "Description": "Description"
   },
   "button": {
     "Home": "Home",
@@ -66,11 +67,15 @@
     "NameMin2": "Name must be at least 2 characters.",
     "NameMax50": "Name must be at most 50 characters.",
     "InvalidEmail": "Invalid email address.",
-    "InvalidPhone": "Invalid phone number."
+    "InvalidPhone": "Invalid phone number.",
+    "InvalidPhotoTypes": "Only PNG, JPG or JPEG files are allowed and they must be less than 5MB.",
+    "Max500Description": "Description must be at most 500 characters.",
+    "Max2Photos": "Max 2 photos allowed."
   },
   "placeholder": {
     "EnterName": "Enter name",
     "EnterEmail": "Enter email",
-    "EnterPhone": "Enter phone"
+    "EnterPhone": "Enter phone",
+    "EnterDescription": "Enter description"
   }
 }

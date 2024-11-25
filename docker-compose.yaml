@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: "postgres:16.3"
+    restart: always
+    ports:
+      - 5432
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_DB: "main"
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+  migrator:
+    build:
+      dockerfile: Dockerfile
+      target: migrator
+    depends_on:
+      - postgres
+    environment:
+      - POSTGRES_URL=${POSTGRES_URL}
+
+volumes:
+  dbdata:
