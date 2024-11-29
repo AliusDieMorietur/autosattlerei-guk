@@ -37,6 +37,20 @@ export default {
       boxShadow: {
         line: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
       },
+      keyframes: {
+        "collapsible-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-collapsible-content-height)" },
+        },
+        "collapsible-up": {
+          from: { height: "var(--radix-collapsible-content-height)" },
+          to: { height: "0" },
+        },
+      },
+      animation: {
+        "collapsible-down": "collapsible-down 0.15s ease-out",
+        "collapsible-up": "collapsible-up 0.15s ease-out",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

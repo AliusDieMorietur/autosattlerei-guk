@@ -41,11 +41,19 @@
     "card5Title": "Reliable and trustworthy",
     "card5Description": "We are committed to providing you with the best possible service and are always available to assist you. We have a proven track record of success and are dedicated to exceeding your expectations.",
     "card6Title": "Experienced and dedicated",
-    "card6Description": "We are a team of experts who have been working together for years. We have a proven track record of success and are dedicated to providing you with the best possible service."
+    "card6Description": "We are a team of experts who have been working together for years. We have a proven track record of success and are dedicated to providing you with the best possible service.",
+    "Name": "Name",
+    "Email": "Email",
+    "Phone": "Phone",
+    "Optional": "Optional",
+    "Photos": "Photos",
+    "Description": "Description",
+    "ThankYouForYourRequest": "Thank you for your request",
+    "WeWillContactYouSoon": "We will contact you soon"
   },
   "button": {
     "Home": "Home",
-    "Gallerie": "Gallery",
+    "Gallery": "Gallery",
     "Contacts": "Contacts",
     "Impressum": "Legal Notice",
     "card1": "Contact us",
@@ -53,6 +61,24 @@
     "card3": "Contact us",
     "card4": "Contact us",
     "card5": "Contact us",
-    "card6": "Contact us"
+    "card6": "Contact us",
+    "Submit": "Submit",
+    "GoNext": "Go next",
+    "Ok": "Ok"
+  },
+  "error": {
+    "NameMin2": "Name must be at least 2 characters.",
+    "NameMax50": "Name must be at most 50 characters.",
+    "InvalidEmail": "Invalid email address.",
+    "InvalidPhone": "Invalid phone number.",
+    "InvalidPhotoTypes": "Only PNG, JPG or JPEG files are allowed and they must be less than 5MB.",
+    "Max500Description": "Description must be at most 500 characters.",
+    "Max2Photos": "Max 2 photos allowed."
+  },
+  "placeholder": {
+    "EnterName": "Enter name",
+    "EnterEmail": "Enter email",
+    "EnterPhone": "Enter phone",
+    "EnterDescription": "Enter description"
   }
 }

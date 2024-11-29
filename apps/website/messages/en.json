@@ -1,6 +1,5 @@
 {
   "label": {
-    "Test": "Test",
     "NotFound": "Not Found",
     "AutosattlereiGuk": "Autosattlerei Guk",
     "autosattlereiGukMail": "info@autosattlerei-guk.de",
@@ -47,13 +46,22 @@
     "Phone": "Phone",
     "Optional": "Optional",
     "Photos": "Photos",
-    "Description": "Description"
+    "Description": "Description",
+    "ThankYouForYourRequest": "Thank you for your request",
+    "WeWillContactYouSoon": "We will contact you soon",
+    "MODO": "MO-DO 10-17",
+    "FR": "FR 10-16",
+    "ContactsDescription": "Fill out the form below to get in touch with us.",
+    "Gallery": "Gallery",
+    "Wheels": "Wheels",
+    "DoorPanels": "Door panels",
+    "Salons": "Salons"
   },
   "button": {
     "Home": "Home",
-    "Gallerie": "Gallery",
+    "Gallery": "Gallery",
     "Contacts": "Contacts",
-    "Impressum": "Legal Notice",
+    "Impressum": "Impressum",
     "card1": "Contact us",
     "card2": "Contact us",
     "card3": "Contact us",
@@ -61,7 +69,10 @@
     "card5": "Contact us",
     "card6": "Contact us",
     "Submit": "Submit",
-    "GoNext": "Go next"
+    "GoNext": "Go next",
+    "Ok": "Ok",
+    "ViewMore": "View more",
+    "ViewLess": "View less"
   },
   "error": {
     "NameMin2": "Name must be at least 2 characters.",

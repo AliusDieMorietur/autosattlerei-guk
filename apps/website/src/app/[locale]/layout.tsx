@@ -5,6 +5,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { notFound, redirect } from "next/navigation";
+import { Header } from "./Header";
 
 const Poppins = localFont({
   src: [
@@ -112,12 +113,12 @@ export const metadata: Metadata = {
 export default async function RootLayout(
   props: Readonly<{
     children: React.ReactNode;
-    params: { locale: string };
+    params: Promise<{ locale: string }>;
   }>
 ) {
   const params = await props.params;
 
-  const { locale } = params;
+  const { locale } = await params;
 
   const { children } = props;
 
@@ -132,10 +133,15 @@ export default async function RootLayout(
   const messages = await getMessages();
 
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body className={`${Poppins.variable} antialiased`}>
         <NextIntlClientProvider messages={messages}>
-          {children}
+          <div id="home" className="w-full flex justify-center">
+            <Header locale={locale} />
+            <div className="pt-[140px] tablet:pt-[124px] pb-[100px] flex flex-col w-full max-w-desktop">
+              {children}
+            </div>
+          </div>
         </NextIntlClientProvider>
       </body>
     </html>

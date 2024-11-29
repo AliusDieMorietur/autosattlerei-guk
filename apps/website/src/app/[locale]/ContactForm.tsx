@@ -15,12 +15,14 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useTranslations } from "next-intl";
-import { useRef } from "react";
 import { X } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 
-export const ContactForm = () => {
-  const inputRef = useRef<HTMLInputElement | null>(null);
+type ContactFormProps = {
+  onSubmit?: () => void;
+};
+
+export const ContactForm = ({ onSubmit: onSubmitOuter }: ContactFormProps) => {
   const t = useTranslations();
   const formSchema = z.object({
     name: z.string().min(2, t("error.NameMin2")).max(50, t("error.NameMax50")),
@@ -71,16 +73,18 @@ export const ContactForm = () => {
       formData.append("photos", photo);
     }
 
-    const data = await fetch("/api/contact/submit", {
+    await fetch("/api/contact/submit", {
       method: "POST",
       body: formData,
-    });
+    }).catch((error) => console.log("error", error));
 
-    console.log("data", await data.text());
+    form.reset();
+
+    onSubmitOuter?.();
   };
 
   return (
-    <div className="p-4 my-4 bg-c9 rounded text-c7">
+    <div className="p-4 my-4 bg-c9 rounded text-c7 w-full">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField

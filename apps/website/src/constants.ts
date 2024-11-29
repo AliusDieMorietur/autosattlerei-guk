@@ -1,4 +1,9 @@
-export const PHONE = "+37529988888";
-export const ADDRESS = "LERNKART, 10";
-export const WORK_HOURS = "10.00-18.00";
-export const EMAIL = "info@autosattlerei-guk.de";
+export const PHONE = "+0176-614-99059";
+export const ADDRESS = "Seelenbinder str. 112";
+export const INDEX = "12555 Berlin";
+export const WORK_HOURS = "10.00-17.00";
+export const EMAIL = "autosattler.guk@gmail.com";
+
+export const MOBILE = 320;
+export const TABLET = 768;
+export const DESKTOP = 1024;
