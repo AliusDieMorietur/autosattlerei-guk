@@ -1,16 +1,15 @@
-import { grid } from "@/lib/utils";
-import { GallerySpecificPage } from "./GallerySpecificPage";
+import { GallerySpecific } from "./GallerySpecific";
 
-export type GallerySpecificProps = {
+export type GallerySpecificPageProps = {
   params: Promise<{
     locale: string;
     type: string;
   }>;
 };
 
-export default async function GallerySpecific({
+export default async function GallerySpecificPage({
   params,
-}: GallerySpecificProps) {
+}: GallerySpecificPageProps) {
   const { locale, type } = await params;
-  return <GallerySpecificPage locale={locale} type={type} />;
+  return <GallerySpecific locale={locale} type={type} />;
 }

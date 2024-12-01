@@ -7,8 +7,7 @@ import useEmblaCarousel, {
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { ArrowLeftSvg } from "../icons/ArrowLeftSvg";
-import { ArrowRightSvg } from "../icons/ArrowRightSvg";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type CarouselApi = UseEmblaCarouselType[1];
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
@@ -218,12 +217,8 @@ const CarouselPrevious = React.forwardRef<
       onClick={scrollPrev}
       {...props}
     >
-      <ArrowLeftSvg
-        style={{
-          width: "32px",
-          height: "32px",
-        }}
-      />
+      <ChevronLeft className="min-w-10 min-h-10" />
+
       <span className="sr-only">Previous slide</span>
     </Button>
   );
@@ -242,7 +237,7 @@ const CarouselNext = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        "absolute h-10 w-10 rounded-full text-c7 border-none",
+        "absolute rounded-full text-c7 border-none",
         orientation === "horizontal"
           ? "right-4 top-1/2 -translate-y-1/2"
           : // "-right-12 top-1/2 -translate-y-1/2"
@@ -253,12 +248,7 @@ const CarouselNext = React.forwardRef<
       onClick={scrollNext}
       {...props}
     >
-      <ArrowRightSvg
-        style={{
-          width: "32px",
-          height: "32px",
-        }}
-      />
+      <ChevronRight className="min-w-10 min-h-10" />
       <span className="sr-only">Next slide</span>
     </Button>
   );

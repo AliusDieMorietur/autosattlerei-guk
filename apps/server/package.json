@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "tsx watch ./start.ts",
     "build": "tsc -p tsconfig.json",
-    "start": "node  ./build/start.js",
+    "start": "node ./build/start.js",
     "generate": "pnpm drizzle-kit generate",
     "migrate": "pnpm tsx ./migrate.ts "
   },

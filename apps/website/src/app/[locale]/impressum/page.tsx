@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Impressum(): JSX.Element {
   return (
-    <div className="flex flex-col text-c7">
+    <div className="flex flex-col text-c7 p-4 -mt-4">
       <div className="text-xl font-semibold">Impressum</div>
       <div>Stanislav Guk</div>
       <div className="mb-4">Autosattlerei Guk</div>

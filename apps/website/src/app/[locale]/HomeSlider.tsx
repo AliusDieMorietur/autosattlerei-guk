@@ -54,7 +54,7 @@ export const HomeSlider = ({
         {images.map(({ src }) => (
           <CarouselItem key={src}>
             <div className="h-[250px] desktop:h-[500px] rounded-xl overflow-hidden relative select-none">
-              <Image src={src} alt={src} layout="fill" objectFit="cover" />
+              <img src={src} alt={src} />
               <div className="absolute bg-c1 opacity-70  top-0 left-0 bottom-0 right-0"></div>
             </div>
           </CarouselItem>

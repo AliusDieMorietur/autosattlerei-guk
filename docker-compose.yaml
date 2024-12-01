@@ -3,21 +3,48 @@ services:
     image: "postgres:16.3"
     restart: always
     ports:
-      - 5432
+      - 1234:5432
     environment:
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "password"
-      POSTGRES_DB: "main"
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     volumes:
       - dbdata:/var/lib/postgresql/data
+
   migrator:
     build:
-      dockerfile: Dockerfile
-      target: migrator
+      context: .
+      dockerfile: ./apps/server/Dockerfile.migrator
     depends_on:
       - postgres
     environment:
       - POSTGRES_URL=${POSTGRES_URL}
+
+  backend:
+    build:
+      context: .
+      dockerfile: ./apps/server/Dockerfile.server
+    depends_on:
+      migrator:
+        condition: service_completed_successfully
+    restart: always
+    environment:
+      - POSTGRES_URL=${POSTGRES_URL}
+      - SECRET_TOKEN=${SECRET_TOKEN}
+    ports:
+      - 6732:8080
+
+  frontend:
+    build:
+      context: .
+      dockerfile: ./apps/website/Dockerfile.website
+    depends_on:
+      - backend
+    restart: always
+    environment:
+      - NEXT_PUBLIC_SERVER_URL=${NEXT_PUBLIC_SERVER_URL}
+    ports:
+      - 3000:3000
 
 volumes:
   dbdata:

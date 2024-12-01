@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useTranslations } from "next-intl";
-import { X } from "lucide-react";
+import { X, Plus } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 
 type ContactFormProps = {
@@ -161,9 +161,8 @@ export const ContactForm = ({ onSubmit: onSubmitOuter }: ContactFormProps) => {
                       <div key={index} className="flex gap-2 items-center">
                         <div>{file.name}</div>
                         <Button
-                          className="w-fit"
                           variant="black"
-                          size="sm"
+                          size="icon"
                           onClick={() => {
                             form.setValue(
                               "photos",
@@ -171,7 +170,7 @@ export const ContactForm = ({ onSubmit: onSubmitOuter }: ContactFormProps) => {
                             );
                           }}
                         >
-                          <X />
+                          <X className="w-7 h-7" />
                         </Button>
                       </div>
                     ))}
@@ -191,11 +190,11 @@ export const ContactForm = ({ onSubmit: onSubmitOuter }: ContactFormProps) => {
                     }}
                   />
                   <Button
-                    className="w-fit"
                     variant="black"
                     onClick={() => document.getElementById("photos")?.click()}
+                    size="icon"
                   >
-                    +
+                    <Plus className="w-7 h-7" />
                   </Button>
                   <FormMessage className="text-c10" />
                 </FormItem>
