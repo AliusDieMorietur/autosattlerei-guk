@@ -2,5 +2,5 @@ FROM node:18
 
 WORKDIR /app
 COPY ./apps/server/. .
-RUN npm ci 
+RUN npm i 
 CMD npm run generate && npm run migrate
