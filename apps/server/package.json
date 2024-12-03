@@ -7,8 +7,8 @@
     "dev": "tsx watch ./start.ts",
     "build": "tsc -p tsconfig.json",
     "start": "node ./build/start.js",
-    "generate": "npm drizzle-kit generate",
-    "migrate": "npm tsx ./migrate.ts "
+    "generate": "npx drizzle-kit generate",
+    "migrate": "npx tsx ./migrate.ts "
   },
   "keywords": [],
   "author": "",
