@@ -50,3 +50,6 @@ services:
 
 volumes:
   dbdata:
+
+networks:
+  default:
