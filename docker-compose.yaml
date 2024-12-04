@@ -11,22 +11,22 @@ services:
     volumes:
       - dbdata:/var/lib/postgresql/data
 
-  # migrator:
-  #   build:
-  #     context: .
-  #     dockerfile: ./apps/server/Dockerfile.migrator
-  #   depends_on:
-  #     - postgres
-  #   environment:
-  #     - POSTGRES_URL=${POSTGRES_URL}
+  migrator:
+    build:
+      context: .
+      dockerfile: ./apps/server/Dockerfile.migrator
+    depends_on:
+      - postgres
+    environment:
+      - POSTGRES_URL=${POSTGRES_URL}
 
   backend:
     build:
       context: .
       dockerfile: ./apps/server/Dockerfile.server
-    # depends_on:
-    #   migrator:
-    #     condition: service_completed_successfully
+    depends_on:
+      migrator:
+        condition: service_completed_successfully
     restart: always
     environment:
       - POSTGRES_URL=${POSTGRES_URL}
