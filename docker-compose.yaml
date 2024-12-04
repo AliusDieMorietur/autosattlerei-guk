@@ -37,6 +37,8 @@ services:
   frontend:
     build:
       context: .
+      args:
+        - NEXT_PUBLIC_SERVER_URL=${NEXT_PUBLIC_SERVER_URL}
       dockerfile: ./apps/website/Dockerfile.website
     depends_on:
       - backend
