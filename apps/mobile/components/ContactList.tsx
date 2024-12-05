@@ -51,10 +51,17 @@ export function ContactList() {
   const loadMore = async (forceReload = false) => {
     if (!forceReload && (isLoading || !hasMore)) return;
     setIsLoading(true);
+    console.log(
+      "process.env.EXPO_PUBLIC_SERVER_URL",
+      process.env.EXPO_PUBLIC_SERVER_URL
+    );
     const data = await getContactList(search, offset);
     console.log("data", data);
     setIsLoading(false);
-    setContactList((prevData) => [...prevData, ...data.items]);
+    setContactList((prevData) => {
+      console.log("prevData", prevData);
+      return [...prevData, ...data.items];
+    });
     setTotal(data.total);
     setOffset((prevPage) => prevPage + BATCH);
   };
