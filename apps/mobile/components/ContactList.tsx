@@ -92,12 +92,13 @@ export function ContactList() {
   }, 200);
 
   useEffect(() => {
-    console.log("3", 3);
     load();
   }, [search]);
 
   return (
     <View style={styles.container}>
+      <Text>{process.env.EXPO_PUBLIC_SERVER_URL}</Text>
+      <Text>{process.env.EXPO_PUBLIC_SECRET_TOKEN}</Text>
       <View style={styles.header}>
         <Button
           icon={
