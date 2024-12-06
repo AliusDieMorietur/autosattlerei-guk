@@ -169,6 +169,7 @@ export const ContactForm = ({ onSubmit: onSubmitOuter }: ContactFormProps) => {
                               photos.filter((_, _index) => _index !== index)
                             );
                           }}
+                          type="button"
                         >
                           <X className="w-7 h-7" />
                         </Button>
@@ -193,6 +194,7 @@ export const ContactForm = ({ onSubmit: onSubmitOuter }: ContactFormProps) => {
                     variant="black"
                     onClick={() => document.getElementById("photos")?.click()}
                     size="icon"
+                    type="button"
                   >
                     <Plus className="w-7 h-7" />
                   </Button>

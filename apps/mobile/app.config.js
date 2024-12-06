@@ -18,6 +18,7 @@ export default ({ config }) => ({
         backgroundColor: "#ffffff",
       },
       package: "com.iakaminskij.autosattlereiguk",
+      permissions: ["ACCESS_NETWORK_STATE"],
     },
     web: {
       bundler: "metro",

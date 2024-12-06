@@ -30,8 +30,8 @@ const getContactList = async (search: string, offset: number) =>
     }
   )
     .then((response) => response.json() as unknown as ContactList)
-    .catch((e) => {
-      console.log("GET_CONTACT_LIST_ERROR", e);
+    .catch((error) => {
+      console.log("GET_CONTACT_LIST_ERROR", error);
       return {
         items: [],
         total: 0,
@@ -49,21 +49,20 @@ export function ContactList() {
   const [search, setSearch] = useState("");
 
   const loadMore = async (forceReload = false) => {
-    if (!forceReload && (isLoading || !hasMore)) return;
-    setIsLoading(true);
-    console.log(
-      "process.env.EXPO_PUBLIC_SERVER_URL",
-      process.env.EXPO_PUBLIC_SERVER_URL
-    );
-    const data = await getContactList(search, offset);
-    console.log("data", data);
-    setIsLoading(false);
-    setContactList((prevData) => {
-      console.log("prevData", prevData);
-      return [...prevData, ...data.items];
-    });
-    setTotal(data.total);
-    setOffset((prevPage) => prevPage + BATCH);
+    try {
+      if (!forceReload && (isLoading || !hasMore)) return;
+      setIsLoading(true);
+      const data = await getContactList(search, offset);
+      setIsLoading(false);
+      setContactList((prevData) => {
+        console.log("prevData", prevData);
+        return [...prevData, ...data.items];
+      });
+      setTotal(data.total);
+      setOffset((prevPage) => prevPage + BATCH);
+    } catch (error) {
+      console.log("LOAD_MORE_ERROR", error);
+    }
   };
 
   const getItem = (data: Contact[], index: number) => data[index];
@@ -97,8 +96,6 @@ export function ContactList() {
 
   return (
     <View style={styles.container}>
-      <Text>{process.env.EXPO_PUBLIC_SERVER_URL}</Text>
-      <Text>{process.env.EXPO_PUBLIC_SECRET_TOKEN}</Text>
       <View style={styles.header}>
         <Button
           icon={
