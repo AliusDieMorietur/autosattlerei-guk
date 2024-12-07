@@ -48,12 +48,19 @@ export function ContactList() {
   const [currentImage, setCurrentImage] = useState<null | ContactPhoto>(null);
   const [search, setSearch] = useState("");
 
-  const loadMore = async (forceReload = false) => {
+  const loadMore = async ({
+    forceReload = false,
+    search,
+    offset,
+  }: {
+    search: string;
+    offset: number;
+    forceReload?: boolean;
+  }) => {
     try {
-      if (!forceReload && (isLoading || !hasMore)) return;
+      if (!forceReload && isLoading) return;
       setIsLoading(true);
       const data = await getContactList(search, offset);
-      setIsLoading(false);
       setContactList((prevData) => {
         console.log("prevData", prevData);
         return [...prevData, ...data.items];
@@ -61,7 +68,10 @@ export function ContactList() {
       setTotal(data.total);
       setOffset((prevPage) => prevPage + BATCH);
     } catch (error) {
+      setContactList([]);
       console.log("LOAD_MORE_ERROR", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -83,21 +93,23 @@ export function ContactList() {
     setOffset((offset) => offset - 1);
   };
 
-  const load = useThrottle(() => {
+  const load = useThrottle((search: string) => {
     setOffset(0);
-    setContactList([]);
     setTotal(1);
-    loadMore(true);
+    setContactList([]);
+    loadMore({
+      search,
+      offset: 0,
+    });
   }, 200);
 
-  useEffect(() => {
-    load();
-  }, [search]);
+  useEffect(() => load(search), []);
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Button
+          disabled={isLoading}
           icon={
             <ReloadSvg
               style={{
@@ -107,17 +119,17 @@ export function ContactList() {
             />
           }
           onPress={() => {
-            if (!search) {
-              load();
-            } else {
-              setSearch("");
-            }
+            setSearch("");
+            load("");
           }}
         />
         <Input
           placeholder="Search"
           value={search}
-          onChangeText={setSearch}
+          onChangeText={(value) => {
+            setSearch(value);
+            load(value);
+          }}
           style={{
             flex: 1,
           }}
@@ -177,7 +189,16 @@ export function ContactList() {
         keyExtractor={(item, index) => `key-${index}`}
         getItem={getItem}
         getItemCount={getItemCount}
-        onEndReached={() => loadMore()}
+        onEndReached={() => {
+          if (!hasMore) {
+            console.warn("Reached end");
+            return;
+          }
+          loadMore({
+            search,
+            offset,
+          });
+        }}
         onEndReachedThreshold={0.5}
         ListFooterComponent={
           isLoading && hasMore ? (

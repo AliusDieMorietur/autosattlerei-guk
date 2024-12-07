@@ -19,7 +19,7 @@ export type ContactSubmitFormData = {
   photos: FileField[] | FileField;
 };
 
-export const FormSchema = z.object({
+export const ContactFormSchema = z.object({
   name: z.string().min(2, "Should be at least 2 characters"),
   email: z.string().email("Invalid Email"),
   phone: z
@@ -32,7 +32,7 @@ export const FormSchema = z.object({
   description: z.string(),
 });
 
-export type Form = z.infer<typeof FormSchema>;
+export type ContactForm = z.infer<typeof ContactFormSchema>;
 
 export const GetContactListQuerySchema = z.object({
   offset: z.string().optional().default("0"),
@@ -56,6 +56,7 @@ export const ContactSchema = z.object({
   phone: z.string().optional(),
   description: z.string().optional(),
   photos: z.array(ContactPhotoSchema).default([]),
+  checked: z.boolean().default(false),
   createdAt: z.string().datetime({ offset: true }),
 });
 
@@ -67,9 +68,17 @@ export const ContactCreateSchema = ContactSchema.omit({
 }).partial({
   photos: true,
   phone: true,
+  checked: true,
 });
 
 export type ContactCreate = z.infer<typeof ContactCreateSchema>;
+
+export const ContactUpdateSchema = ContactSchema.omit({
+  id: true,
+  createdAt: true,
+}).partial();
+
+export type ContactUpdate = z.infer<typeof ContactUpdateSchema>;
 
 export type OrderBy<F extends string> = { field: F; direction: "asc" | "desc" };
 

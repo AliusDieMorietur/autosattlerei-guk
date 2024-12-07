@@ -1,6 +1,12 @@
 import assert from "assert";
 import { db } from "..";
-import { Contact, ContactCreate, ContactSchema, Pagination } from "../../types";
+import {
+  Contact,
+  ContactCreate,
+  ContactSchema,
+  ContactUpdate,
+  Pagination,
+} from "../../types";
 import { schema } from "../schemas";
 import { asc, desc, eq, ilike, or } from "drizzle-orm";
 import { count } from "drizzle-orm";
@@ -59,9 +65,14 @@ const erase = async (id: Contact["id"]) => {
   await db.delete(schema.contact).where(eq(schema.contact.id, id));
 };
 
+const update = async (id: Contact["id"], delta: ContactUpdate) => {
+  await db.update(schema.contact).set(delta).where(eq(schema.contact.id, id));
+};
+
 export const contact = {
   getList,
   delete: erase,
   create,
   getTotal,
+  update,
 };

@@ -8,6 +8,13 @@
       "when": 1732378588848,
       "tag": "0000_minor_killer_shrike",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1733609793324,
+      "tag": "0001_first_shriek",
+      "breakpoints": true
     }
   ]
 }
