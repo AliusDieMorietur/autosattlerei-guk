@@ -1,13 +1,19 @@
 import fastify from "fastify";
 import cors from "@fastify/cors";
 import { api } from "./src/api";
+import multipart from "@fastify/multipart";
+
+const FILE_LIMIT = 20 * 1024 * 1024;
 
 const server = fastify({
   logger: true,
 });
 
-server.register(require("@fastify/multipart"), {
+server.register(multipart, {
   attachFieldsToBody: true,
+  limits: {
+    fileSize: FILE_LIMIT,
+  },
 });
 
 server.register(cors, {
