@@ -11,6 +11,7 @@ export type Contact = {
   phone: string;
   description: string;
   photos: ContactPhoto[];
+  checked: boolean;
   createdAt: string;
 };
 

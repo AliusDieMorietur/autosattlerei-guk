@@ -17,12 +17,15 @@ import { Input } from "@/components/ui/input";
 import { useTranslations } from "next-intl";
 import { X, Plus } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
+import { useState } from "react";
 
 type ContactFormProps = {
   onSubmit?: () => void;
 };
 
 export const ContactForm = ({ onSubmit: onSubmitOuter }: ContactFormProps) => {
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isError, setIsError] = useState(false);
   const t = useTranslations();
   const formSchema = z.object({
     name: z.string().min(2, t("error.NameMin2")).max(50, t("error.NameMax50")),
@@ -64,150 +67,198 @@ export const ContactForm = ({ onSubmit: onSubmitOuter }: ContactFormProps) => {
   const photos = form.watch("photos");
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const formData = new FormData();
-    formData.append("name", values.name);
-    formData.append("email", values.email);
-    formData.append("phone", values.phone);
-    formData.append("description", values.description);
-    for (const photo of values.photos) {
-      formData.append("photos", photo);
+    setIsSubmitted(true);
+    try {
+      const formData = new FormData();
+      formData.append("name", values.name);
+      formData.append("email", values.email);
+      formData.append("phone", values.phone);
+      formData.append("description", values.description);
+      for (const photo of values.photos) {
+        formData.append("photos", photo);
+      }
+
+      const response = await fetch("/api/contact/submit", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.status === 500) {
+        setIsError(true);
+      }
+
+      form.reset();
+    } catch (error) {
+      console.error("SUBMIT_CONTACT_ERROR", error);
+      setIsError(true);
     }
-
-    await fetch("/api/contact/submit", {
-      method: "POST",
-      body: formData,
-    }).catch((error) => console.log("error", error));
-
-    form.reset();
-
-    onSubmitOuter?.();
   };
 
+  if (isError) {
+    return (
+      <div className="p-4 my-4 bg-c9 rounded text-c7 w-full text-center">
+        {t("label.SthWentWrong")}
+      </div>
+    );
+  }
+
+  if (isSubmitted) {
+    return (
+      <div className="p-4 my-4 bg-c9 rounded text-c7 w-full flex flex-col gap-2">
+        <div className="text-c7 text-2xl text-center">
+          {t("label.ThankYouForYourRequest")}
+        </div>
+        <div className="text-c5 text-center">
+          {t("label.WeWillContactYouSoon")}
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="p-4 my-4 bg-c9 rounded text-c7 w-full">
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("label.Name")}</FormLabel>
-                <FormControl>
-                  <Input placeholder={t("placeholder.EnterName")} {...field} />
-                </FormControl>
-                <FormMessage className="text-c10" />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t("label.Email")}</FormLabel>
-                <FormControl>
-                  <Input placeholder={t("placeholder.EnterEmail")} {...field} />
-                </FormControl>
-                <FormMessage className="text-c10" />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="phone"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  {t("label.Phone")} ({t("label.Optional")})
-                </FormLabel>
-                <FormControl>
-                  <Input placeholder={t("placeholder.EnterPhone")} {...field} />
-                </FormControl>
-                <FormMessage className="text-c10" />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>
-                  {t("label.Description")} ({t("label.Optional")})
-                </FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder={t("placeholder.EnterDescription")}
-                    className="resize-none h-[100px]"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage className="text-c10" />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="photos"
-            render={({ field }) => {
-              return (
-                <FormItem className="flex flex-col">
-                  <FormLabel>
-                    {t("label.Photos")} ({t("label.Optional")})
-                  </FormLabel>
-                  <div className="flex flex-col gap-2">
-                    {photos.map((file: File, index) => (
-                      <div key={index} className="flex gap-2 items-center">
-                        <div>{file.name}</div>
-                        <Button
-                          variant="black"
-                          size="icon"
-                          onClick={() => {
-                            form.setValue(
-                              "photos",
-                              photos.filter((_, _index) => _index !== index)
-                            );
-                          }}
-                          type="button"
-                        >
-                          <X className="w-7 h-7" />
-                        </Button>
-                      </div>
-                    ))}
-                  </div>
-                  <Input
-                    id="photos"
-                    className="hidden"
-                    type="file"
-                    accept=".png, .jpeg, .jpg"
-                    multiple
-                    onChange={(e) => {
-                      const photos = form.getValues("photos");
-                      form.setValue("photos", [
-                        ...photos,
-                        ...Array.from(e.target.files || []),
-                      ]);
-                    }}
-                  />
-                  <Button
-                    variant="black"
-                    onClick={() => document.getElementById("photos")?.click()}
-                    size="icon"
-                    type="button"
-                  >
-                    <Plus className="w-7 h-7" />
-                  </Button>
+    <div className="mt-4 flex flex-col justify-center px-4 tablet:px-20">
+      <div className="text-c7 text-2xl text-center">{t("label.ContactUs")}</div>
+      <div className="text-c5 text-lg text-center">
+        {t("label.ContactsDescription")}
+      </div>
+      <div className="p-4 my-4 bg-c9 rounded text-c7 w-full">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("label.Name")}</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder={t("placeholder.EnterName")}
+                      {...field}
+                    />
+                  </FormControl>
                   <FormMessage className="text-c10" />
                 </FormItem>
-              );
-            }}
-          />
-          <Button type="submit" variant="black">
-            {t("button.Submit")}
-          </Button>
-        </form>
-      </Form>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("label.Email")}</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder={t("placeholder.EnterEmail")}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage className="text-c10" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    {t("label.Phone")} ({t("label.Optional")})
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder={t("placeholder.EnterPhone")}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage className="text-c10" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    {t("label.Description")} ({t("label.Optional")})
+                  </FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder={t("placeholder.EnterDescription")}
+                      className="resize-none h-[100px]"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage className="text-c10" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="photos"
+              render={({ field }) => {
+                return (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>
+                      {t("label.Photos")} ({t("label.Optional")})
+                    </FormLabel>
+                    <div className="flex flex-col gap-2">
+                      {photos.map((file: File, index) => (
+                        <div key={index} className="flex gap-2 items-center">
+                          <div>{file.name}</div>
+                          <Button
+                            variant="black"
+                            size="icon"
+                            onClick={() => {
+                              form.setValue(
+                                "photos",
+                                photos.filter((_, _index) => _index !== index)
+                              );
+                            }}
+                            type="button"
+                          >
+                            <X className="w-7 h-7" />
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                    <Input
+                      id="photos"
+                      className="hidden"
+                      type="file"
+                      accept=".png, .jpeg, .jpg"
+                      multiple
+                      onChange={(e) => {
+                        const photos = form.getValues("photos");
+                        form.setValue("photos", [
+                          ...photos,
+                          ...Array.from(e.target.files || []),
+                        ]);
+                      }}
+                    />
+                    {photos.length <= 2 && (
+                      <Button
+                        variant="black"
+                        onClick={() =>
+                          document.getElementById("photos")?.click()
+                        }
+                        size="icon"
+                        type="button"
+                      >
+                        <Plus className="w-7 h-7" />
+                      </Button>
+                    )}
+                    <FormMessage className="text-c10" />
+                  </FormItem>
+                );
+              }}
+            />
+            <Button type="submit" variant="black">
+              {t("button.Submit")}
+            </Button>
+          </form>
+        </Form>
+      </div>
     </div>
   );
 };

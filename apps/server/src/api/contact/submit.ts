@@ -13,7 +13,11 @@ import { FastifyRequest } from "fastify";
 export const submit = async (request: FastifyRequest) => {
   const fields = request.body as ContactSubmitFormData;
   if (fields.photos instanceof Array && fields.photos.length > 2) {
-    throw new Error("Max 2 photos allowed");
+    return {
+      statusCode: 400,
+      error: "Bad Request",
+      message: "Max 2 photos allowed",
+    };
   }
   const form: ContactForm = {
     name: fields.name.value,

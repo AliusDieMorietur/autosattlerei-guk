@@ -52,7 +52,8 @@
     "SalonTitle2": "Салон 2",
     "SalonTitle3": "Салон 3",
     "SalonTitle4": "Салон 4",
-    "SalonTitle5": "Салон 5"
+    "SalonTitle5": "Салон 5",
+    "SthWentWrong": "Что-то пошло не так. Пожалуйста, попробуйте позже."
   },
   "button": {
     "Home": "Главная",

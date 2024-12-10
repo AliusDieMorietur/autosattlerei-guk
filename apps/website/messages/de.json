@@ -52,7 +52,8 @@
     "SalonTitle2": "Innenraum 2",
     "SalonTitle3": "Innenraum 3",
     "SalonTitle4": "Innenraum 4",
-    "SalonTitle5": "Innenraum 5"
+    "SalonTitle5": "Innenraum 5",
+    "SthWentWrong": "Etwas ist schiefgelaufen. Bitte versuchen Sie es später noch einmal."
   },
   "button": {
     "Home": "Startseite",

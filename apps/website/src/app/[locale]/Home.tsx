@@ -51,7 +51,6 @@ export type HomeProps = {
 export function Home({ locale }: HomeProps) {
   const t = useTranslations();
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [open, setOpen] = useState(false);
 
   return (
     <>
@@ -123,16 +122,7 @@ export function Home({ locale }: HomeProps) {
         />
       </div>
       <div id="contacts" className="mb-[120px]" />
-      <div className="mt-4 flex flex-col justify-center px-4 tablet:px-20">
-        <div className="text-c7 text-2xl text-center">
-          {t("label.ContactUs")}
-        </div>
-        <div className="text-c5 text-lg text-center">
-          {t("label.ContactsDescription")}
-        </div>
-        <ContactForm onSubmit={() => setOpen(true)} />
-      </div>
-      <ContactSubmittedDialog onOpenChange={setOpen} open={open} />
+      <ContactForm />
     </>
   );
 }

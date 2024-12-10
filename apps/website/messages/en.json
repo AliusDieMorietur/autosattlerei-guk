@@ -52,7 +52,8 @@
     "SalonTitle2": "Interior 2",
     "SalonTitle3": "Interior 3",
     "SalonTitle4": "Interior 4",
-    "SalonTitle5": "Interior 5"
+    "SalonTitle5": "Interior 5",
+    "SthWentWrong": "Something went wrong. Please try again later."
   },
   "button": {
     "Home": "Home",

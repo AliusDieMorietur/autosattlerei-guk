@@ -1,4 +1,4 @@
-import { ContactPhoto, type Contact, type ContactList } from "@/types/api";
+import { ContactPhoto, type Contact, type ContactList } from "@/types/contact";
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -15,7 +15,8 @@ import { useTheme } from "@/hooks/useTheme";
 import { assert } from "@/utils/assert";
 import { Input } from "./Input";
 import { useThrottle } from "@/hooks/useThrottle";
-import { ReloadSvg } from "./icons/ReloadSvg";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { ContactItem } from "./ContactItem";
 
 const BATCH = 20;
 
@@ -111,11 +112,10 @@ export function ContactList() {
         <Button
           disabled={isLoading}
           icon={
-            <ReloadSvg
-              style={{
-                width: 20,
-                height: 20,
-              }}
+            <MaterialIcons
+              name="sync"
+              size={20}
+              color={colors.button.default.text}
             />
           }
           onPress={() => {
@@ -138,54 +138,13 @@ export function ContactList() {
       <VirtualizedList
         data={contactList}
         initialNumToRender={10}
-        renderItem={({ item }) => {
-          const dateObj = new Date(item.createdAt);
-          const date = dateObj.toLocaleDateString();
-          const time = dateObj.toLocaleTimeString();
-          return (
-            <View
-              style={[
-                styles.item,
-                {
-                  backgroundColor: colors.card,
-                },
-              ]}
-            >
-              <Text>Name: {item.name}</Text>
-              <Text>Email: {item.email}</Text>
-              <Text>Phone: {item.phone}</Text>
-              <Text>Description: {item.description}</Text>
-              <Text>
-                Created at: {date} {time}
-              </Text>
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: 10,
-                }}
-              >
-                {item.photos.map((photo, index) => (
-                  <TouchableOpacity
-                    key={index}
-                    onPress={() => setCurrentImage(photo)}
-                  >
-                    <Image
-                      style={{
-                        width: 100,
-                        height: 100,
-                        borderWidth: 1,
-                      }}
-                      source={{ uri: `data:image/jpeg;base64,${photo.base64}` }}
-                    />
-                  </TouchableOpacity>
-                ))}
-                <Button title="Delete" onPress={() => deleteContact(item.id)} />
-              </View>
-            </View>
-          );
-        }}
+        renderItem={({ item }) => (
+          <ContactItem
+            contact={item}
+            onImageClick={setCurrentImage}
+            onDeleteClick={deleteContact}
+          />
+        )}
         keyExtractor={(item, index) => `key-${index}`}
         getItem={getItem}
         getItemCount={getItemCount}
