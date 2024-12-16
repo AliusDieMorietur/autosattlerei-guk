@@ -1,14 +1,5 @@
 const { writeFileSync } = require("fs");
 
-{
-  /* <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<sitemap>
-<loc>https://sitemap.subjektiv.art/sitemap.xml</loc>
-<lastmod>2024-10-02</lastmod>
-</sitemap>
-</sitemapindex> */
-}
-
 const URLS = [
   "/",
   "/gallery",
