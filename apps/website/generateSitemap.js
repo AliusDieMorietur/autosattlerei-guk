@@ -1,5 +1,7 @@
 const { writeFileSync } = require("fs");
 
+const LOCALES = ["en", "de", "ru", "ua"];
+
 const URLS = [
   "/",
   "/gallery",
@@ -20,7 +22,9 @@ const date = `${year}-${month}-${day}`;
 
 let sitemap = `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
 
-for (const url of URLS) {
+const urls = LOCALES.flatMap((locale) => URLS.map((url) => `/${locale}${url}`));
+
+for (const url of urls) {
   sitemap += "<url>";
   sitemap += `<loc>${HOST}${url}</loc>`;
   sitemap += `<lastmod>${date}</lastmod>`;
