@@ -10,14 +10,23 @@ export const getList = async ({
   Querystring: GetContactListQuery;
 }>) => {
   await auth.bearer(headers.authorization);
-  const { offset: offsetString, search } =
-    GetContactListQuerySchema.parse(query);
+  const {
+    offset: offsetString,
+    search,
+    checked = "",
+  } = GetContactListQuerySchema.parse(query);
   const offset = parseInt(offsetString);
   const LIMIT = 20;
+  const checkedValue = {
+    "1": true,
+    "0": false,
+    "": undefined,
+  }[checked];
   const [items, total] = await Promise.all([
     storage.contact.getList(
       {
         search,
+        checked: checkedValue,
       },
       {
         offset,
@@ -27,6 +36,7 @@ export const getList = async ({
     ),
     storage.contact.getTotal({
       search,
+      checked: checkedValue,
     }),
   ]);
   return { items, total };

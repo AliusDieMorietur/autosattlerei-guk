@@ -1,31 +1,31 @@
 import assert from "assert";
 import { db } from "..";
-import {
-  Contact,
-  ContactCreate,
-  ContactSchema,
-  ContactUpdate,
-  Pagination,
-} from "../../types";
+import { Contact, ContactCreate, ContactUpdate, Pagination } from "../../types";
 import { schema } from "../schemas";
-import { asc, desc, eq, ilike, or } from "drizzle-orm";
+import { and, asc, desc, eq, ilike, or } from "drizzle-orm";
 import { count } from "drizzle-orm";
 import {} from "drizzle-orm";
 
 export type Columns = keyof typeof schema.contact.$inferSelect;
 
 const getList = async (
-  { search }: { search: string },
+  { search, checked }: { search: string; checked?: boolean },
   { limit = 100, offset = 0, orderBy = [] }: Pagination<Columns>
 ) => {
   const SEARCH_COLUMNS: Columns[] = ["name", "email", "phone", "description"];
 
+  let where = or(
+    ...SEARCH_COLUMNS.map((field) =>
+      ilike(schema.contact[field], `%${search}%`)
+    )
+  );
+
+  if (checked !== undefined) {
+    where = and(where, eq(schema.contact.checked, checked));
+  }
+
   return await db.query.contact.findMany({
-    where: or(
-      ...SEARCH_COLUMNS.map((field) =>
-        ilike(schema.contact[field], `%${search}%`)
-      )
-    ),
+    where,
     limit,
     offset,
     orderBy: orderBy.map(({ field, direction }) =>
@@ -36,18 +36,28 @@ const getList = async (
   });
 };
 
-const getTotal = async ({ search }: { search: string }): Promise<number> => {
+const getTotal = async ({
+  search,
+  checked,
+}: {
+  search: string;
+  checked?: boolean;
+}): Promise<number> => {
   const SEARCH_COLUMNS: Columns[] = ["name", "email", "phone", "description"];
+  let where = or(
+    ...SEARCH_COLUMNS.map((field) =>
+      ilike(schema.contact[field], `%${search}%`)
+    )
+  );
+
+  if (checked !== undefined) {
+    where = and(where, eq(schema.contact.checked, checked));
+  }
+
   const rows = await db
     .select({ count: count() })
     .from(schema.contact)
-    .where(
-      or(
-        ...SEARCH_COLUMNS.map((field) =>
-          ilike(schema.contact[field], `%${search}%`)
-        )
-      )
-    );
+    .where(where);
   assert(rows[0], "Total must be defined");
   return rows[0].count;
 };

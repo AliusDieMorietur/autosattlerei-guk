@@ -37,6 +37,7 @@ export type ContactForm = z.infer<typeof ContactFormSchema>;
 export const GetContactListQuerySchema = z.object({
   offset: z.string().optional().default("0"),
   search: z.string().optional().default(""),
+  checked: z.enum(["1", "0"]).optional(),
 });
 
 export type GetContactListQuery = z.infer<typeof GetContactListQuerySchema>;
