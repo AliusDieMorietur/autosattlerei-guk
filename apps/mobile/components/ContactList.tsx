@@ -5,18 +5,16 @@ import {
   ActivityIndicator,
   VirtualizedList,
   StyleSheet,
-  Image,
-  Modal,
-  TouchableOpacity,
 } from "react-native";
 import { Button } from "./Button";
-import { Text } from "./Text";
 import { useTheme } from "@/hooks/useTheme";
-import { assert } from "@/utils/assert";
 import { Input } from "./Input";
 import { useThrottle } from "@/hooks/useThrottle";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { ContactItem } from "./ContactItem";
+import { PreviewModal } from "./PreviewModal";
+import { DeleteConfirmModal } from "./DeleteConfirmModal";
+import { Text } from "./Text";
 
 const BATCH = 20;
 
@@ -32,12 +30,21 @@ const getContactList = async (search: string, offset: number) =>
   )
     .then((response) => response.json() as unknown as ContactList)
     .catch((error) => {
+      Sentry.captureException(error);
       console.log("GET_CONTACT_LIST_ERROR", error);
       return {
         items: [],
         total: 0,
       };
     });
+
+const deleteContact = async (id: number) =>
+  await fetch(`${process.env.EXPO_PUBLIC_SERVER_URL}/contact/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${process.env.EXPO_PUBLIC_SECRET_TOKEN}`,
+    },
+  });
 
 export function ContactList() {
   const { colors } = useTheme();
@@ -48,6 +55,9 @@ export function ContactList() {
   const hasMore = total > contactList.length;
   const [currentImage, setCurrentImage] = useState<null | ContactPhoto>(null);
   const [search, setSearch] = useState("");
+  const [itemToDelete, setItemToDelete] = useState<Contact["id"]>(-1);
+
+  const [error, setError] = useState<string | null>(null);
 
   const loadMore = async ({
     forceReload = false,
@@ -62,13 +72,11 @@ export function ContactList() {
       if (!forceReload && isLoading) return;
       setIsLoading(true);
       const data = await getContactList(search, offset);
-      setContactList((prevData) => {
-        console.log("prevData", prevData);
-        return [...prevData, ...data.items];
-      });
+      setContactList((prevData) => [...prevData, ...data.items]);
       setTotal(data.total);
       setOffset((prevPage) => prevPage + BATCH);
-    } catch (error) {
+    } catch (error: any) {
+      setError(error.message);
       setContactList([]);
       console.log("LOAD_MORE_ERROR", error);
     } finally {
@@ -78,21 +86,6 @@ export function ContactList() {
 
   const getItem = (data: Contact[], index: number) => data[index];
   const getItemCount = (data: Contact[]) => data.length;
-
-  const deleteContact = async (id: number) => {
-    assert(total !== 0, "Total should not be 0 when deleting contact");
-    assert(offset !== 0, "Offset should not be 0 when deleting contact");
-    assert(contactList.length !== 0, "Contact list should not be empty");
-    await fetch(`${process.env.EXPO_PUBLIC_SERVER_URL}/contact/${id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${process.env.EXPO_PUBLIC_SECRET_TOKEN}`,
-      },
-    });
-    setTotal((total) => total - 1);
-    setContactList((list) => list.filter((contact) => contact.id !== id));
-    setOffset((offset) => offset - 1);
-  };
 
   const load = useThrottle((search: string) => {
     setOffset(0);
@@ -106,18 +99,26 @@ export function ContactList() {
 
   useEffect(() => load(search), []);
 
+  if (error) {
+    return (
+      <View style={styles.container}>
+        <Text>{error}</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Button
           disabled={isLoading}
-          icon={
+          icon={() => (
             <MaterialIcons
               name="sync"
               size={20}
               color={colors.button.default.text}
             />
-          }
+          )}
           onPress={() => {
             setSearch("");
             load("");
@@ -136,19 +137,21 @@ export function ContactList() {
         />
       </View>
       <VirtualizedList
+        style={styles.list}
         data={contactList}
         initialNumToRender={10}
         renderItem={({ item }) => (
           <ContactItem
             contact={item}
             onImageClick={setCurrentImage}
-            onDeleteClick={deleteContact}
+            onDeleteClick={(id) => setItemToDelete(id)}
           />
         )}
         keyExtractor={(item, index) => `key-${index}`}
         getItem={getItem}
         getItemCount={getItemCount}
         onEndReached={() => {
+          if (contactList.length === 0) return;
           if (!hasMore) {
             console.warn("Reached end");
             return;
@@ -165,34 +168,31 @@ export function ContactList() {
           ) : null
         }
       />
-      <Modal
-        animationType="slide"
-        transparent={true}
+      <PreviewModal
+        currentImage={currentImage}
         visible={!!currentImage}
-        onRequestClose={() => {
-          setCurrentImage(null);
+        onRequestClose={() => setCurrentImage(null)}
+        onClose={() => setCurrentImage(null)}
+      />
+      <DeleteConfirmModal
+        visible={itemToDelete !== -1}
+        onRequestClose={() => setItemToDelete(-1)}
+        onClose={() => setItemToDelete(-1)}
+        onDelete={async () => {
+          try {
+            const id = itemToDelete;
+            setItemToDelete(-1);
+            await deleteContact(id);
+            setTotal((total) => total - 1);
+            setContactList((list) =>
+              list.filter((contact) => contact.id !== id)
+            );
+            setOffset((offset) => offset - 1);
+          } catch (error) {
+            console.error("DELETE_CONTACT_ERROR", error);
+          }
         }}
-      >
-        <View
-          style={[
-            styles.modal,
-            {
-              backgroundColor: colors.modal,
-            },
-          ]}
-        >
-          {currentImage && (
-            <Image
-              style={{
-                width: currentImage.width,
-                height: currentImage.height,
-              }}
-              source={{ uri: `data:image/jpeg;base64,${currentImage.base64}` }}
-            />
-          )}
-          <Button title="Close" onPress={() => setCurrentImage(null)} />
-        </View>
-      </Modal>
+      />
     </View>
   );
 }
@@ -203,8 +203,12 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   container: {
-    paddingBottom: 100,
+    display: "flex",
+    flexDirection: "column",
+    gap: 8,
+    paddingBottom: 40,
   },
+  list: {},
   item: {
     display: "flex",
     flexDirection: "column",
@@ -215,12 +219,4 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   loader: {},
-  modal: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    gap: 8,
-    display: "flex",
-    flexDirection: "column",
-  },
 });
