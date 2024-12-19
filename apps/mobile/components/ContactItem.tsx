@@ -6,6 +6,7 @@ import { Button } from "./Button";
 import { useState } from "react";
 import { CopyText } from "./CopyText";
 import { COLORS } from "@/constants/Colors";
+import * as Clipboard from "expo-clipboard";
 
 const toggleCheckContact = async (id: number, checked: boolean) =>
   await fetch(`${process.env.EXPO_PUBLIC_SERVER_URL}/contact/${id}`, {
@@ -35,6 +36,17 @@ export const ContactItem = ({
   const dateObj = new Date(contact.createdAt);
   const date = dateObj.toLocaleDateString();
   const time = dateObj.toLocaleTimeString();
+
+  const copyItem = async () => {
+    const text = [
+      contact.name,
+      contact.email,
+      contact.phone,
+      contact.description,
+    ].join("\n");
+    await Clipboard.setStringAsync(text);
+  };
+
   return (
     <View
       style={[
@@ -50,11 +62,10 @@ export const ContactItem = ({
       <Text>
         Email: <CopyText text={contact.email} />
       </Text>
+      <Text>Phone: {contact.phone && <CopyText text={contact.phone} />}</Text>
       <Text>
-        Phone: <CopyText text={contact.phone} />
-      </Text>
-      <Text>
-        Description: <CopyText text={contact.description} />
+        Description:{" "}
+        {contact.description && <CopyText text={contact.description} />}
       </Text>
       <Text>
         Created at: {date} {time}
@@ -81,26 +92,35 @@ export const ContactItem = ({
         ))}
       </View>
       <View style={styles.buttons}>
-        <Button
-          style={styles.button}
-          type={checked ? "success" : "default"}
-          icon={(typeData) => (
-            <MaterialIcons
-              name={checked ? "check-box" : "check-box-outline-blank"}
-              size={20}
-              color={typeData.text}
-            />
-          )}
-          onPress={async () => {
-            try {
-              setChecked(!checked);
-              await toggleCheckContact(contact.id, !checked);
-            } catch (error) {
-              console.error("TOGGLE_CHECK_CONTACT_ERROR", error);
-              setChecked(!checked);
-            }
-          }}
-        />
+        <View style={styles.safeButtons}>
+          <Button
+            style={styles.button}
+            type={checked ? "success" : "default"}
+            icon={(typeData) => (
+              <MaterialIcons
+                name={checked ? "check-box" : "check-box-outline-blank"}
+                size={20}
+                color={typeData.text}
+              />
+            )}
+            onPress={async () => {
+              try {
+                setChecked(!checked);
+                await toggleCheckContact(contact.id, !checked);
+              } catch (error) {
+                console.error("TOGGLE_CHECK_CONTACT_ERROR", error);
+                setChecked(!checked);
+              }
+            }}
+          />
+          <Button
+            style={styles.button}
+            icon={(typeData) => (
+              <MaterialIcons name="copy-all" size={20} color={typeData.text} />
+            )}
+            onPress={() => copyItem()}
+          />
+        </View>
         <Button
           style={styles.button}
           type="danger"
@@ -122,12 +142,18 @@ const styles = StyleSheet.create({
     marginTop: 6,
     marginBottom: 6,
     borderRadius: 8,
-    gap: 4,
+    gap: 8,
   },
   buttons: {
     display: "flex",
     flexDirection: "row",
-    gap: 4,
+    justifyContent: "space-between",
+    gap: 8,
+  },
+  safeButtons: {
+    display: "flex",
+    flexDirection: "row",
+    gap: 8,
   },
   button: {},
 });

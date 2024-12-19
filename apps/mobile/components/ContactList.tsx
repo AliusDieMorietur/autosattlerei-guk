@@ -18,9 +18,21 @@ import { Text } from "./Text";
 
 const BATCH = 20;
 
-const getContactList = async (search: string, offset: number) =>
+const getContactList = async ({
+  checked = "",
+  search,
+  offset,
+}: {
+  checked?: "1" | "0" | "";
+  search: string;
+  offset: number;
+}) =>
   fetch(
-    `${process.env.EXPO_PUBLIC_SERVER_URL}/contact/list?search=${search}&offset=${offset}`,
+    `${
+      process.env.EXPO_PUBLIC_SERVER_URL
+    }/contact/list?search=${search}&offset=${offset}${
+      checked ? `&checked=${checked}` : ""
+    }`,
     {
       headers: {
         Authorization: `Bearer ${process.env.EXPO_PUBLIC_SECRET_TOKEN}`,
@@ -30,7 +42,6 @@ const getContactList = async (search: string, offset: number) =>
   )
     .then((response) => response.json() as unknown as ContactList)
     .catch((error) => {
-      Sentry.captureException(error);
       console.log("GET_CONTACT_LIST_ERROR", error);
       return {
         items: [],
@@ -46,6 +57,8 @@ const deleteContact = async (id: number) =>
     },
   });
 
+const CHECKED_VALUES = ["", "1", "0"] as const;
+
 export function ContactList() {
   const { colors } = useTheme();
   const [contactList, setContactList] = useState<Contact[]>([]);
@@ -56,6 +69,8 @@ export function ContactList() {
   const [currentImage, setCurrentImage] = useState<null | ContactPhoto>(null);
   const [search, setSearch] = useState("");
   const [itemToDelete, setItemToDelete] = useState<Contact["id"]>(-1);
+  const [checkedIndex, setCheckedIndex] = useState<number>(0);
+  const checked = CHECKED_VALUES[checkedIndex];
 
   const [error, setError] = useState<string | null>(null);
 
@@ -63,15 +78,22 @@ export function ContactList() {
     forceReload = false,
     search,
     offset,
+    checked,
   }: {
     search: string;
     offset: number;
+    checked?: "1" | "0" | "";
     forceReload?: boolean;
   }) => {
     try {
       if (!forceReload && isLoading) return;
       setIsLoading(true);
-      const data = await getContactList(search, offset);
+      const data = await getContactList({
+        search,
+        offset,
+        checked,
+      });
+      console.log("data", data);
       setContactList((prevData) => [...prevData, ...data.items]);
       setTotal(data.total);
       setOffset((prevPage) => prevPage + BATCH);
@@ -87,17 +109,18 @@ export function ContactList() {
   const getItem = (data: Contact[], index: number) => data[index];
   const getItemCount = (data: Contact[]) => data.length;
 
-  const load = useThrottle((search: string) => {
+  const load = useThrottle((search: string, checked: "1" | "0" | "") => {
     setOffset(0);
     setTotal(1);
     setContactList([]);
     loadMore({
       search,
       offset: 0,
+      checked,
     });
   }, 200);
 
-  useEffect(() => load(search), []);
+  useEffect(() => load(search, checked), []);
 
   if (error) {
     return (
@@ -121,7 +144,32 @@ export function ContactList() {
           )}
           onPress={() => {
             setSearch("");
-            load("");
+            setCheckedIndex(0);
+            load("", CHECKED_VALUES[0]);
+          }}
+        />
+        <Button
+          disabled={isLoading}
+          icon={() => (
+            <MaterialIcons
+              name={
+                (
+                  {
+                    "0": "check-box-outline-blank",
+                    "1": "check-box",
+                    "": "indeterminate-check-box",
+                  } as const
+                )[checked]
+              }
+              size={20}
+              color={colors.button.default.text}
+            />
+          )}
+          onPress={() => {
+            setCheckedIndex((prevIndex) =>
+              prevIndex === 2 ? 0 : prevIndex + 1
+            );
+            load(search, CHECKED_VALUES[checkedIndex + 1]);
           }}
         />
         <Input
@@ -129,7 +177,7 @@ export function ContactList() {
           value={search}
           onChangeText={(value) => {
             setSearch(value);
-            load(value);
+            load(value, checked);
           }}
           style={{
             flex: 1,
@@ -159,6 +207,7 @@ export function ContactList() {
           loadMore({
             search,
             offset,
+            checked,
           });
         }}
         onEndReachedThreshold={0.5}
