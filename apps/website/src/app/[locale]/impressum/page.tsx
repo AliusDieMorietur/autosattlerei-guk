@@ -1,4 +1,10 @@
-import Link from "next/link";
+import { Metadata } from "next";
+
+export const generateMetadata = async (): Promise<Metadata> => {
+  return {
+    title: "Impressum Autosattlerei Guk",
+  };
+};
 
 export default function Impressum(): JSX.Element {
   return (
