@@ -35,7 +35,13 @@ export const generateMetadata = async ({
         "Showcases von neu bezogenen Fahrzeuginnenräumen in verschiedenster Komplexität. Verschiedene Arten von Innenräumen, verschiedene Stile aus allen möglichen Materialien – von Oldtimern bis hin zu Supersportwagen.",
     },
   };
-  const { base, description } = TYPE_TO_DATA[type];
+  const data = TYPE_TO_DATA[type];
+  if (!data) {
+    return {
+      title: "Gallery - Autosattlerei Guk",
+    };
+  }
+  const { base, description } = data;
   return {
     title: base + " - Autosattlerei Guk",
     description,

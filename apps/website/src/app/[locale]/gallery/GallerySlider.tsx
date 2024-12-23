@@ -5,13 +5,9 @@ import {
   CarouselApi,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
-import { useAppMode } from "@/hooks/useAppMode";
 import { cn, getRandomInt } from "@/lib/utils";
-import Image from "next/image";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export type GallerySliderProps = {
   images: { src: string }[];
