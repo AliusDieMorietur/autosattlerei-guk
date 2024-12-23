@@ -70,7 +70,7 @@ export const GallerySlider = ({
               <img
                 src={src}
                 alt={src}
-                className="rounded-xl absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full w-auto h-auto object-cover"
+                className="rounded-xl h-full w-full object-cover"
               />
             </div>
           </CarouselItem>

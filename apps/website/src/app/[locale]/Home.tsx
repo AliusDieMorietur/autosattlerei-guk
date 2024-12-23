@@ -97,7 +97,7 @@ export function Home({ locale }: HomeProps) {
             <img
               src={`/main_page/cards/${index + 1}.jpg`}
               alt=""
-              className="rounded h-[250px] desktop:h-[190px]"
+              className="rounded h-[250px] desktop:h-[190px] object-cover"
             />
             <div className="text-c7 text-xl">
               {t(`label.card${index + 1}Title`)}
