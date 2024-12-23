@@ -12,13 +12,33 @@ export const generateMetadata = async ({
   params,
 }: GallerySpecificPageProps): Promise<Metadata> => {
   const { type } = await params;
-  const TYPE_TO_BASE: Record<string, string> = {
-    "door-panel": "Türverkleidungen",
-    wheel: "Lenkräder",
-    salon: "Innenräume",
+  const TYPE_TO_DATA: Record<
+    string,
+    {
+      base: string;
+      description: string;
+    }
+  > = {
+    "door-panel": {
+      base: "Türverkleidungen",
+      description:
+        "Showcases von neu bezogenen Türverkleidungen in verschiedenster Komplexität und aus unterschiedlichen Materialien.",
+    },
+    wheel: {
+      base: "Lenkräder",
+      description:
+        "Showcases von Lenkrädern in verschiedenster Komplexität und aus unterschiedlichen Materialien.",
+    },
+    salon: {
+      base: "Innenräume",
+      description:
+        "Showcases von neu bezogenen Fahrzeuginnenräumen in verschiedenster Komplexität. Verschiedene Arten von Innenräumen, verschiedene Stile aus allen möglichen Materialien – von Oldtimern bis hin zu Supersportwagen.",
+    },
   };
+  const { base, description } = TYPE_TO_DATA[type];
   return {
-    title: TYPE_TO_BASE[type] + " Autosattlerei Guk",
+    title: base + " - Autosattlerei Guk",
+    description,
   };
 };
 

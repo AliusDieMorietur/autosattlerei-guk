@@ -7,7 +7,9 @@ export type GalleryPageProps = {
 
 export const generateMetadata = async (): Promise<Metadata> => {
   return {
-    title: "Gallery Autosattlerei Guk",
+    title: "Galerie - Autosattlerei Guk",
+    description:
+      "Es wird eine große Anzahl von Arbeiten verschiedener Schwierigkeitsgrade präsentiert: Innenräume, Lenkräder, Türverkleidungen, Decken.",
   };
 };
 
