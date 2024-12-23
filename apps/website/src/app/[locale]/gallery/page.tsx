@@ -7,9 +7,9 @@ export type GalleryPageProps = {
 
 export const generateMetadata = async (): Promise<Metadata> => {
   return {
-    title: "Galerie - Autosattlerei Guk",
+    title: "Galerie - Autosattlerei Guk in Berlin",
     description:
-      "Es wird eine große Anzahl von Arbeiten verschiedener Schwierigkeitsgrade präsentiert: Innenräume, Lenkräder, Türverkleidungen, Decken.",
+      "Autosattlerei Guk in Berlin - Es wird eine große Anzahl von Arbeiten verschiedener Schwierigkeitsgrade präsentiert: Innenräume, Lenkräder, Türverkleidungen, Decken.",
   };
 };
 

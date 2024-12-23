@@ -44,7 +44,7 @@ export const generateMetadata = async ({
   const { base, description } = data;
   return {
     title: base + " - Autosattlerei Guk",
-    description,
+    description: "Autosattlerei Guk in Berlin - " + description,
   };
 };
 

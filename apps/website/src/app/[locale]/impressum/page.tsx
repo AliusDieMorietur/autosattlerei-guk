@@ -2,7 +2,8 @@ import { Metadata } from "next";
 
 export const generateMetadata = async (): Promise<Metadata> => {
   return {
-    title: "Impressum Autosattlerei Guk",
+    title: "Impressum - Autosattlerei Guk in Berlin",
+    description: "Autosattlerei Guk in Berlin - Impressum",
   };
 };
 
