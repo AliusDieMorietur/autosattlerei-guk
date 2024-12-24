@@ -80,7 +80,7 @@ export const GallerySpecific = ({
 
   return (
     <>
-      <div className="w-full flex flex-col items-center px-4 desktop:px-0 relative">
+      <div className="w-full flex flex-col items-center px-4 desktop:px-0 relative motion-preset-fade delay-300">
         <Link
           className="absolute left-4 tablet:left-0 top-1.5"
           href={`/${locale}/gallery`}

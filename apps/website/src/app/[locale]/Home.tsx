@@ -53,7 +53,7 @@ export function Home({ locale }: HomeProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   return (
-    <>
+    <div className="motion-preset-fade delay-300">
       <div className="relative">
         <div className="w-[350px] tablet:w-[450px] desktop:w-[450px] absolute left-1/2 -translate-x-1/2 bottom-1/2 translate-y-1/2  desktop:bottom-[64px] desktop:left-[64px] desktop:translate-x-0 desktop:translate-y-0 z-[200] flex flex-col items-center desktop:items-start gap-2">
           <div className="text-c7 text-2xl">
@@ -123,6 +123,6 @@ export function Home({ locale }: HomeProps) {
       </div>
       <div id="contacts" className="mb-[120px]" />
       <ContactForm />
-    </>
+    </div>
   );
 }
