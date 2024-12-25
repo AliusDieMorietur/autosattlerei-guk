@@ -8,6 +8,7 @@ import {
 } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { X } from "lucide-react";
+import { AnimatedImage } from "./AnimatedImage";
 
 export type ImageDialogProps = DialogProps & {
   src?: string;
@@ -35,7 +36,11 @@ export const ImageDialog = ({
         <DialogTitle className="hidden" />
 
         {src && (
-          <img src={src} alt="image" className="rounded-xl overflow-hidden" />
+          <AnimatedImage
+            src={src}
+            alt="image"
+            className="rounded-xl overflow-hidden"
+          />
         )}
       </DialogContent>
     </Dialog>

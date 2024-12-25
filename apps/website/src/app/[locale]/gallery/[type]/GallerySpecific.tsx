@@ -9,6 +9,7 @@ import { redirect } from "next/navigation";
 import { Fragment, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, ChevronLeft } from "lucide-react";
+import { AnimatedImage } from "@/components/AnimatedImage";
 
 export type GalleryData = {
   label: string;
@@ -80,7 +81,7 @@ export const GallerySpecific = ({
 
   return (
     <>
-      <div className="w-full flex flex-col items-center px-4 desktop:px-0 relative motion-preset-fade delay-300">
+      <div className="w-full flex flex-col items-center px-4 desktop:px-0 relative">
         <Link
           className="absolute left-4 tablet:left-0 top-1.5"
           href={`/${locale}/gallery`}
@@ -116,7 +117,7 @@ export const GallerySpecific = ({
                     {grid(quantity, columns).map((images, j) => (
                       <div className="flex flex-col gap-4" key={j}>
                         {images.map((n, k) => (
-                          <img
+                          <AnimatedImage
                             key={k}
                             src={buildSrc(n)}
                             alt=""

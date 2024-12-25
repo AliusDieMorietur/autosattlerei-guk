@@ -5,10 +5,9 @@ import { HomeSlider } from "./HomeSlider";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ContactForm } from "./ContactForm";
-import { ContactSubmittedDialog } from "./ContactSubmittedDialog";
-import { useAppMode } from "@/hooks/useAppMode";
 import { HomeIcon, User, Clock } from "lucide-react";
 import Link from "next/link";
+import { AnimatedImage } from "@/components/AnimatedImage";
 
 const INFO_ITEMS = [
   {
@@ -53,7 +52,7 @@ export function Home({ locale }: HomeProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   return (
-    <div className="motion-preset-fade delay-300">
+    <div className="">
       <div className="relative">
         <div className="w-[350px] tablet:w-[450px] desktop:w-[450px] absolute left-1/2 -translate-x-1/2 bottom-1/2 translate-y-1/2  desktop:bottom-[64px] desktop:left-[64px] desktop:translate-x-0 desktop:translate-y-0 z-[200] flex flex-col items-center desktop:items-start gap-2">
           <div className="text-c7 text-2xl">
@@ -94,7 +93,7 @@ export function Home({ locale }: HomeProps) {
       <div className="grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-3 gap-4">
         {CARDS.map((slug, index) => (
           <div key={index} className="flex flex-col rounded-xl p-4 gap-3">
-            <img
+            <AnimatedImage
               src={`/main_page/cards/${index + 1}.jpg`}
               alt=""
               className="rounded h-[250px] desktop:h-[190px] object-cover"

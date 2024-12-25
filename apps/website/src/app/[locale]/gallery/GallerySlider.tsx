@@ -1,5 +1,6 @@
 "use client";
 
+import { AnimatedImage } from "@/components/AnimatedImage";
 import {
   Carousel,
   CarouselApi,
@@ -63,7 +64,7 @@ export const GallerySlider = ({
         {images.map(({ src }) => (
           <CarouselItem key={src} className="tablet:basis-1/3">
             <div className="max-w-full tablet:max-w-[330px] rounded-xl h-[250px] tablet:h-[175px] desktop:h-[225px] overflow-hidden relative">
-              <img
+              <AnimatedImage
                 src={src}
                 alt={src}
                 className="rounded-xl h-full w-full object-cover"
