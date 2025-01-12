@@ -21,16 +21,22 @@ export default {
         c9: "#523A34",
         c10: "#cc0000",
         c11: "#32DE8A",
+        c12: "#8d3620",
+        c13: "#aaf0a8",
+        c14: "#8d8d8d",
       },
       screens: {
+        desktopLg: "1440px",
         desktop: "1024px",
         tablet: "768px",
       },
       width: {
+        desktopLg: "1440px",
         desktop: "1024px",
         tablet: "768px",
       },
       maxWidth: {
+        desktopLg: "1440px",
         desktop: "1024px",
         tablet: "768px",
       },

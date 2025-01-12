@@ -38,16 +38,8 @@ export function Gallery({ locale }: GalleryProps) {
   const t = useTranslations();
 
   return (
-    <div className="w-full flex flex-col items-center px-4 desktop:px-0 gap-10 relative">
-      <Link
-        className="absolute left-4 tablet:left-0 top-1.5"
-        href={`/${locale}/`}
-      >
-        <Button size="icon">
-          <ChevronLeft className="-ml-0.5 min-w-7 min-h-7" />
-        </Button>
-      </Link>
-      <div className="w-full text-c7 text-3xl text-center py-1.5">
+    <div className="w-full flex flex-col items-center px-5 desktopLg:px-0 gap-5 desktop:gap-10 relative">
+      <div className="w-full text-c7 text-xl desktop:text-2xl py-1.5">
         {t("label.Gallery")}
       </div>
       {SECTIONS.map(({ title, slug, buildSrc, autoStartDelay }, index) => (
@@ -67,7 +59,7 @@ export function Gallery({ locale }: GalleryProps) {
             />
           </div>
           {index !== SECTIONS.length - 1 && (
-            <div className="w-full h-px bg-c3" />
+            <div className="w-full h-px bg-white/10" />
           )}
         </Fragment>
       ))}

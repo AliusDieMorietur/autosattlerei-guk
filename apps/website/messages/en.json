@@ -5,7 +5,7 @@
     "autosattlereiGukMail": "autosattler.guk@gmail.com",
     "autosattlereiGukPhone": "+0176-614-99059",
     "autosattlereiGukIndex": "12555 Berlin",
-    "autosattlereiGukAddress": "Seelenbinder str. 112",
+    "autosattlereiGukAddress": "Seelenbinder Str. 112-124",
     "autosattlereiGukWorkHours": "10.00-17.00",
     "Contacts": "Contacts",
     "ContactUs": "Contact Us",
@@ -25,6 +25,7 @@
     "slide7Title": "Other Services",
     "slide7Description": "We offer a wide range of services for your car: from floor mats to unique design solutions. Contact us for a consultation!",
     "WorkHours": "Working Hours",
+    "WorkingHours": "Working Hours",
     "Address": "Address",
     "PhoneNumber": "Phone Number",
     "card1Title": "Interiors",
@@ -53,12 +54,14 @@
     "SalonTitle3": "Interior 3",
     "SalonTitle4": "Interior 4",
     "SalonTitle5": "Interior 5",
-    "SthWentWrong": "Something went wrong. Please try again later."
+    "SthWentWrong": "Something went wrong. Please try again later.",
+    "FeelFreeToContactUs": "Feel free to contact us or submit the form and we will contact you back."
   },
   "button": {
     "Home": "Home",
     "Gallery": "Gallery",
     "Contacts": "Contacts",
+    "ContactUs": "Contact Us",
     "Impressum": "Impressum",
     "card1": "Contact Us",
     "card2": "Contact Us",
@@ -71,7 +74,9 @@
     "WatchInGallery": "View in Gallery",
     "Ok": "OK",
     "ViewMore": "View More",
-    "ViewLess": "View Less"
+    "ViewLess": "View Less",
+    "OurServices": "Our Services",
+    "ClickToOpen": "Click to open"
   },
   "error": {
     "NameMin2": "Name must be at least 2 characters long.",

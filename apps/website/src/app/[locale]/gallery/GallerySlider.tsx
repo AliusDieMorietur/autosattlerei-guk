@@ -57,13 +57,17 @@ export const GallerySlider = ({
       className="w-full rounded-xl overflow-hidden"
       opts={{
         loop: true,
+        align: "start",
       }}
       setApi={setApi}
     >
       <CarouselContent className="">
         {images.map(({ src }) => (
-          <CarouselItem key={src} className="tablet:basis-1/3">
-            <div className="max-w-full tablet:max-w-[330px] rounded-xl h-[250px] tablet:h-[175px] desktop:h-[225px] overflow-hidden relative">
+          <CarouselItem
+            key={src}
+            className="tablet:basis-1/2 desktop:basis-1/3 desktopLg:basis-1/4"
+          >
+            <div className="w-full rounded-xl h-[250px] tablet:h-[200px] desktop:h-[225px] overflow-hidden relative">
               <AnimatedImage
                 src={src}
                 alt={src}
@@ -77,8 +81,8 @@ export const GallerySlider = ({
         {images.map((_, index) => (
           <div
             key={index}
-            className={cn("bg-c7 w-2 h-2 rounded-full", {
-              "bg-c11": index === currentSlide,
+            className={cn("transition-all bg-c7 w-2 h-2 rounded-full", {
+              "bg-c12 w-6": index === currentSlide,
             })}
           />
         ))}

@@ -18,12 +18,17 @@ import { useTranslations } from "next-intl";
 import { X, Plus } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 type ContactFormProps = {
   onSubmit?: () => void;
+  className?: string;
 };
 
-export const ContactForm = ({ onSubmit: onSubmitOuter }: ContactFormProps) => {
+export const ContactForm = ({
+  className,
+  onSubmit: onSubmitOuter,
+}: ContactFormProps) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isError, setIsError] = useState(false);
   const t = useTranslations();
@@ -116,11 +121,7 @@ export const ContactForm = ({ onSubmit: onSubmitOuter }: ContactFormProps) => {
   }
 
   return (
-    <div className="mt-4 flex flex-col justify-center px-4 tablet:px-20">
-      <div className="text-c7 text-2xl text-center">{t("label.ContactUs")}</div>
-      <div className="text-c5 text-lg text-center">
-        {t("label.ContactsDescription")}
-      </div>
+    <div className={cn("mt-4 flex flex-col justify-center", className)}>
       <div className="p-4 my-4 bg-c9 rounded text-c7 w-full">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

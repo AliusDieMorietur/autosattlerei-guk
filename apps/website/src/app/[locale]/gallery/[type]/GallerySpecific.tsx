@@ -8,7 +8,7 @@ import { useTranslations } from "next-intl";
 import { redirect } from "next/navigation";
 import { Fragment, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, ChevronLeft } from "lucide-react";
+import { ArrowLeft, ChevronLeft, Pointer, TextCursor } from "lucide-react";
 import { AnimatedImage } from "@/components/AnimatedImage";
 
 export type GalleryData = {
@@ -81,26 +81,18 @@ export const GallerySpecific = ({
 
   return (
     <>
-      <div className="w-full flex flex-col items-center px-4 desktop:px-0 relative">
-        <Link
-          className="absolute left-4 tablet:left-0 top-1.5"
-          href={`/${locale}/gallery`}
-        >
-          <Button size="icon">
-            <ChevronLeft className="-ml-0.5 min-w-7 min-h-7" />
-          </Button>
-        </Link>
-        <div className="w-full text-c7 text-3xl text-center py-1.5 mb-8">
+      <div className="w-full flex flex-col items-center px-5 desktopLg:px-0 relative">
+        <div className="w-full text-c7 text-xl desktop:text-2xl py-1.5 mb-5 desktop:mb-8">
           {t(data.label)}
         </div>
-        <div className="flex flex-col gap-10">
+        <div className="w-full flex flex-col gap-10">
           {data.items.map(({ label, quantity, buildSrc, viewMore }, i) => {
             const open = opened.includes(i) || !viewMore;
             return (
               <Fragment key={i}>
                 <div className="flex flex-col gap-4">
                   {label && (
-                    <div className="w-full text-c7 text-center tablet:text-start text-2xl font-semibold">
+                    <div className="w-full text-c7 tablet:text-start text-2xl">
                       {t(label)}
                     </div>
                   )}
@@ -115,15 +107,25 @@ export const GallerySpecific = ({
                     )}
                   >
                     {grid(quantity, columns).map((images, j) => (
-                      <div className="flex flex-col gap-4" key={j}>
+                      <div className="w-full flex flex-col gap-4" key={j}>
                         {images.map((n, k) => (
-                          <AnimatedImage
+                          <div
                             key={k}
-                            src={buildSrc(n)}
-                            alt=""
-                            className="w-full h-full object-cover max-h-[250px] rounded-xl"
+                            className="relative group cursor-pointer"
                             onClick={() => setCurrentSrc(buildSrc(n))}
-                          />
+                          >
+                            <AnimatedImage
+                              src={buildSrc(n)}
+                              alt=""
+                              className="w-full h-full object-cover max-h-[250px] rounded-xl cursor-pointer transition-all"
+                            />
+                            <div className="transition-all duration-150 opacity-0 invisible group-hover:opacity-100  group-hover:visible bg-black/60 absolute inset-0 rounded-xl flex flex-col justify-center items-center gap-1">
+                              <Pointer className="text-c8" />
+                              <div className="text-c8 text-[12px] leading-[16px] font-medium">
+                                {t("button.ClickToOpen")}
+                              </div>
+                            </div>
+                          </div>
                         ))}
                       </div>
                     ))}
@@ -168,7 +170,7 @@ export const GallerySpecific = ({
                   )}
                 </div>
                 {i !== data.items.length - 1 && (
-                  <div className="w-full h-px bg-c3" />
+                  <div className="w-full h-px bg-white/10" />
                 )}
               </Fragment>
             );

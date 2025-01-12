@@ -206,11 +206,10 @@ const CarouselPrevious = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        "absolute h-10 w-10 rounded-full text-c7 border-none",
+        "absolute h-10 w-10 rounded-full text-white/70 border-none",
         orientation === "horizontal"
-          ? "left-4 top-1/2 -translate-y-1/2"
-          : // "-left-12 top-1/2 -translate-y-1/2"
-            "-top-12 left-1/2 -translate-x-1/2 rotate-90",
+          ? "left-0 top-1/2 -translate-y-1/2"
+          : "-top-12 left-1/2 -translate-x-1/2 rotate-90",
         className
       )}
       disabled={!canScrollPrev}
@@ -218,7 +217,6 @@ const CarouselPrevious = React.forwardRef<
       {...props}
     >
       <ChevronLeft className="min-w-10 min-h-10" />
-
       <span className="sr-only">Previous slide</span>
     </Button>
   );
@@ -237,11 +235,10 @@ const CarouselNext = React.forwardRef<
       variant={variant}
       size={size}
       className={cn(
-        "absolute rounded-full text-c7 border-none",
+        "absolute rounded-full text-white/70 border-none",
         orientation === "horizontal"
-          ? "right-4 top-1/2 -translate-y-1/2"
-          : // "-right-12 top-1/2 -translate-y-1/2"
-            "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
+          ? "right-0 top-1/2 -translate-y-1/2"
+          : "-bottom-12 left-1/2 -translate-x-1/2 rotate-90",
         className
       )}
       disabled={!canScrollNext}
