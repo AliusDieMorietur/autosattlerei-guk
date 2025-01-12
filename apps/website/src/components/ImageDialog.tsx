@@ -36,11 +36,7 @@ export const ImageDialog = ({
         <DialogTitle className="hidden" />
 
         {src && (
-          <AnimatedImage
-            src={src}
-            alt="image"
-            className="rounded-xl overflow-hidden"
-          />
+          <img src={src} alt="image" className="rounded-xl overflow-hidden" />
         )}
       </DialogContent>
     </Dialog>

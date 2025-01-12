@@ -82,7 +82,7 @@ export function Home({ locale }: HomeProps) {
             key={index}
             className="flex flex-col rounded-xl gap-3 min-w-[85%] tablet:min-w-[75%] desktop:min-w-[22%]"
           >
-            <AnimatedImage
+            <img
               src={`/main_page/cards/${index + 1}.jpg`}
               alt=""
               className="rounded-xl h-[250px] desktop:h-[250px] object-cover"

@@ -68,7 +68,7 @@ export const GallerySlider = ({
             className="tablet:basis-1/2 desktop:basis-1/3 desktopLg:basis-1/4"
           >
             <div className="w-full rounded-xl h-[250px] tablet:h-[200px] desktop:h-[225px] overflow-hidden relative">
-              <AnimatedImage
+              <img
                 src={src}
                 alt={src}
                 className="rounded-xl h-full w-full object-cover"

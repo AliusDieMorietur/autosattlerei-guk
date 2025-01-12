@@ -114,7 +114,7 @@ export const GallerySpecific = ({
                             className="relative group cursor-pointer"
                             onClick={() => setCurrentSrc(buildSrc(n))}
                           >
-                            <AnimatedImage
+                            <img
                               src={buildSrc(n)}
                               alt=""
                               className="w-full h-full object-cover max-h-[250px] rounded-xl cursor-pointer transition-all"
