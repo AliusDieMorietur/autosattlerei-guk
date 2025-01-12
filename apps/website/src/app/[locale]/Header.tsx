@@ -172,7 +172,7 @@ export const Header = ({ locale }: HeaderProps): JSX.Element => {
           >
             {t("button.ContactUs")} <ArrowRight className="w-4 h-4" />
           </Link>
-          <Link href={`/${locale}/#impressum`} onClick={() => setOpen(false)}>
+          <Link href={`/${locale}/impressum`} onClick={() => setOpen(false)}>
             {t("button.Impressum")}
           </Link>
         </div>
