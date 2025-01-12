@@ -9,7 +9,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
 
 export default function Impressum(): JSX.Element {
   return (
-    <div className="flex flex-col text-c7 p-5 -mt-4">
+    <div className="flex flex-col text-c7 p-5 desktopLg:p-0 -mt-4">
       <div className="text-c14">Impressum</div>
       <div>Stanislav Guk</div>
       <div className="mb-4">Autosattlerei Guk</div>

@@ -22,7 +22,7 @@ const JSON_LD = {
     longitude: "13.592589044619203",
   },
   openingHours: "Mo-Fr 10.00-17.00",
-  telephone: "+0176-614-99059",
+  telephone: "0176-614-99059",
   sameAs: ["https://www.tiktok.com/@autosattlerei.guk1"],
   service: {
     "@type": "Service",
