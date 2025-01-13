@@ -24,13 +24,10 @@ export const ImageDialog = ({
         className="max-w-[900px] p-10 bg-transparent"
         hideCloseButton
         customClose={
-          <Button
-            className="fixed z-[999] top-4 right-4 pointer-events-auto"
-            size="icon"
+          <X
+            className="cursor-pointer fixed z-[2000] top-4 right-4 pointer-events-auto min-w-7 min-h-7 text-white/50"
             onClick={() => props.onOpenChange?.(false)}
-          >
-            <X className="min-w-7 min-h-7" />
-          </Button>
+          />
         }
       >
         <DialogTitle className="hidden" />
