@@ -92,7 +92,7 @@ export const GallerySpecific = ({
               <Fragment key={i}>
                 <div className="flex flex-col gap-4">
                   {label && (
-                    <div className="w-full text-c7 tablet:text-start text-2xl">
+                    <div className="w-full text-c7 tablet:text-start text-xl">
                       {t(label)}
                     </div>
                   )}
