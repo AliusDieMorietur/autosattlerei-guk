@@ -76,7 +76,7 @@ export function Home({ locale }: HomeProps) {
           </div>
         </div>
       </div>
-      <div className="flex overflow-x-auto flex-nowrap gap-6 desktopLg:gap-8 px-5 desktopLg:px-0">
+      <div className="flex overflow-x-auto flex-nowrap gap-6 desktopLg:gap-8 px-5 desktopLg:px-0 pb-4">
         {CARDS.map((slug, index) => (
           <div
             key={index}

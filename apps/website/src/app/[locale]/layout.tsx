@@ -200,10 +200,13 @@ export default async function RootLayout(
       </head>
       <body className={`${Poppins.variable} ${OpenSans.variable} antialiased`}>
         <NextIntlClientProvider messages={messages}>
-          <div id="home" className="w-full flex justify-center">
+          <div id="home" className="w-full flex flex-col h-screen">
             <Header locale={locale} />
-            <div className="pb-[120px] mt-[86px] desktop:mt-[120px] flex flex-col w-full max-w-desktopLg">
-              {children}
+            <div className="min-h-[65px] desktop:min-h-[104px] w-full"></div>
+            <div className="pt-3 flex justify-center overflow-y-auto ">
+              <div className="flex flex-col w-full max-w-desktopLg">
+                {children}
+              </div>
             </div>
           </div>
         </NextIntlClientProvider>
@@ -211,3 +214,5 @@ export default async function RootLayout(
     </html>
   );
 }
+
+// pb-[120px] pt-[86px] desktop:pt-[120px]

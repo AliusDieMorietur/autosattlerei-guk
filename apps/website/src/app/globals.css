@@ -14,4 +14,22 @@ body {
 
 * {
   outline: none;
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: theme("colors.c14");
+    border-radius: 10px;
+  }
+
+  /* ::-webkit-scrollbar-thumb:hover {
+  } */
+
+  -webkit-tap-highlight-color: transparent;
 }
