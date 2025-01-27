@@ -214,5 +214,3 @@ export default async function RootLayout(
     </html>
   );
 }
-
-// pb-[120px] pt-[86px] desktop:pt-[120px]

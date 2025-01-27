@@ -12,20 +12,21 @@ const SECTIONS = [
     title: "label.Wheels",
     slug: "wheel",
     buildSrc: (n: number) =>
-      `/gallery_page_wheel/gallery_page_wheel_slide(${n}).jpg`,
+      `/gallery_page_wheel/gallery_page_wheel_slide(${n}).webp`,
     autoStartDelay: 0,
   },
   {
     title: "label.DoorPanels",
     slug: "door-panel",
     buildSrc: (n: number) =>
-      `/gallery_page_door_panel/gallery_page_door_panel_slide(${n}).jpg`,
+      `/gallery_page_door_panel/gallery_page_door_panel_slide(${n}).webp`,
     autoStarDelay: 333,
   },
   {
     title: "label.Salons",
     slug: "salon",
-    buildSrc: (n: number) => `/salon_slide/salon${n}/salon${n}_slide(${n}).JPG`,
+    buildSrc: (n: number) =>
+      `/salon_slide/salon${n}/salon${n}_slide(${n}).webp`,
     autoStartDelay: 666,
   },
 ];

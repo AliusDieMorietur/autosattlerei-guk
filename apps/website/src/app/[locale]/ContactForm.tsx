@@ -101,7 +101,7 @@ export const ContactForm = ({
 
   if (isError) {
     return (
-      <div className="p-4 my-4 bg-c9 rounded text-c7 w-full text-center">
+      <div className="p-4 my-4 bg-c9 rounded text-c7 w-fit text-center flex items-center">
         {t("label.SthWentWrong")}
       </div>
     );
@@ -109,7 +109,7 @@ export const ContactForm = ({
 
   if (isSubmitted) {
     return (
-      <div className="p-4 my-4 bg-c9 rounded text-c7 w-full flex flex-col gap-2">
+      <div className="p-4 my-4 bg-c9 rounded text-c7 w-fit flex flex-col items-center justify-center gap-2">
         <div className="text-c7 text-2xl text-center">
           {t("label.ThankYouForYourRequest")}
         </div>

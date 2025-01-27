@@ -27,7 +27,7 @@ export const GALLERY_DATA: Record<string, GalleryData> = {
     items: [
       {
         buildSrc: (n: string | number) =>
-          `/door_panel_page/door_panel_page_grid(${n}).jpg`,
+          `/door_panel_page/door_panel_page_grid(${n}).webp`,
         quantity: 7,
       },
     ],
@@ -37,7 +37,7 @@ export const GALLERY_DATA: Record<string, GalleryData> = {
     items: [
       {
         buildSrc: (n: string | number) =>
-          `/wheel_page/wheel_page_grid(${n}).jpg`,
+          `/wheel_page/wheel_page_grid(${n}).webp`,
         quantity: 7,
       },
     ],
@@ -47,7 +47,7 @@ export const GALLERY_DATA: Record<string, GalleryData> = {
     items: [10, 5, 8, 16, 7].map((quantity, index) => ({
       label: `label.SalonTitle${index + 1}`,
       buildSrc: (n: string | number) =>
-        `/salon_slide/salon${index + 1}/salon${index + 1}_slide(${n}).JPG`,
+        `/salon_slide/salon${index + 1}/salon${index + 1}_slide(${n}).webp`,
       quantity,
       viewMore: true,
     })),

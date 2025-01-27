@@ -69,7 +69,7 @@ export function Home({ locale }: HomeProps) {
           <div className="flex justify-center rounded-xl overflow-hidden mx-5 desktopLg:mx-0">
             <HomeSlider
               images={Array.from({ length: 7 }).map((_, index) => ({
-                src: `/main_page/main_page_card (${index + 1}).jpg`,
+                src: `/main_page/main_page_card (${index + 1}).webp`,
               }))}
               onSelect={(index) => setCurrentSlide(index)}
             />
@@ -83,7 +83,7 @@ export function Home({ locale }: HomeProps) {
             className="flex flex-col rounded-xl gap-3 min-w-[85%] tablet:min-w-[75%] desktop:min-w-[22%]"
           >
             <img
-              src={`/main_page/cards/${index + 1}.jpg`}
+              src={`/main_page/cards/${index + 1}.webp`}
               alt=""
               className="rounded-xl h-[250px] desktop:h-[250px] object-cover"
             />
