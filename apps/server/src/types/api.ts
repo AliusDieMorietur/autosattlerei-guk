@@ -6,3 +6,9 @@ export const UpdateAdminBodySchema = z.object({
 });
 
 export type UpdateAdminBody = z.infer<typeof UpdateAdminBodySchema>;
+
+export const ReportAdminBodySchema = z.object({
+  message: z.string(),
+});
+
+export type ReportAdminBody = z.infer<typeof ReportAdminBodySchema>;

@@ -13,7 +13,6 @@ server.addContentTypeParser(
   "application/json",
   { parseAs: "string" },
   async (_, response, done) => {
-    console.log("1111", 1111);
     try {
       let data = "";
       for await (const chunk of response) {

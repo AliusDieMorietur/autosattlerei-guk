@@ -1,6 +1,10 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { auth } from "../lib/auth";
-import { UpdateAdminBody, UpdateAdminBodySchema } from "../types/api";
+import {
+  ReportAdminBody,
+  UpdateAdminBody,
+  UpdateAdminBodySchema,
+} from "../types/api";
 import { lib } from "../lib";
 
 const init = async ({
@@ -26,6 +30,19 @@ const init = async ({
   return { success: true };
 };
 
+const report = async ({
+  headers,
+  body,
+}: FastifyRequest<{
+  Body: ReportAdminBody;
+}>) => {
+  await auth.bearer(headers.authorization);
+  const data = UpdateAdminBodySchema.parse(body);
+  console.log("data", data);
+  return { success: true };
+};
+
 export const admin = {
   init,
+  report,
 };
