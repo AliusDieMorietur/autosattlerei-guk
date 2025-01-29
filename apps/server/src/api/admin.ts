@@ -2,6 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { auth } from "../lib/auth";
 import {
   ReportAdminBody,
+  ReportAdminBodySchema,
   UpdateAdminBody,
   UpdateAdminBodySchema,
 } from "../types/api";
@@ -37,7 +38,7 @@ const report = async ({
   Body: ReportAdminBody;
 }>) => {
   await auth.bearer(headers.authorization);
-  const data = UpdateAdminBodySchema.parse(body);
+  const data = ReportAdminBodySchema.parse(body);
   console.log("data", data);
   return { success: true };
 };
