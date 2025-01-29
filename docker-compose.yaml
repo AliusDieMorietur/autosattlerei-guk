@@ -29,6 +29,7 @@ services:
     environment:
       - POSTGRES_URL=${POSTGRES_URL}
       - SECRET_TOKEN=${SECRET_TOKEN}
+      - ADMIN_NAME=${ADMIN_NAME}
     ports:
       - 6732:8080
  
