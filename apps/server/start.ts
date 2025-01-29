@@ -2,12 +2,15 @@ import fastify from "fastify";
 import cors from "@fastify/cors";
 import { api } from "./src/api";
 import multipart from "@fastify/multipart";
+import { config } from "./src/lib/config";
 
 const FILE_LIMIT = 20 * 1024 * 1024;
 
 const server = fastify({
   logger: true,
 });
+
+console.log("config.adminUserName", config.adminUserName);
 
 server.addContentTypeParser(
   "application/json",

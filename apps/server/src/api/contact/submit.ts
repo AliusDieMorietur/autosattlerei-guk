@@ -82,6 +82,8 @@ export const submit = async (request: FastifyRequest) => {
     photos: photos,
   });
 
+  console.log("config.adminUserName", config.adminUserName);
+
   const user = await lib.user.getByName(config.adminUserName);
 
   if (!user) {
