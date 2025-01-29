@@ -1,10 +1,10 @@
 import assert from "assert";
-import { db } from "..";
-import { Contact, ContactCreate, ContactUpdate, Pagination } from "../../types";
-import { schema } from "../schemas";
 import { and, asc, desc, eq, ilike, or } from "drizzle-orm";
 import { count } from "drizzle-orm";
 import {} from "drizzle-orm";
+import { schema } from "../db/schemas";
+import { db } from "../db";
+import { Pagination, ContactCreate, Contact, ContactUpdate } from "../types";
 
 export type Columns = keyof typeof schema.contact.$inferSelect;
 

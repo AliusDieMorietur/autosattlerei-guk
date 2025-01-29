@@ -1,6 +1,5 @@
 import sizeOf from "image-size";
 import sharp from "sharp";
-import { storage } from "../../db/storage";
 import {
   ContactSubmitFormData,
   ContactForm,
@@ -9,6 +8,8 @@ import {
   FileField,
 } from "../../types";
 import { FastifyRequest } from "fastify";
+import { config } from "../../lib/config";
+import { lib } from "../../lib";
 
 export const submit = async (request: FastifyRequest) => {
   const fields = request.body as ContactSubmitFormData;
@@ -72,12 +73,25 @@ export const submit = async (request: FastifyRequest) => {
   } else if (fields.photos) {
     await addPhoto(fields.photos);
   }
-  await storage.contact.create({
+
+  await lib.contact.create({
     name: data.name,
     email: data.email,
     phone: data.phone,
     description: data.description,
     photos: photos,
   });
+
+  const user = await lib.user.getByName(config.adminUserName);
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  await lib.expo.sendNotification(
+    user.id,
+    `New contact ${data.name} added`,
+    "Check app now!"
+  );
   return { success: true };
 };

@@ -1,6 +1,5 @@
 import { FastifyRequest } from "fastify";
-import { auth } from "../../lib/auth";
-import { storage } from "../../db/storage";
+import { lib } from "../../lib";
 
 export const erase = async ({
   params: { id },
@@ -8,7 +7,7 @@ export const erase = async ({
 }: FastifyRequest<{
   Params: { id: string };
 }>) => {
-  await auth.bearer(headers.authorization);
-  await storage.contact.delete(parseInt(id));
+  await lib.auth.bearer(headers.authorization);
+  await lib.contact.delete(parseInt(id));
   return { id: parseInt(id) };
 };

@@ -9,6 +9,23 @@ const server = fastify({
   logger: true,
 });
 
+server.addContentTypeParser(
+  "application/json",
+  { parseAs: "string" },
+  async (_, response, done) => {
+    console.log("1111", 1111);
+    try {
+      let data = "";
+      for await (const chunk of response) {
+        data += chunk;
+      }
+      return JSON.parse(data);
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
 server.register(multipart, {
   attachFieldsToBody: true,
   limits: {
@@ -24,6 +41,7 @@ server.post("/contact/submit", api.contact.submit);
 server.get("/contact/list", api.contact.getList);
 server.delete("/contact/:id", api.contact.delete);
 server.put("/contact/:id", api.contact.update);
+server.post("/api/admin/init", api.admin.init);
 
 server.listen({ host: "0.0.0.0", port: 8080 }, (error, address) => {
   if (error) {

@@ -1,7 +1,6 @@
 import { FastifyRequest } from "fastify";
 import { GetContactListQuery, GetContactListQuerySchema } from "../../types";
-import { auth } from "../../lib/auth";
-import { storage } from "../../db/storage";
+import { lib } from "../../lib";
 
 export const getList = async ({
   query,
@@ -9,7 +8,7 @@ export const getList = async ({
 }: FastifyRequest<{
   Querystring: GetContactListQuery;
 }>) => {
-  await auth.bearer(headers.authorization);
+  await lib.auth.bearer(headers.authorization);
   const {
     offset: offsetString,
     search,
@@ -23,7 +22,7 @@ export const getList = async ({
     "": undefined,
   }[checked];
   const [items, total] = await Promise.all([
-    storage.contact.getList(
+    lib.contact.getList(
       {
         search,
         checked: checkedValue,
@@ -34,7 +33,7 @@ export const getList = async ({
         orderBy: [{ field: "createdAt", direction: "desc" }],
       }
     ),
-    storage.contact.getTotal({
+    lib.contact.getTotal({
       search,
       checked: checkedValue,
     }),

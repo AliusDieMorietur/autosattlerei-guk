@@ -21,6 +21,5 @@ export const contact = pgTable(
     emailIdx: index("Contact_email_idx").on(contact.email),
     phoneIdx: index("Contact_phone_idx").on(contact.phone),
     nameIdx: index("Contact_name_idx").on(contact.name),
-    descriptionIdx: index("Contact_description_idx").on(contact.description),
   })
 );

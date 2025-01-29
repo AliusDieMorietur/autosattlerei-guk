@@ -88,3 +88,26 @@ export type Pagination<F extends string = string> = {
   offset?: number;
   orderBy?: OrderBy<F>[];
 };
+
+export const User = z.object({
+  id: z.number(),
+  name: z.string(),
+  fcmDeviceToken: z.string(),
+  createdAt: z.date(),
+});
+
+export type User = z.infer<typeof User>;
+
+export const UserCreateSchema = User.omit({
+  id: true,
+  createdAt: true,
+});
+
+export type UserCreate = z.infer<typeof UserCreateSchema>;
+
+export const UserUpdateSchema = User.omit({
+  id: true,
+  createdAt: true,
+}).partial();
+
+export type UserUpdate = z.infer<typeof UserUpdateSchema>;

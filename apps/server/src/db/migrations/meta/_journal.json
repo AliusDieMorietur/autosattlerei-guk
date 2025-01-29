@@ -15,6 +15,13 @@
       "when": 1733609793324,
       "tag": "0001_first_shriek",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1736976416473,
+      "tag": "0002_faulty_maria_hill",
+      "breakpoints": true
     }
   ]
 }

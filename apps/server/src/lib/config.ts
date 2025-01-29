@@ -6,4 +6,6 @@ export const config = {
   postgresUrl:
     process.env.POSTGRES_URL ||
     "postgres://postgres:password@0.0.0.0:5432/main",
+  fcmToken: process.env.FCM_TOKEN || "",
+  adminUserName: process.env.ADMIN_NAME || "admin",
 };
