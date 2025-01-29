@@ -41,6 +41,7 @@ server.get("/contact/list", api.contact.getList);
 server.delete("/contact/:id", api.contact.delete);
 server.put("/contact/:id", api.contact.update);
 server.post("/api/admin/init", api.admin.init);
+server.post("/api/admin/report", api.admin.report);
 
 server.listen({ host: "0.0.0.0", port: 8080 }, (error, address) => {
   if (error) {
