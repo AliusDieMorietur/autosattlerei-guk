@@ -178,7 +178,7 @@ export const GallerySpecific = ({
         </div>
       </div>
       <ImageDialog
-        src={currentSrc}
+        src={`${currentSrc.replace(".webp", "")}-2x.webp`}
         open={!!currentSrc}
         onOpenChange={(open) => {
           if (!open) setCurrentSrc("");
