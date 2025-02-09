@@ -181,17 +181,12 @@ export default async function RootLayout(
 
   const { children } = props;
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  if (!routing.locales.includes(locale)) {
-    return redirect("/de/notfound");
-  }
-
   // Providing all messages to the client
   // side is the easiest way to get started
   const messages = await getMessages();
 
-  const font = ["en", "de"].includes(locale) ? "Poppins" : "OpenSans";
+  const font =
+    ["en", "de"].includes(locale) || !locale ? "Poppins" : "OpenSans";
 
   return (
     <html lang={locale}>
