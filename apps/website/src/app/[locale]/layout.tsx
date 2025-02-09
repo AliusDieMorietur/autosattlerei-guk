@@ -173,7 +173,7 @@ export default async function RootLayout(
   props: Readonly<{
     children: React.ReactNode;
     params: Promise<{ locale: string }>;
-  }>
+  }>,
 ) {
   const params = await props.params;
 
@@ -203,9 +203,10 @@ export default async function RootLayout(
           <div id="home" className="w-full flex flex-col h-screen">
             <Header locale={locale} />
             <div className="min-h-[65px] desktop:min-h-[104px] w-full"></div>
-            <div className="pt-3 flex justify-center overflow-y-auto ">
+            <div className="pt-3 flex justify-center overflow-y-auto">
               <div className="flex flex-col w-full max-w-desktopLg">
                 {children}
+                <div className="w-full min-h-[200px]" />
               </div>
             </div>
           </div>

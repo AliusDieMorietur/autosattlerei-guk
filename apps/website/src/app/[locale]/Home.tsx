@@ -54,7 +54,7 @@ export function Home({ locale }: HomeProps) {
   return (
     <div>
       <div className="flex justify-center">
-        <div className="mb-10 relative desktop:max-w-[75%]">
+        <div className="mb-10 relative desktop:w-[75%]">
           <div className="w-[350px] tablet:w-[450px] desktop:w-[450px] absolute left-1/2 -translate-x-1/2 bottom-1/2 translate-y-1/2  desktop:bottom-[64px] desktop:left-[64px] desktop:translate-x-0 desktop:translate-y-0 z-[200] flex flex-col items-center desktop:items-start gap-2">
             <div className="text-white text-2xl">
               {t(`label.slide${currentSlide + 1}Title`)}

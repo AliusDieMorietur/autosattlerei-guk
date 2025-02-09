@@ -14,7 +14,7 @@ const JSON_LD = {
     streetAddress: "Seelenbinder str. 112",
     addressLocality: "Berlin",
     postalCode: "12555",
-    addressCountry: "Страна",
+    addressCountry: "Deutchland",
   },
   geo: {
     "@type": "GeoCoordinates",

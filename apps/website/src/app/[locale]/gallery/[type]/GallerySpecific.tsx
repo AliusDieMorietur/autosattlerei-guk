@@ -103,7 +103,7 @@ export const GallerySpecific = ({
                       {
                         "max-h-[300px]": !open,
                         "max-h-[99999px]": open,
-                      }
+                      },
                     )}
                   >
                     {grid(quantity, columns).map((images, j) => (
@@ -145,7 +145,7 @@ export const GallerySpecific = ({
                         onClick={() => {
                           if (opened.includes(i)) {
                             const element = document.getElementById(
-                              `section-${i}`
+                              `section-${i}`,
                             );
                             if (!element) return;
                             window.scrollTo({
@@ -156,14 +156,14 @@ export const GallerySpecific = ({
                           setOpen((previous) =>
                             previous.includes(i)
                               ? previous.filter((item) => item !== i)
-                              : [...previous, i]
+                              : [...previous, i],
                           );
                         }}
                       >
                         {t(
                           opened.includes(i)
                             ? "button.ViewLess"
-                            : "button.ViewMore"
+                            : "button.ViewMore",
                         )}
                       </Button>
                     </div>
