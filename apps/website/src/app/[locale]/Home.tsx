@@ -1,38 +1,12 @@
 "use client";
 
-import { useTranslations } from "next-intl";
-import { HomeSlider } from "./HomeSlider";
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ContactForm } from "./ContactForm";
-import { HomeIcon, User, Clock } from "lucide-react";
+import { useTranslations } from "next-intl";
+import Image from "next/image";
 import Link from "next/link";
-import { AnimatedImage } from "@/components/AnimatedImage";
-
-const INFO_ITEMS = [
-  {
-    title: "label.WorkHours",
-    line1: "label.MODO",
-    line2: "label.FR",
-    icon: <Clock className="w-7 h-7" />,
-    interNationalized: true,
-    link: "/#address",
-  },
-  {
-    title: "label.Address",
-    line1: "label.autosattlereiGukAddress",
-    line2: "label.autosattlereiGukIndex",
-    icon: <HomeIcon className="w-7 h-7" />,
-    link: "/#address",
-  },
-  {
-    title: "label.Contacts",
-    line1: "label.autosattlereiGukPhone",
-    line2: "label.autosattlereiGukMail",
-    icon: <User className="w-7 h-7" />,
-    link: "/#contact-us",
-  },
-];
+import { useState } from "react";
+import { ContactForm } from "./ContactForm";
+import { HomeSlider } from "./HomeSlider";
 
 const CARDS = [
   "salons",
@@ -54,7 +28,7 @@ export function Home({ locale }: HomeProps) {
   return (
     <div>
       <div className="flex justify-center">
-        <div className="mb-10 relative desktop:w-[75%]">
+        <div className="w-full mb-10 relative desktop:w-[75%]">
           <div className="w-[350px] tablet:w-[450px] desktop:w-[450px] absolute left-1/2 -translate-x-1/2 bottom-1/2 translate-y-1/2  desktop:bottom-[64px] desktop:left-[64px] desktop:translate-x-0 desktop:translate-y-0 z-[200] flex flex-col items-center desktop:items-start gap-2">
             <div className="text-white text-2xl">
               {t(`label.slide${currentSlide + 1}Title`)}
@@ -66,7 +40,7 @@ export function Home({ locale }: HomeProps) {
               <Button className="w-fit">{t("button.ViewMore")}</Button>
             </Link>
           </div>
-          <div className="flex justify-center rounded-xl overflow-hidden mx-5 desktopLg:mx-0">
+          <div className="w-full flex justify-center rounded-xl overflow-hidden px-5 desktopLg:px-0">
             <HomeSlider
               images={Array.from({ length: 7 }).map((_, index) => ({
                 src: `/main_page/main_page_card (${index + 1}).webp`,
@@ -82,11 +56,14 @@ export function Home({ locale }: HomeProps) {
             key={index}
             className="flex flex-col rounded-xl gap-3 min-w-[85%] tablet:min-w-[75%] desktop:min-w-[22%]"
           >
-            <img
-              src={`/main_page/cards/${index + 1}.webp`}
-              alt=""
-              className="rounded-xl h-[250px] desktop:h-[250px] object-cover"
-            />
+            <div className="relative rounded-xl h-[250px] desktop:h-[250px]">
+              <Image
+                src={`/main_page/cards/${index + 1}.webp`}
+                alt="Main page card"
+                className="object-cover rounded-xl"
+                fill
+              />
+            </div>
             <div className="text-white text-xl">
               {t(`label.card${index + 1}Title`)}
             </div>

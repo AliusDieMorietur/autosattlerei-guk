@@ -10,6 +10,7 @@ import { Fragment, useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, ChevronLeft, Pointer, TextCursor } from "lucide-react";
 import { AnimatedImage } from "@/components/AnimatedImage";
+import Image from "next/image";
 
 export type GalleryData = {
   label: string;
@@ -66,7 +67,7 @@ export const GallerySpecific = ({
   const t = useTranslations();
   const mode = useAppMode();
   const [opened, setOpen] = useState<number[]>([]);
-  const [currentSrc, setCurrentSrc] = useState("");
+  // const [currentSrc, setCurrentSrc] = useState("");
 
   const data = GALLERY_DATA[type as keyof typeof GALLERY_DATA];
   if (!data) {
@@ -103,7 +104,7 @@ export const GallerySpecific = ({
                       {
                         "max-h-[300px]": !open,
                         "max-h-[99999px]": open,
-                      },
+                      }
                     )}
                   >
                     {grid(quantity, columns).map((images, j) => (
@@ -111,14 +112,18 @@ export const GallerySpecific = ({
                         {images.map((n, k) => (
                           <div
                             key={k}
-                            className="relative group cursor-pointer"
-                            onClick={() => setCurrentSrc(buildSrc(n))}
+                            className="relative"
+                            // className="relative group cursor-pointer"
+                            // onClick={() => setCurrentSrc(buildSrc(n))}
                           >
-                            <img
-                              src={buildSrc(n)}
-                              alt=""
-                              className="w-full h-full object-cover max-h-[250px] rounded-xl cursor-pointer transition-all"
-                            />
+                            <div className="relative w-full h-[250px] rounded-xl">
+                              <Image
+                                src={buildSrc(n)}
+                                alt={buildSrc(n)}
+                                fill
+                                className="object-cover max-h-[250px] rounded-xl transition-all"
+                              />
+                            </div>
                             <div className="transition-all duration-150 opacity-0 invisible group-hover:opacity-100  group-hover:visible bg-black/60 absolute inset-0 rounded-xl flex flex-col justify-center items-center gap-1">
                               <Pointer className="text-c8" />
                               <div className="text-c8 text-[12px] leading-[16px] font-medium">
@@ -145,7 +150,7 @@ export const GallerySpecific = ({
                         onClick={() => {
                           if (opened.includes(i)) {
                             const element = document.getElementById(
-                              `section-${i}`,
+                              `section-${i}`
                             );
                             if (!element) return;
                             window.scrollTo({
@@ -156,14 +161,14 @@ export const GallerySpecific = ({
                           setOpen((previous) =>
                             previous.includes(i)
                               ? previous.filter((item) => item !== i)
-                              : [...previous, i],
+                              : [...previous, i]
                           );
                         }}
                       >
                         {t(
                           opened.includes(i)
                             ? "button.ViewLess"
-                            : "button.ViewMore",
+                            : "button.ViewMore"
                         )}
                       </Button>
                     </div>
@@ -177,13 +182,15 @@ export const GallerySpecific = ({
           })}
         </div>
       </div>
-      <ImageDialog
-        src={`${currentSrc.replace(".webp", "")}-2x.webp`}
+      {/* <ImageDialog
+        src={
+          currentSrc ? `${currentSrc.replace(".webp", "")}-2x.webp` : undefined
+        }
         open={!!currentSrc}
         onOpenChange={(open) => {
           if (!open) setCurrentSrc("");
         }}
-      />
+      /> */}
     </>
   );
 };

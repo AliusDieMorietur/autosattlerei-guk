@@ -8,6 +8,7 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { cn, getRandomInt } from "@/lib/utils";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export type GallerySliderProps = {
@@ -68,11 +69,9 @@ export const GallerySlider = ({
             className="tablet:basis-1/2 desktop:basis-1/3 desktopLg:basis-1/4"
           >
             <div className="w-full rounded-xl h-[250px] tablet:h-[200px] desktop:h-[225px] overflow-hidden relative">
-              <img
-                src={src}
-                alt={src}
-                className="rounded-xl h-full w-full object-cover"
-              />
+              <div className="relative w-full h-full">
+                <Image src={src} alt={src} fill className="object-cover" />
+              </div>
             </div>
           </CarouselItem>
         ))}
