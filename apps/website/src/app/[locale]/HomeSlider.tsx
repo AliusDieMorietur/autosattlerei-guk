@@ -52,7 +52,7 @@ export const HomeSlider = ({
       plugins={[autoPlayRef.current]}
     >
       <CarouselContent>
-        {images.map(({ src }) => (
+        {images.map(({ src }, index) => (
           <CarouselItem key={src}>
             <div className="w-full h-[250px] tablet:h-[450px] desktop:h-[550px] rounded-xl overflow-hidden relative select-none">
               <Image
@@ -60,6 +60,7 @@ export const HomeSlider = ({
                 alt={src}
                 className="w-full h-full object-cover"
                 fill
+                priority={index === 0}
               />
               <div className="absolute bg-black/70 top-0 left-0 bottom-0 right-0"></div>
             </div>
