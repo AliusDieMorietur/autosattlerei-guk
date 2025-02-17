@@ -22,8 +22,25 @@ export const HomeSlider = ({
   onSelect,
 }: HomeSliderProps): JSX.Element => {
   const autoPlayRef = useRef(
-    Autoplay({ delay: 3000, stopOnInteraction: true })
+    Autoplay({ delay: 3000, stopOnInteraction: true, playOnInit: false })
   );
+
+  useEffect(() => {
+    let isStarted = false;
+    const onUserAction = () => {
+      if (isStarted) return;
+      autoPlayRef.current?.play();
+      isStarted = true;
+    };
+
+    window.addEventListener("scroll", onUserAction);
+    window.addEventListener("pointermove", onUserAction);
+
+    return () => {
+      window.removeEventListener("scroll", onUserAction);
+      window.removeEventListener("pointermove", onUserAction);
+    };
+  }, []);
 
   return (
     <Carousel
