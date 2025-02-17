@@ -1,4 +1,25 @@
+import { useEffect, useState } from "react";
+
 export const Map = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const onUserAction = () => {
+      if (isLoaded) return;
+      setIsLoaded(true);
+    };
+
+    window.addEventListener("scroll", onUserAction);
+    window.addEventListener("pointermove", onUserAction);
+
+    return () => {
+      window.removeEventListener("scroll", onUserAction);
+      window.removeEventListener("pointermove", onUserAction);
+    };
+  }, []);
+
+  if (!isLoaded) return <></>;
+
   return (
     <iframe
       className="w-full desktop:max-w-[70%] border-none rounded-xl h-[300px] tablet:h-[500px]"

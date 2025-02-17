@@ -1,6 +1,5 @@
 "use client";
 
-import { AnimatedImage } from "@/components/AnimatedImage";
 import {
   Carousel,
   CarouselApi,
