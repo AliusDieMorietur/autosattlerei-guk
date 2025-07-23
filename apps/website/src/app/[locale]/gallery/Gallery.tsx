@@ -24,7 +24,7 @@ const SECTIONS = [
   {
     title: "label.Salons",
     slug: "salon",
-    buildSrc: (n: number) => `/salon_slide/salon${n}/slide(${n}).webp`,
+    buildSrc: (n: number) => `/salon_slide/salon${n}/slide(1).webp`,
     autoStartDelay: 666,
   },
 ];
@@ -51,7 +51,7 @@ export function Gallery({ locale }: GalleryProps) {
               </Link>
             </div>
             <GallerySlider
-              images={Array.from({ length: 5 }).map((_, index) => ({
+              images={Array.from({ length: 7 }).map((_, index) => ({
                 src: buildSrc(index + 1),
               }))}
               autoPlayStartDelay={autoStartDelay}
