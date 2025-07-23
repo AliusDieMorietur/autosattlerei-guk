@@ -23,6 +23,7 @@ export type HomeProps = {
 };
 
 export function Home({ locale }: HomeProps) {
+  console.log("locale", locale);
   const t = useTranslations();
   const [currentSlide, setCurrentSlide] = useState(0);
 

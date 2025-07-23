@@ -1,21 +1,18 @@
 "use client";
 
-import { ImageDialog } from "@/components/ImageDialog";
 import { Button } from "@/components/ui/button";
 import { useAppMode } from "@/hooks/useAppMode";
 import { cn, grid } from "@/lib/utils";
+import { Pointer } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 import { Fragment, useState } from "react";
-import Link from "next/link";
-import { ArrowLeft, ChevronLeft, Pointer, TextCursor } from "lucide-react";
-import { AnimatedImage } from "@/components/AnimatedImage";
-import Image from "next/image";
 
 export type GalleryData = {
   label: string;
   items: {
-    label?: string;
+    label?: (t: (key: string) => string) => string;
     buildSrc: (n: string | number) => string;
     quantity: number;
     viewMore?: boolean;
@@ -45,10 +42,11 @@ export const GALLERY_DATA: Record<string, GalleryData> = {
   },
   salon: {
     label: "label.Salons",
-    items: [10, 5, 8, 16, 7].map((quantity, index) => ({
-      label: `label.SalonTitle${index + 1}`,
+    items: [10, 5, 8, 16, 7, 11, 4].map((quantity, index) => ({
+      label: (t) => `${t("label.SalonTitle")} ${index + 1}`,
+      subLabel: index + 1,
       buildSrc: (n: string | number) =>
-        `/salon_slide/salon${index + 1}/salon${index + 1}_slide(${n}).webp`,
+        `/salon_slide/salon${index + 1}/slide(${n}).webp`,
       quantity,
       viewMore: true,
     })),
@@ -67,7 +65,6 @@ export const GallerySpecific = ({
   const t = useTranslations();
   const mode = useAppMode();
   const [opened, setOpen] = useState<number[]>([]);
-  // const [currentSrc, setCurrentSrc] = useState("");
 
   const data = GALLERY_DATA[type as keyof typeof GALLERY_DATA];
   if (!data) {
@@ -84,7 +81,7 @@ export const GallerySpecific = ({
     <>
       <div className="w-full flex flex-col items-center px-5 desktopLg:px-0 relative">
         <div className="w-full text-c7 text-xl desktop:text-2xl py-1.5 mb-5 desktop:mb-8">
-          {t(data.label)}
+          {data.label && t(data.label)}
         </div>
         <div className="w-full flex flex-col gap-10">
           {data.items.map(({ label, quantity, buildSrc, viewMore }, i) => {
@@ -94,7 +91,7 @@ export const GallerySpecific = ({
                 <div className="flex flex-col gap-4">
                   {label && (
                     <div className="w-full text-c7 tablet:text-start text-xl">
-                      {t(label)}
+                      {label(t)}
                     </div>
                   )}
                   <div
