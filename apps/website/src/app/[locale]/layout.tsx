@@ -178,11 +178,7 @@ export default async function RootLayout(
 ) {
   const params = await props.params;
 
-  console.log("props", params);
-
   const { locale } = await params;
-
-  console.log("locale2", locale);
 
   const { children } = props;
 

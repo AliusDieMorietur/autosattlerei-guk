@@ -23,7 +23,6 @@ export type HomeProps = {
 };
 
 export function Home({ locale }: HomeProps) {
-  console.log("locale", locale);
   const t = useTranslations();
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -31,8 +30,8 @@ export function Home({ locale }: HomeProps) {
     <div>
       <div className="flex justify-center">
         <div className="w-full mb-10 relative desktop:w-[75%]">
-          <div className="w-[350px] tablet:w-[450px] desktop:w-[450px] absolute left-1/2 -translate-x-1/2 bottom-1/2 translate-y-1/2  desktop:bottom-[64px] desktop:left-[64px] desktop:translate-x-0 desktop:translate-y-0 z-[200] flex flex-col items-center desktop:items-start gap-2">
-            <div className="text-white text-2xl">
+          <div className="w-[80%] tablet:w-[450px] desktop:w-[450px] absolute left-1/2 -translate-x-1/2 bottom-1/2 translate-y-1/2  desktop:bottom-[64px] desktop:left-[64px] desktop:translate-x-0 desktop:translate-y-0 z-[200] flex flex-col items-center desktop:items-start gap-2">
+            <div className="text-white text-lg tablet:text-2xl text-center tablet:text-start">
               {t(`label.slide${currentSlide + 1}Title`)}
             </div>
             <div className="hidden tablet:block text-c14 text-lg text-center desktop:text-start">

@@ -1,11 +1,10 @@
 "use client";
 
-import { useTranslations } from "next-intl";
-import { GallerySlider } from "./GallerySlider";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ChevronLeft } from "lucide-react";
+import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { Fragment } from "react";
+import { GallerySlider } from "./GallerySlider";
 
 const SECTIONS = [
   {
@@ -25,8 +24,7 @@ const SECTIONS = [
   {
     title: "label.Salons",
     slug: "salon",
-    buildSrc: (n: number) =>
-      `/salon_slide/salon${n}/salon${n}_slide(${n}).webp`,
+    buildSrc: (n: number) => `/salon_slide/salon${n}/slide(${n}).webp`,
     autoStartDelay: 666,
   },
 ];
