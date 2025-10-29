@@ -4,6 +4,7 @@ import "../globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { Header } from "@/components/Header";
+import Script from "next/script";
 
 const Poppins = localFont({
   src: [
@@ -193,6 +194,18 @@ export default async function RootLayout(
     <html lang={locale}>
       <head>
         <style>{`* { font-family: ${font}; }`}</style>
+        <Script
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=AW-16768468473"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-16768468473');
+          `}
+        </Script>
       </head>
       <body className={`${Poppins.variable} ${OpenSans.variable} antialiased`}>
         <NextIntlClientProvider messages={messages}>
