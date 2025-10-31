@@ -19,6 +19,7 @@ import { X, Plus } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { sendGTMEvent } from "@next/third-parties/google";
 
 type ContactFormProps = {
   onSubmit?: () => void;
@@ -92,6 +93,12 @@ export const ContactForm = ({
         setIsError(true);
       }
 
+      if (response.status === 200) {
+        sendGTMEvent({
+          event: "conversion",
+          send_to: process.env.NEXT_PUBLIC_GTM_CONVERSION_ID,
+        });
+      }
       form.reset();
     } catch (error) {
       console.error("SUBMIT_CONTACT_ERROR", error);
