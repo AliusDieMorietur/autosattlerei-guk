@@ -96,7 +96,9 @@ export const ContactForm = ({
       if (response.status === 200) {
         sendGTMEvent({
           event: "conversion",
-          send_to: process.env.NEXT_PUBLIC_GTM_CONVERSION_ID,
+          value: {
+            send_to: process.env.NEXT_PUBLIC_GA_CONVERSION_ID,
+          },
         });
       }
       form.reset();

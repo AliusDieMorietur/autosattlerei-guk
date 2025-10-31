@@ -32,22 +32,24 @@ services:
       - ADMIN_NAME=${ADMIN_NAME}
     ports:
       - 6732:8080
- 
 
   frontend:
     build:
       context: .
       args:
         - NEXT_PUBLIC_SERVER_URL=${NEXT_PUBLIC_SERVER_URL}
+        - NEXT_PUBLIC_GA_ID=${NEXT_PUBLIC_GA_ID}
+        - NEXT_PUBLIC_GA_CONVERSION_ID=${NEXT_PUBLIC_GA_CONVERSION_ID}
       dockerfile: ./apps/website/Dockerfile.website
     depends_on:
       - backend
     restart: always
     environment:
       - NEXT_PUBLIC_SERVER_URL=${NEXT_PUBLIC_SERVER_URL}
+      - NEXT_PUBLIC_GA_ID=${NEXT_PUBLIC_GA_ID}
+      - NEXT_PUBLIC_GA_CONVERSION_ID=${NEXT_PUBLIC_GA_CONVERSION_ID}
     ports:
       - 3000:3000
 
 volumes:
   dbdata:
-

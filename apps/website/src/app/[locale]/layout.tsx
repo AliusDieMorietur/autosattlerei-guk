@@ -1,10 +1,10 @@
+import { Header } from "@/components/Header";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";
-import localFont from "next/font/local";
-import "../globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import { Header } from "@/components/Header";
-import { GoogleTagManager } from "@next/third-parties/google";
+import localFont from "next/font/local";
+import "../globals.css";
 
 const Poppins = localFont({
   src: [
@@ -192,7 +192,9 @@ export default async function RootLayout(
     <html lang={locale}>
       <head>
         <style>{`* { font-family: ${font}; }`}</style>
-        <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID!} />
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+        )}
       </head>
       <body className={`${Poppins.variable} ${OpenSans.variable} antialiased`}>
         <NextIntlClientProvider messages={messages}>
