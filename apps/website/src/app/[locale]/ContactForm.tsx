@@ -93,14 +93,14 @@ export const ContactForm = ({
         setIsError(true);
       }
 
-      if (response.status === 200) {
-        sendGTMEvent({
-          event: "conversion",
-          value: {
-            send_to: process.env.NEXT_PUBLIC_GA_CONVERSION_ID,
-          },
-        });
-      }
+      // if (response.status === 200) {
+      //   sendGTMEvent({
+      //     event: "conversion",
+      //     value: {
+      //       send_to: process.env.NEXT_PUBLIC_GA_CONVERSION_ID,
+      //     },
+      //   });
+      // }
       form.reset();
     } catch (error) {
       console.error("SUBMIT_CONTACT_ERROR", error);

@@ -38,6 +38,7 @@ services:
       context: .
       args:
         - NEXT_PUBLIC_SERVER_URL=${NEXT_PUBLIC_SERVER_URL}
+        - NEXT_PUBLIC_GTM_ID=${NEXT_PUBLIC_GTM_ID}
         - NEXT_PUBLIC_GA_ID=${NEXT_PUBLIC_GA_ID}
         - NEXT_PUBLIC_GA_CONVERSION_ID=${NEXT_PUBLIC_GA_CONVERSION_ID}
       dockerfile: ./apps/website/Dockerfile.website
@@ -46,6 +47,7 @@ services:
     restart: always
     environment:
       - NEXT_PUBLIC_SERVER_URL=${NEXT_PUBLIC_SERVER_URL}
+      - NEXT_PUBLIC_GTM_ID=${NEXT_PUBLIC_GTM_ID}
       - NEXT_PUBLIC_GA_ID=${NEXT_PUBLIC_GA_ID}
       - NEXT_PUBLIC_GA_CONVERSION_ID=${NEXT_PUBLIC_GA_CONVERSION_ID}
     ports:

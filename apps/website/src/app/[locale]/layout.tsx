@@ -1,5 +1,5 @@
 import { Header } from "@/components/Header";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
@@ -192,8 +192,8 @@ export default async function RootLayout(
     <html lang={locale}>
       <head>
         <style>{`* { font-family: ${font}; }`}</style>
-        {process.env.NEXT_PUBLIC_GA_ID && (
-          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+        {process.env.NEXT_PUBLIC_GTM_ID && (
+          <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />
         )}
       </head>
       <body className={`${Poppins.variable} ${OpenSans.variable} antialiased`}>
