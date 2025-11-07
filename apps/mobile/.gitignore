@@ -81,3 +81,5 @@ yarn-error.*
 .env.local
 
 build.sh
+
+google-services.json

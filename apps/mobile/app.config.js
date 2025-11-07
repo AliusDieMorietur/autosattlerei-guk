@@ -14,11 +14,13 @@ export default ({ config }) => ({
     },
     android: {
       adaptiveIcon: {
-        foregroundImage: "./assets/images/adaptive-icon.png",
+        foregroundImage: "./assets/images/icon.png",
         backgroundColor: "#ffffff",
       },
       package: "com.iakaminskij.autosattlereiguk",
       permissions: ["ACCESS_NETWORK_STATE"],
+      usesCleartextTraffic: true,
+      googleServicesFile: process.env.GOOGLE_SERVICES_FILE_ANDROID,
     },
     web: {
       bundler: "metro",
@@ -37,6 +39,14 @@ export default ({ config }) => ({
         },
       ],
       "expo-font",
+      [
+        "expo-notifications",
+        {
+          icon: "./assets/images/icon.png",
+          color: "#ffffff",
+          sounds: [],
+        },
+      ],
     ],
     experiments: {
       typedRoutes: true,
@@ -55,6 +65,7 @@ export default ({ config }) => ({
       env: {
         EXPO_PUBLIC_SERVER_URL: process.env.EXPO_PUBLIC_SERVER_URL,
         EXPO_PUBLIC_SECRET_TOKEN: process.env.EXPO_PUBLIC_SECRET_TOKEN,
+        EXPO_PUBLIC_ADMIN_NAME: process.env.EXPO_PUBLIC_ADMIN_NAME,
       },
     },
   },

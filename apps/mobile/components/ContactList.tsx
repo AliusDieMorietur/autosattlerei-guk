@@ -38,11 +38,11 @@ const getContactList = async ({
         Authorization: `Bearer ${process.env.EXPO_PUBLIC_SECRET_TOKEN}`,
         "ngrok-skip-browser-warning": "true",
       },
-    }
+    },
   )
     .then((response) => response.json() as unknown as ContactList)
     .catch((error) => {
-      console.log("GET_CONTACT_LIST_ERROR", error);
+      console.error("GET_CONTACT_LIST_ERROR", error);
       return {
         items: [],
         total: 0,
@@ -167,7 +167,7 @@ export function ContactList() {
           )}
           onPress={() => {
             setCheckedIndex((prevIndex) =>
-              prevIndex === 2 ? 0 : prevIndex + 1
+              prevIndex === 2 ? 0 : prevIndex + 1,
             );
             load(search, CHECKED_VALUES[checkedIndex + 1]);
           }}
@@ -234,7 +234,7 @@ export function ContactList() {
             await deleteContact(id);
             setTotal((total) => total - 1);
             setContactList((list) =>
-              list.filter((contact) => contact.id !== id)
+              list.filter((contact) => contact.id !== id),
             );
             setOffset((offset) => offset - 1);
           } catch (error) {
