@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { useTranslations } from "next-intl";
 
 export const generateMetadata = async (): Promise<Metadata> => {
   return {
@@ -8,20 +9,19 @@ export const generateMetadata = async (): Promise<Metadata> => {
 };
 
 export default function Impressum(): JSX.Element {
+  const t = useTranslations();
+
   return (
     <div className="flex flex-col text-c7 p-5 desktopLg:p-0 -mt-4">
       <div className="text-c14">Impressum</div>
       <div>Stanislav Guk</div>
-      <div className="mb-4">Autosattlerei Guk</div>
-      <div className="text-c14">Hauptniederlassung</div>
-      <div>Baruther Straße 13</div>
-      <div className="mb-4">15806 Zossen</div>
+      <div className="mb-4">{t("label.AutosattlereiGuk")}</div>
       <div className="text-c14">Betriebsstätte</div>
-      <div>Seelenbinderstraße 112</div>
-      <div className="mb-4">12555 Berlin</div>
+      <div>{t("label.autosattlereiGukAddress")}</div>
+      <div className="mb-4">{t("label.autosattlereiGukIndex")}</div>
       <div className="text-c14">Kontakt</div>
-      <div>Telefon: 0176-614-99059</div>
-      <div className="mb-4">E-Mail: autosattler.guk@gmail.com</div>
+      <div>Telefon: {t("label.autosattlereiGukPhone")}</div>
+      <div className="mb-4">E-Mail: {t("label.autosattlereiGukMail")}</div>
       <div className="text-c14">Umsatzsteuer-ID</div>
       <div>
         Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:
