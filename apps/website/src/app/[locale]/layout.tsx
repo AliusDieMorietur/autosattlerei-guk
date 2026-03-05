@@ -195,6 +195,7 @@ export default async function RootLayout(
         {process.env.NEXT_PUBLIC_GTM_ID && (
           <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />
         )}
+        <GoogleAnalytics gaId="AW-17977348849" />
       </head>
       <body className={`${Poppins.variable} ${OpenSans.variable} antialiased`}>
         <NextIntlClientProvider messages={messages}>
