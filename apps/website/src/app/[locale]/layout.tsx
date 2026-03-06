@@ -175,7 +175,7 @@ export default async function RootLayout(
   props: Readonly<{
     children: React.ReactNode;
     params: Promise<{ locale: string }>;
-  }>
+  }>,
 ) {
   const params = await props.params;
 
@@ -195,7 +195,9 @@ export default async function RootLayout(
         {process.env.NEXT_PUBLIC_GTM_ID && (
           <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />
         )}
-        <GoogleAnalytics gaId="AW-17977348849" />
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+        )}
       </head>
       <body className={`${Poppins.variable} ${OpenSans.variable} antialiased`}>
         <NextIntlClientProvider messages={messages}>
