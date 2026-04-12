@@ -20,6 +20,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { sendGTMEvent } from "@next/third-parties/google";
+import { submitContact } from "@/lib/api/contact";
 
 type ContactFormProps = {
   onSubmit?: () => void;
@@ -74,38 +75,17 @@ export const ContactForm = ({
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitted(true);
-    try {
-      const formData = new FormData();
-      formData.append("name", values.name);
-      formData.append("email", values.email);
-      formData.append("phone", values.phone);
-      formData.append("description", values.description);
-      for (const photo of values.photos) {
-        formData.append("photos", photo);
-      }
-
-      const response = await fetch("/api/contact/submit", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (response.status === 500) {
-        setIsError(true);
-      }
-
-      // if (response.status === 200) {
-      //   sendGTMEvent({
-      //     event: "conversion",
-      //     value: {
-      //       send_to: process.env.NEXT_PUBLIC_GA_CONVERSION_ID,
-      //     },
-      //   });
-      // }
-      form.reset();
-    } catch (error) {
-      console.error("SUBMIT_CONTACT_ERROR", error);
+    const result = await submitContact({
+      name: values.name,
+      email: values.email,
+      phone: values.phone,
+      description: values.description,
+      photos: values.photos,
+    });
+    if (result.isErr()) {
       setIsError(true);
     }
+    form.reset();
   };
 
   if (isError) {

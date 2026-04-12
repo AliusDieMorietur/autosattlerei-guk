@@ -17,7 +17,7 @@ export type ImageDialogProps = DialogProps & {
 export const ImageDialog = ({
   src,
   ...props
-}: ImageDialogProps): JSX.Element => {
+}: ImageDialogProps) => {
   return (
     <Dialog {...props}>
       <DialogContent

@@ -30,7 +30,7 @@ export type LanguageSelectProps = {
 export const LanguageSelect = ({
   value,
   onChange,
-}: LanguageSelectProps): JSX.Element => {
+}: LanguageSelectProps) => {
   return (
     <Select value={value} onValueChange={onChange}>
       <SelectTrigger className="w-9 p-0 uppercase text-base">
@@ -56,7 +56,7 @@ export const LanguageSelect = ({
 LanguageSelect.Horizontal = ({
   value,
   onChange,
-}: LanguageSelectProps): JSX.Element => {
+}: LanguageSelectProps) => {
   return (
     <div className="flex items-center gap-4">
       {LOCALES.map((locale) => (

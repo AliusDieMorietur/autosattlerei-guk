@@ -1,3 +1,4 @@
+import { config } from "@/lib/config";
 import { sendGTMEvent } from "@next/third-parties/google";
 import { useEffect, useState } from "react";
 
@@ -22,7 +23,7 @@ export const Map = () => {
   const onMapClick = () => {
     sendGTMEvent({
       event: "conversion",
-      send_to: process.env.NEXT_PUBLIC_GA_CONVERSION_ID,
+      send_to: config.gaConversionId,
       value: 1.0,
       currency: "EUR",
     });

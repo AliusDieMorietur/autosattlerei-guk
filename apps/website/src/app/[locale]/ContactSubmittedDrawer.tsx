@@ -9,7 +9,7 @@ import {
   DrawerTitle,
 } from "@/components/ui/drawer";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { JSX, useState } from "react";
 
 export type ContactSubmittedDrawerProps = {
   open?: boolean;
@@ -19,7 +19,7 @@ export type ContactSubmittedDrawerProps = {
 export const ContactSubmittedDrawer = ({
   open: outerOpen,
   onOpenChange,
-}: ContactSubmittedDrawerProps): JSX.Element => {
+}: ContactSubmittedDrawerProps) => {
   const t = useTranslations();
   const [innerOpen, setInnerOpen] = useState(false);
   const open = outerOpen ?? innerOpen;

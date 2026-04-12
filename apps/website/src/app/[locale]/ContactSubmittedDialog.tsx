@@ -18,7 +18,7 @@ export type ContactSubmittedDialogProps = {
 export const ContactSubmittedDialog = ({
   open: outerOpen,
   onOpenChange,
-}: ContactSubmittedDialogProps): JSX.Element => {
+}: ContactSubmittedDialogProps) => {
   const t = useTranslations();
   const [innerOpen, setInnerOpen] = useState(false);
   const open = outerOpen ?? innerOpen;

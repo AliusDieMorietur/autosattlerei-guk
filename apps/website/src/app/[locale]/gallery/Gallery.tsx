@@ -6,34 +6,19 @@ import Link from "next/link";
 import { Fragment } from "react";
 import { GallerySlider } from "./GallerySlider";
 
-const SECTIONS = [
-  {
-    title: "label.Wheels",
-    slug: "wheel",
-    buildSrc: (n: number) =>
-      `/gallery_page_wheel/gallery_page_wheel_slide(${n}).webp`,
-    autoStartDelay: 0,
-  },
-  {
-    title: "label.DoorPanels",
-    slug: "door-panel",
-    buildSrc: (n: number) =>
-      `/gallery_page_door_panel/gallery_page_door_panel_slide(${n}).webp`,
-    autoStarDelay: 333,
-  },
-  {
-    title: "label.Salons",
-    slug: "salon",
-    buildSrc: (n: number) => `/salon_slide/salon${n}/slide(1).webp`,
-    autoStartDelay: 666,
-  },
-];
+type GallerySection = {
+  title: string;
+  slug: string;
+  images: { src: string }[];
+  autoStartDelay: number;
+};
 
 export type GalleryProps = {
   locale: string;
+  sections: GallerySection[];
 };
 
-export function Gallery({ locale }: GalleryProps) {
+export function Gallery({ locale, sections }: GalleryProps) {
   const t = useTranslations();
 
   return (
@@ -41,23 +26,18 @@ export function Gallery({ locale }: GalleryProps) {
       <div className="w-full text-c7 text-xl desktop:text-2xl py-1.5">
         {t("label.Gallery")}
       </div>
-      {SECTIONS.map(({ title, slug, buildSrc, autoStartDelay }, index) => (
+      {sections.map(({ title, slug, images, autoStartDelay }, index) => (
         <Fragment key={slug}>
           <div key={slug} className="flex flex-col gap-4 w-full">
             <div className="flex justify-start items-center gap-2">
-              <div className="w-fit text-c7 text-xl">{t(title)}</div>
+              <div className="w-fit text-c7 text-xl">{title}</div>
               <Link href={`/${locale}/gallery/${slug}`}>
                 <Button size="sm">{t("button.ViewMore")}</Button>
               </Link>
             </div>
-            <GallerySlider
-              images={Array.from({ length: 7 }).map((_, index) => ({
-                src: buildSrc(index + 1),
-              }))}
-              autoPlayStartDelay={autoStartDelay}
-            />
+            <GallerySlider images={images} autoPlayStartDelay={autoStartDelay} />
           </div>
-          {index !== SECTIONS.length - 1 && (
+          {index !== sections.length - 1 && (
             <div className="w-full h-px bg-white/10" />
           )}
         </Fragment>

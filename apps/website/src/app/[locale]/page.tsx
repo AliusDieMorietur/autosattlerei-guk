@@ -1,3 +1,6 @@
+import { config } from "@/lib/config";
+import { serverApi } from "@/lib/api/server";
+import { cmsMediaUrl } from "@/lib/api/utils";
 import { Home } from "./Home";
 
 const JSON_LD = {
@@ -6,9 +9,9 @@ const JSON_LD = {
   name: "Autosattlerei Guk",
   description:
     "Eine Werkstatt für das Neubeziehen von Fahrzeuginnenräumen. Arbeiten in allen Schwierigkeitsgraden. Vielfältige Arbeitsoptionen: Neubezug von Türverkleidungen, Sitzen, Lenkrädern, Armaturenbrettern, Dachhimmeln, Griffen, Schalthebeln und kompletten Innenräumen. Von Oldtimern bis hin zu Supersportwagen. Handwerkskunst auf höchstem Niveau.",
-  url: process.env.NEXT_PUBLIC_HOST_URL,
-  logo: `${process.env.NEXT_PUBLIC_HOST_URL}/logo.png`,
-  image: `${process.env.NEXT_PUBLIC_HOST_URL}/logo.png`,
+  url: config.hostUrl,
+  logo: `${config.hostUrl}/logo.png`,
+  image: `${config.hostUrl}/logo.png`,
   address: {
     "@type": "PostalAddress",
     streetAddress: "Seelenbinder str. 112",
@@ -38,13 +41,32 @@ export type HomePageProps = {
 
 const HomePage = async ({ params }: HomePageProps) => {
   const { locale } = await params;
+  const cmsClient = serverApi();
+
+  const [slidesResult, cardsResult] = await Promise.all([
+    cmsClient.slides(locale),
+    cmsClient.serviceCards(locale),
+  ]);
+
+  const slides = (slidesResult.unwrapOr({ slides: [] }).slides ?? []).map((slide) => ({
+    src: cmsMediaUrl(slide.media?.url ?? ""),
+    title: slide.title ?? "",
+    description: slide.description ?? "",
+  }));
+
+  const cards = (cardsResult.unwrapOr({ cards: [] }).cards ?? []).map((card) => ({
+    src: cmsMediaUrl(card.media?.url ?? ""),
+    title: card.title ?? "",
+    slug: card.slug ?? "",
+  }));
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
       />
-      <Home locale={locale} />
+      <Home locale={locale} slides={slides} cards={cards} />
     </>
   );
 };

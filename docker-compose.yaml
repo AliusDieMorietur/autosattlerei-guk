@@ -9,47 +9,80 @@ services:
     volumes:
       - dbdata:/var/lib/postgresql/data
 
-  migrator:
+  # migrator:
+  #   build:
+  #     context: .
+  #     dockerfile: ./apps/server/Dockerfile.migrator
+  #   depends_on:
+  #     - postgres
+  #   environment:
+  #     - POSTGRES_URL=${POSTGRES_URL}
+
+  # backend:
+  #   build:
+  #     context: .
+  #     dockerfile: ./apps/server/Dockerfile.server
+  #   depends_on:
+  #     migrator:
+  #       condition: service_completed_successfully
+  #   restart: always
+  #   environment:
+  #     - POSTGRES_URL=${POSTGRES_URL}
+  #     - SECRET_TOKEN=${SECRET_TOKEN}
+  #     - ADMIN_NAME=${ADMIN_NAME}
+  #   ports:
+  #     - 6732:8080
+
+  cms-migrate:
     build:
       context: .
-      dockerfile: ./apps/server/Dockerfile.migrator
+      dockerfile: ./apps/cms/Dockerfile.cms
+      target: builder
     depends_on:
       - postgres
+    working_dir: /app
     environment:
-      - POSTGRES_URL=${POSTGRES_URL}
+      DATABASE_URL: ${CMS_DATABASE_URL}
+      PAYLOAD_SECRET: ${PAYLOAD_SECRET}
+    command: sh -c "corepack enable pnpm && pnpm payload migrate"
 
-  backend:
+  cms:
     build:
       context: .
-      dockerfile: ./apps/server/Dockerfile.server
+      dockerfile: ./apps/cms/Dockerfile.cms
     depends_on:
-      migrator:
-        condition: service_completed_successfully
+      - postgres
+      - cms-migrate
     restart: always
     environment:
-      - POSTGRES_URL=${POSTGRES_URL}
-      - SECRET_TOKEN=${SECRET_TOKEN}
-      - ADMIN_NAME=${ADMIN_NAME}
+      DATABASE_URL: ${CMS_DATABASE_URL}
+      PAYLOAD_SECRET: ${PAYLOAD_SECRET}
     ports:
-      - 6732:8080
+      - 3232:3000
 
-  frontend:
+  website:
     build:
       context: .
+      dockerfile: ./apps/website/Dockerfile.website
       args:
         - NEXT_PUBLIC_SERVER_URL=${NEXT_PUBLIC_SERVER_URL}
         - NEXT_PUBLIC_GTM_ID=${NEXT_PUBLIC_GTM_ID}
         - NEXT_PUBLIC_GA_ID=${NEXT_PUBLIC_GA_ID}
         - NEXT_PUBLIC_GA_CONVERSION_ID=${NEXT_PUBLIC_GA_CONVERSION_ID}
-      dockerfile: ./apps/website/Dockerfile.website
+        - CMS_URL=http://cms:3000
+        - RESEND_API_KEY=${RESEND_API_KEY}
+        - NEXT_PUBLIC_HOST_URL=${NEXT_PUBLIC_HOST_URL}
     depends_on:
-      - backend
+      - cms
     restart: always
     environment:
       - NEXT_PUBLIC_SERVER_URL=${NEXT_PUBLIC_SERVER_URL}
       - NEXT_PUBLIC_GTM_ID=${NEXT_PUBLIC_GTM_ID}
       - NEXT_PUBLIC_GA_ID=${NEXT_PUBLIC_GA_ID}
       - NEXT_PUBLIC_GA_CONVERSION_ID=${NEXT_PUBLIC_GA_CONVERSION_ID}
+      - CMS_URL=http://cms:3000
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - NEXT_PUBLIC_HOST_URL=${NEXT_PUBLIC_HOST_URL}
     ports:
       - 3000:3000
 

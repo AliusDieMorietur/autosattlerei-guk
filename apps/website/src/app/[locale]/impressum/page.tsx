@@ -8,7 +8,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
   };
 };
 
-export default function Impressum(): JSX.Element {
+export default function Impressum() {
   const t = useTranslations();
 
   return (

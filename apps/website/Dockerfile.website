@@ -1,19 +1,31 @@
-FROM oven/bun:latest AS base
+FROM oven/bun:1.3.5 AS base
 WORKDIR /app
 
 FROM base AS deps
-COPY apps/website/package.json apps/website/bun.lockb ./
+COPY /apps/website/package.json /apps/website/bun.lock ./
 RUN bun install --frozen-lockfile
 
 FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
-COPY apps/website .
+COPY ./apps/website .
 ENV NEXT_TELEMETRY_DISABLED=1
 ARG NEXT_PUBLIC_SERVER_URL
+ARG NEXT_PUBLIC_GTM_ID
+ARG NEXT_PUBLIC_GA_ID
+ARG NEXT_PUBLIC_GA_CONVERSION_ID
+ARG CMS_URL=http://cms:3000
+ARG RESEND_API_KEY
+ARG NEXT_PUBLIC_HOST_URL
 ENV NEXT_PUBLIC_SERVER_URL=${NEXT_PUBLIC_SERVER_URL}
+ENV NEXT_PUBLIC_GTM_ID=${NEXT_PUBLIC_GTM_ID}
+ENV NEXT_PUBLIC_GA_ID=${NEXT_PUBLIC_GA_ID}
+ENV NEXT_PUBLIC_GA_CONVERSION_ID=${NEXT_PUBLIC_GA_CONVERSION_ID}
+ENV CMS_URL=${CMS_URL}
+ENV RESEND_API_KEY=${RESEND_API_KEY}
+ENV NEXT_PUBLIC_HOST_URL=${NEXT_PUBLIC_HOST_URL}
 RUN bun run build
 
-FROM oven/bun:latest AS runner
+FROM oven/bun:1.3.5 AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
@@ -22,6 +34,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
+
 
 EXPOSE 3000
 

@@ -18,7 +18,7 @@ export type HeaderProps = {
   locale: string;
 };
 
-export const Header = ({ locale }: HeaderProps): JSX.Element => {
+export const Header = ({ locale }: HeaderProps) => {
   const t = useTranslations();
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -118,6 +118,7 @@ export const Header = ({ locale }: HeaderProps): JSX.Element => {
             </div>
             <div className="hidden desktop:flex items-center gap-6 text-lg">
               <Link href={`/${locale}/gallery`}>{t("button.OurServices")}</Link>
+              <Link href={`/${locale}/blog`}>Blog</Link>
               <Link href={`/${locale}/#contact-us`}>
                 {t("button.ContactUs")}
               </Link>
@@ -164,6 +165,9 @@ export const Header = ({ locale }: HeaderProps): JSX.Element => {
         <div className="flex flex-col gap-4 p-4">
           <Link href={`/${locale}/gallery`} onClick={() => setOpen(false)}>
             {t("button.OurServices")}
+          </Link>
+          <Link href={`/${locale}/blog`} onClick={() => setOpen(false)}>
+            Blog
           </Link>
           <Link
             href={`/${locale}/#contact-us`}

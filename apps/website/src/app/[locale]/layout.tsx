@@ -1,3 +1,4 @@
+import { config } from "@/lib/config";
 import { Header } from "@/components/Header";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import type { Metadata } from "next";
@@ -192,14 +193,10 @@ export default async function RootLayout(
     <html lang={locale}>
       <head>
         <style>{`* { font-family: ${font}; }`}</style>
-        {process.env.NEXT_PUBLIC_GTM_ID && (
-          <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />
-        )}
-        {process.env.NEXT_PUBLIC_GA_ID && (
-          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
-        )}
+        {config.gtmId && <GoogleTagManager gtmId={config.gtmId} />}
+        {config.gaId && <GoogleAnalytics gaId={config.gaId} />}
       </head>
-      <body className={`${Poppins.variable} ${OpenSans.variable} antialiased`}>
+      <body className={`${Poppins.variable} ${OpenSans.variable} antialiased`} suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>
           <div id="home" className="w-full flex flex-col h-screen">
             <Header locale={locale} />

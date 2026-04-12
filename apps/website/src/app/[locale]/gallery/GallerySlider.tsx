@@ -18,7 +18,7 @@ export type GallerySliderProps = {
 export const GallerySlider = ({
   images,
   autoPlayStartDelay = 0,
-}: GallerySliderProps): JSX.Element => {
+}: GallerySliderProps) => {
   const [api, setApi] = useState<CarouselApi>();
   const [currentSlide, setCurrentSlide] = useState(0);
 

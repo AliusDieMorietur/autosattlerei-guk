@@ -2,72 +2,46 @@
 
 import { Button } from "@/components/ui/button";
 import { useAppMode } from "@/hooks/useAppMode";
-import { cn, grid } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { Pointer } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import { Fragment, useState } from "react";
+import { Fragment, JSX, useState } from "react";
 
-export type GalleryData = {
-  label: string;
-  items: {
-    label?: (t: (key: string) => string) => string;
-    buildSrc: (n: string | number) => string;
-    quantity: number;
-    viewMore?: boolean;
-  }[];
+export type GalleryItemData = {
+  label?: string;
+  images: { src: string }[];
+  viewMore?: boolean;
 };
 
-export const GALLERY_DATA: Record<string, GalleryData> = {
-  "door-panel": {
-    label: "label.DoorPanels",
-    items: [
-      {
-        buildSrc: (n: string | number) =>
-          `/door_panel_page/door_panel_page_grid(${n}).webp`,
-        quantity: 7,
-      },
-    ],
-  },
-  wheel: {
-    label: "label.Wheels",
-    items: [
-      {
-        buildSrc: (n: string | number) =>
-          `/wheel_page/wheel_page_grid(${n}).webp`,
-        quantity: 7,
-      },
-    ],
-  },
-  salon: {
-    label: "label.Salons",
-    items: [10, 5, 8, 16, 7, 11, 4].map((quantity, index) => ({
-      label: (t) => `${t("label.SalonTitle")} ${index + 1}`,
-      subLabel: index + 1,
-      buildSrc: (n: string | number) =>
-        `/salon_slide/salon${index + 1}/slide(${n}).webp`,
-      quantity,
-      viewMore: true,
-    })),
-  },
+export type GallerySpecificData = {
+  label: string;
+  items: GalleryItemData[];
 };
 
 export type GallerySpecificProps = {
   locale: string;
   type: string;
+  galleryData: GallerySpecificData | null;
+};
+
+const splitIntoColumns = (images: { src: string }[], cols: number) => {
+  const result: { src: string }[][] = Array.from({ length: cols }, () => []);
+  images.forEach((img, i) => result[i % cols].push(img));
+  return result;
 };
 
 export const GallerySpecific = ({
   locale,
   type,
-}: GallerySpecificProps): JSX.Element => {
+  galleryData,
+}: GallerySpecificProps) => {
   const t = useTranslations();
   const mode = useAppMode();
   const [opened, setOpen] = useState<number[]>([]);
 
-  const data = GALLERY_DATA[type as keyof typeof GALLERY_DATA];
-  if (!data) {
+  if (!galleryData) {
     return redirect(`/${locale}/gallery`);
   }
 
@@ -81,17 +55,17 @@ export const GallerySpecific = ({
     <>
       <div className="w-full flex flex-col items-center px-5 desktopLg:px-0 relative">
         <div className="w-full text-c7 text-xl desktop:text-2xl py-1.5 mb-5 desktop:mb-8">
-          {data.label && t(data.label)}
+          {galleryData.label}
         </div>
         <div className="w-full flex flex-col gap-10">
-          {data.items.map(({ label, quantity, buildSrc, viewMore }, i) => {
+          {galleryData.items.map(({ label, images, viewMore }, i) => {
             const open = opened.includes(i) || !viewMore;
             return (
               <Fragment key={i}>
                 <div className="flex flex-col gap-4">
                   {label && (
                     <div className="w-full text-c7 tablet:text-start text-xl">
-                      {label(t)}
+                      {label}
                     </div>
                   )}
                   <div
@@ -101,22 +75,22 @@ export const GallerySpecific = ({
                       {
                         "max-h-[300px]": !open,
                         "max-h-[99999px]": open,
-                      }
+                      },
                     )}
                   >
-                    {grid(quantity, columns).map((images, j) => (
+                    {splitIntoColumns(images, columns).map((col, j) => (
                       <div className="w-full flex flex-col gap-4" key={j}>
-                        {images.map((n, k) => (
+                        {col.map((img, k) => (
                           <div
                             key={k}
                             className="relative"
                             // className="relative group cursor-pointer"
-                            // onClick={() => setCurrentSrc(buildSrc(n))}
+                            // onClick={() => setCurrentSrc(img.src)}
                           >
                             <div className="relative w-full h-[250px] rounded-xl">
                               <Image
-                                src={buildSrc(n)}
-                                alt={buildSrc(n)}
+                                src={img.src}
+                                alt={img.src}
                                 fill
                                 className="object-cover max-h-[250px] rounded-xl transition-all"
                               />
@@ -147,7 +121,7 @@ export const GallerySpecific = ({
                         onClick={() => {
                           if (opened.includes(i)) {
                             const element = document.getElementById(
-                              `section-${i}`
+                              `section-${i}`,
                             );
                             if (!element) return;
                             window.scrollTo({
@@ -158,20 +132,20 @@ export const GallerySpecific = ({
                           setOpen((previous) =>
                             previous.includes(i)
                               ? previous.filter((item) => item !== i)
-                              : [...previous, i]
+                              : [...previous, i],
                           );
                         }}
                       >
                         {t(
                           opened.includes(i)
                             ? "button.ViewLess"
-                            : "button.ViewMore"
+                            : "button.ViewMore",
                         )}
                       </Button>
                     </div>
                   )}
                 </div>
-                {i !== data.items.length - 1 && (
+                {i !== galleryData.items.length - 1 && (
                   <div className="w-full h-px bg-white/10" />
                 )}
               </Fragment>
