@@ -93,5 +93,15 @@
     "EnterEmail": "E-Mail-Adresse eingeben",
     "EnterPhone": "Telefonnummer eingeben",
     "EnterDescription": "Beschreibung eingeben"
+  },
+  "meta": {
+    "homeTitle": "Autosattlerei Guk Berlin",
+    "homeDescription": "Autosattlerei Guk in Berlin – professioneller Fahrzeuginnenausbau. Neubezug von Sitzen, Lenkrädern, Türverkleidungen, Dachhimmeln und kompletten Innenräumen. Von Oldtimern bis Supersportwagen.",
+    "galleryTitle": "Galerie",
+    "galleryDescription": "Entdecken Sie unsere Arbeiten: Innenräume, Lenkräder, Türverkleidungen und Dachhimmel – Autosattlerei Guk in Berlin.",
+    "blogTitle": "Blog",
+    "blogDescription": "Neuigkeiten und Projekte von Autosattlerei Guk in Berlin.",
+    "impressumTitle": "Impressum",
+    "impressumDescription": "Impressum von Autosattlerei Guk in Berlin."
   }
 }

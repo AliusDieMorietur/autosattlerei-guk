@@ -1,7 +1,10 @@
 import { config } from "@/lib/config";
+import { buildAlternates, localeToOgLocale } from "@/lib/seo";
 import { serverApi } from "@/lib/api/server";
 import { cmsMediaUrl } from "@/lib/api/utils";
 import { Home } from "./Home";
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
 const JSON_LD = {
   "@context": "https://schema.org",
@@ -17,7 +20,7 @@ const JSON_LD = {
     streetAddress: "Seelenbinder str. 112",
     addressLocality: "Berlin",
     postalCode: "12555",
-    addressCountry: "Deutchland",
+    addressCountry: "DE",
   },
   geo: {
     "@type": "GeoCoordinates",
@@ -37,6 +40,25 @@ const JSON_LD = {
 
 export type HomePageProps = {
   params: Promise<{ locale: string }>;
+};
+
+export const generateMetadata = async ({ params }: HomePageProps): Promise<Metadata> => {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "meta" });
+  const ogLocale = localeToOgLocale[locale] ?? "de_DE";
+  return {
+    title: t("homeTitle"),
+    description: t("homeDescription"),
+    alternates: buildAlternates(locale),
+    openGraph: {
+      title: t("homeTitle"),
+      description: t("homeDescription"),
+      url: `${config.hostUrl}/${locale}`,
+      type: "website",
+      locale: ogLocale,
+      images: [{ url: `${config.hostUrl}/logo.png`, width: 512, height: 512, alt: "Autosattlerei Guk" }],
+    },
+  };
 };
 
 const HomePage = async ({ params }: HomePageProps) => {

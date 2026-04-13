@@ -379,8 +379,12 @@ async function seed() {
   await clearCollection(token, 'media')
 
   // --- Slides ---
-  type SlideItem = { title: string; description: string; media: number }
-  const slideItems: Record<string, SlideItem[]> = { de: [], en: [], ru: [], ua: [] }
+  type SlideItemAll = {
+    title: Record<string, string>
+    description: Record<string, string>
+    media: number
+  }
+  const slideItemsAll: SlideItemAll[] = []
 
   for (const slide of SLIDES) {
     const imagePath = path.resolve(dirname, '../../website/public/main_page', slide.image)
@@ -388,38 +392,23 @@ async function seed() {
     console.log(`Uploading slide media: ${slide.image}`)
     const mediaId = await uploadMedia(token, imagePath, name, slide.de.title)
 
-    for (const locale of ['de', 'en', 'ru', 'ua'] as const) {
-      slideItems[locale].push({
-        title: slide[locale].title,
-        description: slide[locale].description,
-        media: mediaId,
-      })
-    }
-  }
-
-  console.log('Setting slides global (de)')
-  const slidesRes = await fetch(`${CMS_URL}/api/globals/slides?locale=de`, {
-    method: 'POST',
-    headers: { Authorization: `JWT ${token}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ slides: slideItems.de }),
-  })
-  const slidesData = await slidesRes.json() as { slides?: { id: string }[] }
-  const slideIds = (slidesData.slides ?? []).map((s) => s.id)
-
-  for (const locale of ['en', 'ru', 'ua'] as const) {
-    console.log(`Setting slides global (${locale})`)
-    await fetch(`${CMS_URL}/api/globals/slides?locale=${locale}`, {
-      method: 'POST',
-      headers: { Authorization: `JWT ${token}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        slides: slideItems[locale].map((item, i) => ({ ...item, id: slideIds[i] })),
-      }),
+    slideItemsAll.push({
+      title: { de: slide.de.title, en: slide.en.title, ru: slide.ru.title, ua: slide.ua.title },
+      description: { de: slide.de.description, en: slide.en.description, ru: slide.ru.description, ua: slide.ua.description },
+      media: mediaId,
     })
   }
 
+  console.log('Setting slides global (all locales)')
+  await fetch(`${CMS_URL}/api/globals/slides?locale=all`, {
+    method: 'POST',
+    headers: { Authorization: `JWT ${token}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ slides: slideItemsAll }),
+  })
+
   // --- Service Cards ---
-  type CardItem = { title: string; slug: string; media: number }
-  const cardItems: Record<string, CardItem[]> = { de: [], en: [], ru: [], ua: [] }
+  type CardItemAll = { title: Record<string, string>; slug: string; media: number }
+  const cardItemsAll: CardItemAll[] = []
 
   for (const card of SERVICE_CARDS) {
     const imagePath = path.resolve(dirname, '../../website/public/main_page', card.image)
@@ -427,34 +416,19 @@ async function seed() {
     console.log(`Uploading card media: ${card.image}`)
     const mediaId = await uploadMedia(token, imagePath, name, card.de.title)
 
-    for (const locale of ['de', 'en', 'ru', 'ua'] as const) {
-      cardItems[locale].push({
-        title: card[locale].title,
-        slug: card.slug,
-        media: mediaId,
-      })
-    }
-  }
-
-  console.log('Setting service-cards global (de)')
-  const cardsRes = await fetch(`${CMS_URL}/api/globals/service-cards?locale=de`, {
-    method: 'POST',
-    headers: { Authorization: `JWT ${token}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ cards: cardItems.de }),
-  })
-  const cardsData = await cardsRes.json() as { cards?: { id: string }[] }
-  const cardIds = (cardsData.cards ?? []).map((c) => c.id)
-
-  for (const locale of ['en', 'ru', 'ua'] as const) {
-    console.log(`Setting service-cards global (${locale})`)
-    await fetch(`${CMS_URL}/api/globals/service-cards?locale=${locale}`, {
-      method: 'POST',
-      headers: { Authorization: `JWT ${token}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        cards: cardItems[locale].map((item, i) => ({ ...item, id: cardIds[i] })),
-      }),
+    cardItemsAll.push({
+      title: { de: card.de.title, en: card.en.title, ru: card.ru.title, ua: card.ua.title },
+      slug: card.slug,
+      media: mediaId,
     })
   }
+
+  console.log('Setting service-cards global (all locales)')
+  await fetch(`${CMS_URL}/api/globals/service-cards?locale=all`, {
+    method: 'POST',
+    headers: { Authorization: `JWT ${token}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ cards: cardItemsAll }),
+  })
 
   // --- Gallery Sections ---
   const publicBase = path.resolve(dirname, '../../website/public')
@@ -469,13 +443,13 @@ async function seed() {
       imageRefs.push({ media: mediaId })
     }
 
-    console.log(`Creating gallery section (de): ${section.de.title}`)
-    const sectionRes = await fetch(`${CMS_URL}/api/gallery-sections?locale=de`, {
+    console.log(`Creating gallery section (all locales): ${section.de.title}`)
+    const sectionRes = await fetch(`${CMS_URL}/api/gallery-sections?locale=all`, {
       method: 'POST',
       headers: { Authorization: `JWT ${token}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        title: section.de.title,
-        description: section.de.description,
+        title: { de: section.de.title, en: section.en.title, ru: section.ru.title, ua: section.ua.title },
+        description: { de: section.de.description, en: section.en.description, ru: section.ru.description, ua: section.ua.description },
         slug: section.slug,
         order: section.order,
         images: imageRefs,
@@ -483,19 +457,6 @@ async function seed() {
     })
     const sectionData = await sectionRes.json() as { doc?: { id: number } }
     if (!sectionData.doc) throw new Error(`Failed to create gallery section: ${JSON.stringify(sectionData)}`)
-    const sectionId = sectionData.doc.id
-
-    for (const locale of ['en', 'ru', 'ua'] as const) {
-      console.log(`  Updating gallery section (${locale}): ${section[locale].title}`)
-      await fetch(`${CMS_URL}/api/gallery-sections/${sectionId}?locale=${locale}`, {
-        method: 'PATCH',
-        headers: { Authorization: `JWT ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          title: section[locale].title,
-          description: section[locale].description,
-        }),
-      })
-    }
   }
 
   console.log('Seed complete!')

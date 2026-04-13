@@ -93,5 +93,15 @@
     "EnterEmail": "Введіть електронну пошту",
     "EnterPhone": "Введіть номер телефону",
     "EnterDescription": "Введіть опис"
+  },
+  "meta": {
+    "homeTitle": "Autosattlerei Guk Берлін",
+    "homeDescription": "Autosattlerei Guk у Берліні – професійна перетяжка автомобільного салону. Перетяжка сидінь, керма, дверних карт, стелі та повного салону. Від класичних авто до суперкарів.",
+    "galleryTitle": "Галерея",
+    "galleryDescription": "Наші роботи: салони, керма, дверні карти та стелі – Autosattlerei Guk у Берліні.",
+    "blogTitle": "Блог",
+    "blogDescription": "Новини та проекти від Autosattlerei Guk у Берліні.",
+    "impressumTitle": "Імпресум",
+    "impressumDescription": "Правова інформація Autosattlerei Guk у Берліні."
   }
 }

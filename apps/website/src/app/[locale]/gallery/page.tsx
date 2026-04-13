@@ -3,16 +3,29 @@ import { Metadata } from "next";
 import { Gallery } from "./Gallery";
 import { serverApi } from "@/lib/api/server";
 import { cmsMediaUrl } from "@/lib/api/utils";
+import { buildAlternates, localeToOgLocale } from "@/lib/seo";
+import { config } from "@/lib/config";
 
 export type GalleryPageProps = {
   params: Promise<{ locale: string }>;
 };
 
-export const generateMetadata = async (): Promise<Metadata> => {
+export const generateMetadata = async ({ params }: GalleryPageProps): Promise<Metadata> => {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "meta" });
+  const ogLocale = localeToOgLocale[locale] ?? "de_DE";
   return {
-    title: "Galerie - Autosattlerei Guk in Berlin",
-    description:
-      "Autosattlerei Guk in Berlin - Es wird eine große Anzahl von Arbeiten verschiedener Schwierigkeitsgrade präsentiert: Innenräume, Lenkräder, Türverkleidungen, Decken.",
+    title: t("galleryTitle"),
+    description: t("galleryDescription"),
+    alternates: buildAlternates(locale, "/gallery"),
+    openGraph: {
+      title: `${t("galleryTitle")} | Autosattlerei Guk`,
+      description: t("galleryDescription"),
+      url: `${config.hostUrl}/${locale}/gallery`,
+      type: "website",
+      locale: ogLocale,
+      images: [{ url: `${config.hostUrl}/logo.png`, width: 512, height: 512, alt: "Autosattlerei Guk" }],
+    },
   };
 };
 

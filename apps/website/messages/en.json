@@ -93,5 +93,15 @@
     "EnterEmail": "Enter email address",
     "EnterPhone": "Enter phone number",
     "EnterDescription": "Enter description"
+  },
+  "meta": {
+    "homeTitle": "Autosattlerei Guk Berlin",
+    "homeDescription": "Autosattlerei Guk in Berlin – professional car interior upholstery. Reupholstering seats, steering wheels, door panels, headliners and full interiors. From classic cars to supercars.",
+    "galleryTitle": "Gallery",
+    "galleryDescription": "Browse our work: interiors, steering wheels, door panels and headliners – Autosattlerei Guk in Berlin.",
+    "blogTitle": "Blog",
+    "blogDescription": "News and projects from Autosattlerei Guk in Berlin.",
+    "impressumTitle": "Impressum",
+    "impressumDescription": "Legal notice of Autosattlerei Guk in Berlin."
   }
 }

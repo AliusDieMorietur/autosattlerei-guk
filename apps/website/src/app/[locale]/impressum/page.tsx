@@ -1,10 +1,20 @@
 import { Metadata } from "next";
 import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
+import { buildAlternates } from "@/lib/seo";
 
-export const generateMetadata = async (): Promise<Metadata> => {
+type ImpressumPageProps = {
+  params: Promise<{ locale: string }>;
+};
+
+export const generateMetadata = async ({ params }: ImpressumPageProps): Promise<Metadata> => {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "meta" });
   return {
-    title: "Impressum - Autosattlerei Guk in Berlin",
-    description: "Autosattlerei Guk in Berlin - Impressum",
+    title: t("impressumTitle"),
+    description: t("impressumDescription"),
+    alternates: buildAlternates(locale, "/impressum"),
+    robots: { index: false, follow: true },
   };
 };
 

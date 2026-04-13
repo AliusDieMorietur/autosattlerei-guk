@@ -93,5 +93,15 @@
     "EnterEmail": "Введите адрес электронной почты",
     "EnterPhone": "Введите номер телефона",
     "EnterDescription": "Введите описание"
+  },
+  "meta": {
+    "homeTitle": "Autosattlerei Guk Берлин",
+    "homeDescription": "Autosattlerei Guk в Берлине – профессиональная перетяжка автомобильного интерьера. Перетяжка сидений, рулевых колёс, дверных панелей, потолков и полного салона. От классических авто до суперкаров.",
+    "galleryTitle": "Галерея",
+    "galleryDescription": "Наши работы: интерьеры, рулевые колёса, дверные панели и потолки – Autosattlerei Guk в Берлине.",
+    "blogTitle": "Блог",
+    "blogDescription": "Новости и проекты от Autosattlerei Guk в Берлине.",
+    "impressumTitle": "Импрессум",
+    "impressumDescription": "Правовые сведения Autosattlerei Guk в Берлине."
   }
 }

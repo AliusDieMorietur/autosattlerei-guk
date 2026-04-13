@@ -2,16 +2,31 @@ import { Metadata } from "next";
 import { serverApi } from "@/lib/api/server";
 import { cmsMediaUrl } from "@/lib/api/utils";
 import { Blog, BlogPost } from "./Blog";
-
-export const generateMetadata = async (): Promise<Metadata> => {
-  return {
-    title: "Blog - Autosattlerei Guk",
-    description: "Neuigkeiten und Projekte von Autosattlerei Guk in Berlin.",
-  };
-};
+import { buildAlternates, localeToOgLocale } from "@/lib/seo";
+import { config } from "@/lib/config";
+import { getTranslations } from "next-intl/server";
 
 type BlogPageProps = {
   params: Promise<{ locale: string }>;
+};
+
+export const generateMetadata = async ({ params }: BlogPageProps): Promise<Metadata> => {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "meta" });
+  const ogLocale = localeToOgLocale[locale] ?? "de_DE";
+  return {
+    title: t("blogTitle"),
+    description: t("blogDescription"),
+    alternates: buildAlternates(locale, "/blog"),
+    openGraph: {
+      title: `${t("blogTitle")} | Autosattlerei Guk`,
+      description: t("blogDescription"),
+      url: `${config.hostUrl}/${locale}/blog`,
+      type: "website",
+      locale: ogLocale,
+      images: [{ url: `${config.hostUrl}/logo.png`, width: 512, height: 512, alt: "Autosattlerei Guk" }],
+    },
+  };
 };
 
 function toMediaType(mimeType?: string): "image" | "video" | null {

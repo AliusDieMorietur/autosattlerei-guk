@@ -1,9 +1,10 @@
 import { config } from "@/lib/config";
+import { buildAlternates, localeToOgLocale } from "@/lib/seo";
 import { Header } from "@/components/Header";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { getMessages, getTranslations } from "next-intl/server";
 import localFont from "next/font/local";
 import "../globals.css";
 
@@ -163,14 +164,30 @@ const OpenSans = localFont({
   preload: true,
 });
 
-export const metadata: Metadata = {
-  title: "Autosattlerei Guk",
-  description:
-    "Autosattlerei Guk in Berlin - Eine Werkstatt für das Neubeziehen von Fahrzeuginnenräumen. Arbeiten in allen Schwierigkeitsgraden. Vielfältige Arbeitsoptionen: Neubezug von Türverkleidungen, Sitzen, Lenkrädern, Armaturenbrettern, Dachhimmeln, Griffen, Schalthebeln und kompletten Innenräumen. Von Oldtimern bis hin zu Supersportwagen. Handwerkskunst auf höchstem Niveau.",
-  alternates: {
-    canonical: "./",
-  },
-};
+export async function generateMetadata(props: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await props.params;
+  const t = await getTranslations({ locale, namespace: "meta" });
+  const ogLocale = localeToOgLocale[locale] ?? "de_DE";
+  return {
+    title: {
+      template: `%s | Autosattlerei Guk`,
+      default: "Autosattlerei Guk",
+    },
+    description: t("homeDescription"),
+    alternates: buildAlternates(locale),
+    openGraph: {
+      siteName: "Autosattlerei Guk",
+      locale: ogLocale,
+      images: [{ url: `${config.hostUrl}/logo.png`, width: 512, height: 512, alt: "Autosattlerei Guk" }],
+    },
+    twitter: {
+      card: "summary",
+      images: [`${config.hostUrl}/logo.png`],
+    },
+  };
+}
 
 export default async function RootLayout(
   props: Readonly<{
