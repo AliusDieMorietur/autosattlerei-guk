@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
 
   const result = await ResultAsync.fromPromise(
     resend.emails.send({
-      from: "noreply@autosattlerei-guk.de",
+      from: "noreply@resend.autosattlerei-guk.de",
       to: ["autosattler.guk@gmail.com"],
       subject: `Neue Anfrage von ${name}`,
       html: `
