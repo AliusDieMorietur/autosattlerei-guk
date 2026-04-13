@@ -24,6 +24,12 @@ export type GallerySectionDoc = {
   order?: number;
   images?: { media?: { url?: string } }[];
 };
+export type MediaDoc = {
+  url?: string;
+  mimeType?: string;
+  width?: number;
+  height?: number;
+};
 export type CmsCollection<T> = { docs: T[]; hasNextPage: boolean; nextPage?: number | null };
 export type SlidesGlobal = { slides?: SlideItem[] };
 export type ServiceCardsGlobal = { cards?: ServiceCardItem[] };
@@ -31,7 +37,7 @@ export type BlogPostDoc = {
   id: string;
   title?: string;
   description?: string;
-  media?: { url?: string; mimeType?: string };
+  mediaItems?: { media?: MediaDoc }[];
   publishedAt?: string;
 };
 
@@ -43,23 +49,15 @@ export const api = ({ baseUrl, revalidate = 60 }: CmsOptions) => {
     .options({ next: { revalidate } });
 
   return {
-    slides: (locale: string) =>
+    slides: (_locale?: string) =>
       ResultAsync.fromPromise(
-        client
-          .url("/api/globals/slides")
-          .query({ depth: 1, locale })
-          .get()
-          .json<SlidesGlobal>(),
+        client.url("/api/globals/slides").query({ depth: 1 }).get().json<SlidesGlobal>(),
         toError,
       ),
 
-    serviceCards: (locale: string) =>
+    serviceCards: (_locale?: string) =>
       ResultAsync.fromPromise(
-        client
-          .url("/api/globals/service-cards")
-          .query({ depth: 1, locale })
-          .get()
-          .json<ServiceCardsGlobal>(),
+        client.url("/api/globals/service-cards").query({ depth: 1 }).get().json<ServiceCardsGlobal>(),
         toError,
       ),
 
@@ -73,14 +71,16 @@ export const api = ({ baseUrl, revalidate = 60 }: CmsOptions) => {
         toError,
       ),
 
-    blogPosts: (params: { locale?: string; page?: number; limit?: number } = {}) =>
-      ResultAsync.fromPromise(
+    blogPosts: (params: { locale?: string; page?: number; limit?: number } = {}) => {
+      const { locale: _locale, ...rest } = params;
+      return ResultAsync.fromPromise(
         client
           .url("/api/blog-posts")
-          .query({ sort: "-publishedAt", depth: 1, limit: 10, ...params })
+          .query({ sort: "-publishedAt", depth: 1, limit: 10, ...rest })
           .get()
           .json<CmsCollection<BlogPostDoc>>(),
         toError,
-      ),
+      );
+    },
   };
 };

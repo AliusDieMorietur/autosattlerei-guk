@@ -12,17 +12,23 @@ export const BlogPosts: CollectionConfig = {
       name: 'title',
       type: 'text',
       required: true,
-      localized: true,
     },
     {
       name: 'description',
       type: 'textarea',
-      localized: true,
     },
     {
-      name: 'media',
-      type: 'upload',
-      relationTo: 'media',
+      name: 'mediaItems',
+      label: 'Media items',
+      type: 'array',
+      fields: [
+        {
+          name: 'media',
+          type: 'upload',
+          relationTo: 'media',
+          required: true,
+        },
+      ],
     },
     {
       name: 'publishedAt',

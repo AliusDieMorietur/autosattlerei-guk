@@ -3,24 +3,10 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
-  SelectValue,
 } from "@/components/ui/select";
-import { DESvg } from "./icons/DESvg";
-import { UASvg } from "./icons/UASvg";
-import { RUSvg } from "./icons/RUSvg";
-import { UKSvg } from "./icons/UKSvg";
 import { LOCALES } from "@/i18n/routing";
-import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
-
-const LOCALE_TO_SVG: Record<(typeof LOCALES)[number], ReactNode> = {
-  en: <UKSvg className="w-4 h-3" />,
-  de: <DESvg className="w-4 h-3" />,
-  ua: <UASvg className="w-4 h-3" />,
-  ru: <RUSvg className="w-4 h-3" />,
-};
 
 export type LanguageSelectProps = {
   value: string;

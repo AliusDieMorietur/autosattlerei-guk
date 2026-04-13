@@ -21,7 +21,7 @@ export const generateMetadata = async ({ params }: GalleryPageProps): Promise<Me
     openGraph: {
       title: `${t("galleryTitle")} | Autosattlerei Guk`,
       description: t("galleryDescription"),
-      url: `${config.hostUrl}/${locale}/gallery`,
+      url: `${config.hostUrl}/gallery`,
       type: "website",
       locale: ogLocale,
       images: [{ url: `${config.hostUrl}/logo.png`, width: 512, height: 512, alt: "Autosattlerei Guk" }],
@@ -33,11 +33,12 @@ const GalleryPage = async ({ params }: GalleryPageProps) => {
   const { locale } = await params;
   const cmsClient = serverApi();
 
-  const result = await cmsClient.gallerySections({ locale });
+  const result = await cmsClient.gallerySections();
   const docs = result.unwrapOr({ docs: [] }).docs;
 
   const sections = docs.map((section, index) => ({
     title: section.title ?? "",
+    description: section.description ?? "",
     slug: section.slug ?? "",
     images: (section.images ?? []).map((img) => ({
       src: cmsMediaUrl(img.media?.url ?? ""),

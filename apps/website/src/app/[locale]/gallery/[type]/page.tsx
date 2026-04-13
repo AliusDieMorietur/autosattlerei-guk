@@ -19,7 +19,6 @@ export const generateMetadata = async ({
   const cmsClient = serverApi();
   const result = await cmsClient.gallerySections({
     "where[slug][equals]": type,
-    locale,
     limit: "1",
   });
   const section = result.unwrapOr({ docs: [] }).docs[0];
@@ -41,7 +40,7 @@ export const generateMetadata = async ({
     openGraph: {
       title: `${title} | Autosattlerei Guk`,
       description,
-      url: `${config.hostUrl}/${locale}/gallery/${type}`,
+      url: `${config.hostUrl}/gallery/${type}`,
       type: "website",
       locale: ogLocale,
       images: [{ url: `${config.hostUrl}/logo.png`, width: 512, height: 512, alt: "Autosattlerei Guk" }],
@@ -57,7 +56,6 @@ export default async function GallerySpecificPage({
 
   const result = await cmsClient.gallerySections({
     "where[slug][equals]": type,
-    locale,
     limit: "1",
   });
   const section = result.unwrapOr({ docs: [] }).docs[0];
@@ -70,6 +68,7 @@ export default async function GallerySpecificPage({
     }));
     galleryData = {
       label: section.title ?? "",
+      description: section.description ?? "",
       items: [{ images, viewMore: false }],
     };
   }

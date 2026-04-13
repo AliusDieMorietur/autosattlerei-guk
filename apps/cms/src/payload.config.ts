@@ -24,11 +24,6 @@ export default buildConfig({
   },
   collections: [Users, Media, GallerySections, BlogPosts],
   globals: [SlidesGlobal, ServiceCardsGlobal],
-  localization: {
-    locales: ['de', 'en', 'ru', 'ua'],
-    defaultLocale: 'de',
-    fallback: true,
-  },
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

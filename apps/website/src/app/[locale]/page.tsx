@@ -53,7 +53,7 @@ export const generateMetadata = async ({ params }: HomePageProps): Promise<Metad
     openGraph: {
       title: t("homeTitle"),
       description: t("homeDescription"),
-      url: `${config.hostUrl}/${locale}`,
+      url: config.hostUrl,
       type: "website",
       locale: ogLocale,
       images: [{ url: `${config.hostUrl}/logo.png`, width: 512, height: 512, alt: "Autosattlerei Guk" }],

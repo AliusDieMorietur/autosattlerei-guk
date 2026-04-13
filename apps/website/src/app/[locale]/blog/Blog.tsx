@@ -2,12 +2,18 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
+export type BlogPostMedia = {
+  url: string;
+  type: "image" | "video" | null;
+  width?: number;
+  height?: number;
+};
+
 export type BlogPost = {
   id: string;
   title: string;
   description: string;
-  mediaUrl: string;
-  mediaType: "image" | "video" | null;
+  media: BlogPostMedia[];
   publishedAt: string;
 };
 
@@ -17,24 +23,76 @@ type Props = {
   locale: string;
 };
 
+function getMediaLayout(item: BlogPostMedia) {
+  const width = item.width ?? 0;
+  const height = item.height ?? 0;
+  const ratio = width > 0 && height > 0 ? width / height : 16 / 9;
+
+  if (ratio <= 0.8) {
+    return {
+      className: "w-full max-w-sm mx-auto",
+      aspectRatio: "9 / 16",
+    };
+  }
+
+  if (ratio <= 1.2) {
+    return {
+      className: "w-full max-w-lg mx-auto",
+      aspectRatio: "1 / 1",
+    };
+  }
+
+  return {
+    className: "w-full",
+    aspectRatio: "16 / 9",
+  };
+}
+
 function PostCard({ post, locale }: { post: BlogPost; locale: string }) {
   return (
     <article className="flex flex-col gap-3 w-full border border-white/10 rounded-lg overflow-hidden bg-white/5">
-      {post.mediaUrl && post.mediaType === "video" && (
-        <video
-          src={post.mediaUrl}
-          controls
-          playsInline
-          className="w-full max-h-[480px] object-cover"
-        />
-      )}
-      {post.mediaUrl && post.mediaType === "image" && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={post.mediaUrl}
-          alt={post.title}
-          className="w-full max-h-[480px] object-cover"
-        />
+      {post.media.length > 0 && (
+        <div className="flex flex-col gap-2 p-2">
+          {post.media.map((item, index) => {
+            const layout = getMediaLayout(item);
+
+            if (item.type === "video") {
+              return (
+                <div
+                  key={`${post.id}-media-${index}`}
+                  className={layout.className}
+                  style={{ aspectRatio: layout.aspectRatio }}
+                >
+                  <video
+                    src={item.url}
+                    controls
+                    playsInline
+                    className="w-full h-full rounded-md bg-black object-cover"
+                  />
+                </div>
+              );
+            }
+
+            if (item.type === "image") {
+              return (
+                <div
+                  key={`${post.id}-media-${index}`}
+                  className={layout.className}
+                  style={{ aspectRatio: layout.aspectRatio }}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={item.url}
+                    alt={post.title}
+                    className="w-full h-full rounded-md bg-black object-cover"
+                  />
+                </div>
+              );
+            }
+
+            return null;
+          })}
+        </div>
       )}
       <div className="flex flex-col gap-2 px-4 pb-4">
         {post.title && (

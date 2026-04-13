@@ -12,7 +12,6 @@ export const ServiceCardsGlobal: GlobalConfig = {
           name: 'title',
           type: 'text',
           required: true,
-          localized: true,
         },
         {
           name: 'slug',

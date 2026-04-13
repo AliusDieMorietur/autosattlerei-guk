@@ -41,7 +41,7 @@ export function Home({ locale, slides, cards }: HomeProps) {
               />
             </div>
             <div className="text-white text-xl">{card.title}</div>
-            <Link href={`/${locale}/gallery/${card.slug}`}>
+            <Link href={`/gallery/${card.slug}`}>
               <Button className="bg-c9 text-c8 w-fit">
                 {t("button.ViewMore")}
               </Button>
@@ -56,7 +56,7 @@ export function Home({ locale, slides, cards }: HomeProps) {
           <div className="text-c14 mb-4">{t("label.FeelFreeToContactUs")}</div>
           <div className="text-c14 mb-1">{t("label.Address")}</div>
           <Link
-            href={`/${locale}/#address`}
+            href="/#address"
             className="text-white mb-4 underline underline-offset-2"
           >
             {t("label.autosattlereiGukAddress")}

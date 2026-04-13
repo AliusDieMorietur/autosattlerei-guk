@@ -2,8 +2,7 @@ import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
-   CREATE TYPE "public"."_locales" AS ENUM('de', 'en', 'ru', 'ua');
-  CREATE TABLE "users_sessions" (
+   CREATE TABLE "users_sessions" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
@@ -49,34 +48,28 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   
   CREATE TABLE "gallery_sections" (
   	"id" serial PRIMARY KEY NOT NULL,
+  	"title" varchar NOT NULL,
+  	"description" varchar,
   	"slug" varchar NOT NULL,
   	"order" numeric DEFAULT 0,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
   );
   
-  CREATE TABLE "gallery_sections_locales" (
-  	"title" varchar NOT NULL,
-  	"description" varchar,
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
+  CREATE TABLE "blog_posts_media_items" (
+  	"_order" integer NOT NULL,
+  	"_parent_id" integer NOT NULL,
+  	"id" varchar PRIMARY KEY NOT NULL,
+  	"media_id" integer NOT NULL
   );
   
   CREATE TABLE "blog_posts" (
   	"id" serial PRIMARY KEY NOT NULL,
-  	"media_id" integer,
+  	"title" varchar NOT NULL,
+  	"description" varchar,
   	"published_at" timestamp(3) with time zone NOT NULL,
   	"updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
   	"created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
-  );
-  
-  CREATE TABLE "blog_posts_locales" (
-  	"title" varchar NOT NULL,
-  	"description" varchar,
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"_locale" "_locales" NOT NULL,
-  	"_parent_id" integer NOT NULL
   );
   
   CREATE TABLE "payload_kv" (
@@ -131,15 +124,9 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
-  	"media_id" integer NOT NULL
-  );
-  
-  CREATE TABLE "slides_slides_locales" (
   	"title" varchar NOT NULL,
   	"description" varchar,
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"_locale" "_locales" NOT NULL,
-  	"_parent_id" varchar NOT NULL
+  	"media_id" integer NOT NULL
   );
   
   CREATE TABLE "slides" (
@@ -152,15 +139,9 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
+  	"title" varchar NOT NULL,
   	"slug" varchar NOT NULL,
   	"media_id" integer NOT NULL
-  );
-  
-  CREATE TABLE "service_cards_cards_locales" (
-  	"title" varchar NOT NULL,
-  	"id" serial PRIMARY KEY NOT NULL,
-  	"_locale" "_locales" NOT NULL,
-  	"_parent_id" varchar NOT NULL
   );
   
   CREATE TABLE "service_cards" (
@@ -172,9 +153,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "users_sessions" ADD CONSTRAINT "users_sessions_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "gallery_sections_images" ADD CONSTRAINT "gallery_sections_images_media_id_media_id_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "gallery_sections_images" ADD CONSTRAINT "gallery_sections_images_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."gallery_sections"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "gallery_sections_locales" ADD CONSTRAINT "gallery_sections_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."gallery_sections"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "blog_posts" ADD CONSTRAINT "blog_posts_media_id_media_id_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
-  ALTER TABLE "blog_posts_locales" ADD CONSTRAINT "blog_posts_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."blog_posts"("id") ON DELETE cascade ON UPDATE no action;
+  ALTER TABLE "blog_posts_media_items" ADD CONSTRAINT "blog_posts_media_items_media_id_media_id_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  ALTER TABLE "blog_posts_media_items" ADD CONSTRAINT "blog_posts_media_items_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."blog_posts"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_parent_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."payload_locked_documents"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_users_fk" FOREIGN KEY ("users_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_media_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE cascade ON UPDATE no action;
@@ -184,10 +164,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "payload_preferences_rels" ADD CONSTRAINT "payload_preferences_rels_users_fk" FOREIGN KEY ("users_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "slides_slides" ADD CONSTRAINT "slides_slides_media_id_media_id_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "slides_slides" ADD CONSTRAINT "slides_slides_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."slides"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "slides_slides_locales" ADD CONSTRAINT "slides_slides_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."slides_slides"("id") ON DELETE cascade ON UPDATE no action;
   ALTER TABLE "service_cards_cards" ADD CONSTRAINT "service_cards_cards_media_id_media_id_fk" FOREIGN KEY ("media_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
   ALTER TABLE "service_cards_cards" ADD CONSTRAINT "service_cards_cards_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."service_cards"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "service_cards_cards_locales" ADD CONSTRAINT "service_cards_cards_locales_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."service_cards_cards"("id") ON DELETE cascade ON UPDATE no action;
   CREATE INDEX "users_sessions_order_idx" ON "users_sessions" USING btree ("_order");
   CREATE INDEX "users_sessions_parent_id_idx" ON "users_sessions" USING btree ("_parent_id");
   CREATE INDEX "users_updated_at_idx" ON "users" USING btree ("updated_at");
@@ -202,11 +180,11 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE UNIQUE INDEX "gallery_sections_slug_idx" ON "gallery_sections" USING btree ("slug");
   CREATE INDEX "gallery_sections_updated_at_idx" ON "gallery_sections" USING btree ("updated_at");
   CREATE INDEX "gallery_sections_created_at_idx" ON "gallery_sections" USING btree ("created_at");
-  CREATE UNIQUE INDEX "gallery_sections_locales_locale_parent_id_unique" ON "gallery_sections_locales" USING btree ("_locale","_parent_id");
-  CREATE INDEX "blog_posts_media_idx" ON "blog_posts" USING btree ("media_id");
+  CREATE INDEX "blog_posts_media_items_order_idx" ON "blog_posts_media_items" USING btree ("_order");
+  CREATE INDEX "blog_posts_media_items_parent_id_idx" ON "blog_posts_media_items" USING btree ("_parent_id");
+  CREATE INDEX "blog_posts_media_items_media_idx" ON "blog_posts_media_items" USING btree ("media_id");
   CREATE INDEX "blog_posts_updated_at_idx" ON "blog_posts" USING btree ("updated_at");
   CREATE INDEX "blog_posts_created_at_idx" ON "blog_posts" USING btree ("created_at");
-  CREATE UNIQUE INDEX "blog_posts_locales_locale_parent_id_unique" ON "blog_posts_locales" USING btree ("_locale","_parent_id");
   CREATE UNIQUE INDEX "payload_kv_key_idx" ON "payload_kv" USING btree ("key");
   CREATE INDEX "payload_locked_documents_global_slug_idx" ON "payload_locked_documents" USING btree ("global_slug");
   CREATE INDEX "payload_locked_documents_updated_at_idx" ON "payload_locked_documents" USING btree ("updated_at");
@@ -230,11 +208,9 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX "slides_slides_order_idx" ON "slides_slides" USING btree ("_order");
   CREATE INDEX "slides_slides_parent_id_idx" ON "slides_slides" USING btree ("_parent_id");
   CREATE INDEX "slides_slides_media_idx" ON "slides_slides" USING btree ("media_id");
-  CREATE UNIQUE INDEX "slides_slides_locales_locale_parent_id_unique" ON "slides_slides_locales" USING btree ("_locale","_parent_id");
   CREATE INDEX "service_cards_cards_order_idx" ON "service_cards_cards" USING btree ("_order");
   CREATE INDEX "service_cards_cards_parent_id_idx" ON "service_cards_cards" USING btree ("_parent_id");
-  CREATE INDEX "service_cards_cards_media_idx" ON "service_cards_cards" USING btree ("media_id");
-  CREATE UNIQUE INDEX "service_cards_cards_locales_locale_parent_id_unique" ON "service_cards_cards_locales" USING btree ("_locale","_parent_id");`)
+  CREATE INDEX "service_cards_cards_media_idx" ON "service_cards_cards" USING btree ("media_id");`)
 }
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
@@ -244,9 +220,8 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "media" CASCADE;
   DROP TABLE "gallery_sections_images" CASCADE;
   DROP TABLE "gallery_sections" CASCADE;
-  DROP TABLE "gallery_sections_locales" CASCADE;
+  DROP TABLE "blog_posts_media_items" CASCADE;
   DROP TABLE "blog_posts" CASCADE;
-  DROP TABLE "blog_posts_locales" CASCADE;
   DROP TABLE "payload_kv" CASCADE;
   DROP TABLE "payload_locked_documents" CASCADE;
   DROP TABLE "payload_locked_documents_rels" CASCADE;
@@ -254,10 +229,7 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TABLE "payload_preferences_rels" CASCADE;
   DROP TABLE "payload_migrations" CASCADE;
   DROP TABLE "slides_slides" CASCADE;
-  DROP TABLE "slides_slides_locales" CASCADE;
   DROP TABLE "slides" CASCADE;
   DROP TABLE "service_cards_cards" CASCADE;
-  DROP TABLE "service_cards_cards_locales" CASCADE;
-  DROP TABLE "service_cards" CASCADE;
-  DROP TYPE "public"."_locales";`)
+  DROP TABLE "service_cards" CASCADE;`)
 }

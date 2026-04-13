@@ -4,8 +4,7 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Menu, X } from "lucide-react";
-import { LanguageSelect } from "@/components/LanguageSelect";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
   ClockIcon as Clock,
@@ -22,7 +21,6 @@ export const Header = ({ locale }: HeaderProps) => {
   const t = useTranslations();
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const router = useRouter();
 
   const mobileButtons = [
     {
@@ -36,7 +34,7 @@ export const Header = ({ locale }: HeaderProps) => {
       icon: <Clock className="w-4 h-4" />,
     },
     {
-      link: `/${locale}/#address`,
+      link: `/#address`,
       title: t("label.autosattlereiGukAddress"),
       icon: <MapPin className="w-4 h-4" />,
     },
@@ -77,7 +75,7 @@ export const Header = ({ locale }: HeaderProps) => {
               </div>
             </div>
             <Link
-              href={`/${locale}/impressum`}
+              href="/impressum"
               className="text-white underline underline-offset-2"
             >
               {t("label.Impressum")}
@@ -110,28 +108,16 @@ export const Header = ({ locale }: HeaderProps) => {
                   )}
                 />
               </div>
-              <Link href={`/${locale}/#home`} onClick={() => setOpen(false)}>
+              <Link href="/#home" onClick={() => setOpen(false)}>
                 <h1 className="text-lg desktop:text-2xl">
                   {t("label.AutosattlereiGuk")}
                 </h1>
               </Link>
             </div>
             <div className="hidden desktop:flex items-center gap-6 text-lg">
-              <Link href={`/${locale}/gallery`}>{t("button.OurServices")}</Link>
-              <Link href={`/${locale}/blog`}>Blog</Link>
-              <Link href={`/${locale}/#contact-us`}>
-                {t("button.ContactUs")}
-              </Link>
-              <div className="bg-white/10 h-6 w-px -mx-2" />
-              <LanguageSelect
-                value={locale}
-                onChange={(locale) => {
-                  setOpen(false);
-                  const newPathName = pathname.split("/");
-                  newPathName[1] = locale;
-                  router.push(newPathName.join("/"));
-                }}
-              />
+              <Link href="/gallery">{t("button.OurServices")}</Link>
+              <Link href="/blog">Blog</Link>
+              <Link href="/#contact-us">{t("button.ContactUs")}</Link>
             </div>
             <div className="flex desktop:hidden gap-3">
               <Link
@@ -163,20 +149,20 @@ export const Header = ({ locale }: HeaderProps) => {
         )}
       >
         <div className="flex flex-col gap-4 p-4">
-          <Link href={`/${locale}/gallery`} onClick={() => setOpen(false)}>
+          <Link href="/gallery" onClick={() => setOpen(false)}>
             {t("button.OurServices")}
           </Link>
-          <Link href={`/${locale}/blog`} onClick={() => setOpen(false)}>
+          <Link href="/blog" onClick={() => setOpen(false)}>
             Blog
           </Link>
           <Link
-            href={`/${locale}/#contact-us`}
+            href="/#contact-us"
             className="flex gap-2 items-center text-c13"
             onClick={() => setOpen(false)}
           >
             {t("button.ContactUs")} <ArrowRight className="w-4 h-4" />
           </Link>
-          <Link href={`/${locale}/impressum`} onClick={() => setOpen(false)}>
+          <Link href="/impressum" onClick={() => setOpen(false)}>
             {t("button.Impressum")}
           </Link>
         </div>
@@ -204,17 +190,7 @@ export const Header = ({ locale }: HeaderProps) => {
             )
           )}
         </div>
-        <div className="px-4 py-2">
-          <LanguageSelect.Horizontal
-            value={locale}
-            onChange={(locale) => {
-              setOpen(false);
-              const newPathName = pathname.split("/");
-              newPathName[1] = locale;
-              router.push(newPathName.join("/"));
-            }}
-          />
-        </div>
+        {pathname && <div className="px-4 py-2 text-white/50 uppercase">de</div>}
       </div>
     </>
   );

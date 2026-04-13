@@ -9,21 +9,38 @@ function toMediaType(mimeType?: string): "image" | "video" | null {
   return null;
 }
 
+function toPostMedia(doc: {
+  mediaItems?: { media?: { url?: string; mimeType?: string; width?: number; height?: number } }[];
+}) {
+  return (doc.mediaItems ?? [])
+    .map((item) => item.media)
+    .filter(
+      (
+        item,
+      ): item is { url?: string; mimeType?: string; width?: number; height?: number } => Boolean(item),
+    )
+    .filter((item) => Boolean(item.url))
+    .map((item) => ({
+      url: cmsMediaUrl(item.url ?? ""),
+      type: toMediaType(item.mimeType),
+      width: item.width,
+      height: item.height,
+    }));
+}
+
 export async function GET(req: NextRequest) {
   const { searchParams } = req.nextUrl;
-  const locale = searchParams.get("locale") ?? "de";
   const page = Number(searchParams.get("page") ?? "1");
 
   const cmsClient = serverApi();
-  const result = await cmsClient.blogPosts({ locale, page, limit: 10 });
+  const result = await cmsClient.blogPosts({ page, limit: 10 });
   const data = result.unwrapOr({ docs: [], hasNextPage: false });
 
   const posts = data.docs.map((doc) => ({
     id: doc.id,
     title: doc.title ?? "",
     description: doc.description ?? "",
-    mediaUrl: doc.media?.url ? cmsMediaUrl(doc.media.url) : "",
-    mediaType: toMediaType(doc.media?.mimeType),
+    media: toPostMedia(doc),
     publishedAt: doc.publishedAt ?? "",
   }));
 

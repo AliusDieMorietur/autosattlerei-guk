@@ -90,12 +90,7 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  fallbackLocale:
-    | ('false' | 'none' | 'null')
-    | false
-    | null
-    | ('de' | 'en' | 'ru' | 'ua')
-    | ('de' | 'en' | 'ru' | 'ua')[];
+  fallbackLocale: null;
   globals: {
     slides: Slide;
     'service-cards': ServiceCard;
@@ -104,7 +99,7 @@ export interface Config {
     slides: SlidesSelect<false> | SlidesSelect<true>;
     'service-cards': ServiceCardsSelect<false> | ServiceCardsSelect<true>;
   };
-  locale: 'de' | 'en' | 'ru' | 'ua';
+  locale: null;
   widgets: {
     collections: CollectionsWidget;
   };
@@ -209,7 +204,12 @@ export interface BlogPost {
   id: number;
   title: string;
   description?: string | null;
-  media?: (number | null) | Media;
+  mediaItems?:
+    | {
+        media: number | Media;
+        id?: string | null;
+      }[]
+    | null;
   publishedAt: string;
   updatedAt: string;
   createdAt: string;
@@ -361,7 +361,12 @@ export interface GallerySectionsSelect<T extends boolean = true> {
 export interface BlogPostsSelect<T extends boolean = true> {
   title?: T;
   description?: T;
-  media?: T;
+  mediaItems?:
+    | T
+    | {
+        media?: T;
+        id?: T;
+      };
   publishedAt?: T;
   updatedAt?: T;
   createdAt?: T;

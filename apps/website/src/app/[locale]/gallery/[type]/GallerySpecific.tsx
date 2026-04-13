@@ -17,6 +17,7 @@ export type GalleryItemData = {
 
 export type GallerySpecificData = {
   label: string;
+  description?: string;
   items: GalleryItemData[];
 };
 
@@ -42,7 +43,7 @@ export const GallerySpecific = ({
   const [opened, setOpen] = useState<number[]>([]);
 
   if (!galleryData) {
-    return redirect(`/${locale}/gallery`);
+    return redirect(`/gallery`);
   }
 
   const columns = {
@@ -54,8 +55,15 @@ export const GallerySpecific = ({
   return (
     <>
       <div className="w-full flex flex-col items-center px-5 desktopLg:px-0 relative">
-        <div className="w-full text-c7 text-xl desktop:text-2xl py-1.5 mb-5 desktop:mb-8">
-          {galleryData.label}
+        <div className="w-full flex flex-col gap-2 py-1.5 mb-5 desktop:mb-8">
+          <div className="text-c7 text-xl desktop:text-2xl">
+            {galleryData.label}
+          </div>
+          {galleryData.description && (
+            <p className="text-white/70 text-sm whitespace-pre-line max-w-3xl">
+              {galleryData.description}
+            </p>
+          )}
         </div>
         <div className="w-full flex flex-col gap-10">
           {galleryData.items.map(({ label, images, viewMore }, i) => {

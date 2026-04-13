@@ -21,7 +21,7 @@ export const generateMetadata = async ({ params }: BlogPageProps): Promise<Metad
     openGraph: {
       title: `${t("blogTitle")} | Autosattlerei Guk`,
       description: t("blogDescription"),
-      url: `${config.hostUrl}/${locale}/blog`,
+      url: `${config.hostUrl}/blog`,
       type: "website",
       locale: ogLocale,
       images: [{ url: `${config.hostUrl}/logo.png`, width: 512, height: 512, alt: "Autosattlerei Guk" }],
@@ -36,6 +36,25 @@ function toMediaType(mimeType?: string): "image" | "video" | null {
   return null;
 }
 
+function toPostMedia(doc: {
+  mediaItems?: { media?: { url?: string; mimeType?: string; width?: number; height?: number } }[];
+}) {
+  return (doc.mediaItems ?? [])
+    .map((item) => item.media)
+    .filter(
+      (
+        item,
+      ): item is { url?: string; mimeType?: string; width?: number; height?: number } => Boolean(item),
+    )
+    .filter((item) => Boolean(item.url))
+    .map((item) => ({
+      url: cmsMediaUrl(item.url ?? ""),
+      type: toMediaType(item.mimeType),
+      width: item.width,
+      height: item.height,
+    }));
+}
+
 const BlogPage = async ({ params }: BlogPageProps) => {
   const { locale } = await params;
   const cmsClient = serverApi();
@@ -47,8 +66,7 @@ const BlogPage = async ({ params }: BlogPageProps) => {
     id: doc.id,
     title: doc.title ?? "",
     description: doc.description ?? "",
-    mediaUrl: doc.media?.url ? cmsMediaUrl(doc.media.url) : "",
-    mediaType: toMediaType(doc.media?.mimeType),
+    media: toPostMedia(doc),
     publishedAt: doc.publishedAt ?? "",
   }));
 
