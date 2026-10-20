@@ -45,7 +45,6 @@ export const HomeSlider = ({
       opts={{
         loop: true,
       }}
-      // @ts-ignore
       plugins={[autoPlayRef.current]}
     >
       <CarouselContent>
@@ -57,6 +56,7 @@ export const HomeSlider = ({
                 alt={title || src}
                 className="w-full h-full object-cover"
                 fill
+                sizes="(min-width: 1440px) 1080px, (min-width: 1024px) 75vw, calc(100vw - 40px)"
                 priority={index === 0}
               />
               <div className="absolute bg-black/70 top-0 left-0 bottom-0 right-0"></div>

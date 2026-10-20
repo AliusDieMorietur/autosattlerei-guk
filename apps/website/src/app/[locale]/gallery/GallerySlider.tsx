@@ -50,7 +50,7 @@ export const GallerySlider = ({
       if (timeout) clearTimeout(timeout);
       api.off("select", onSelectListener);
     };
-  }, [api]);
+  }, [api, autoPlayStartDelay]);
 
   return (
     <Carousel
@@ -69,7 +69,13 @@ export const GallerySlider = ({
           >
             <div className="w-full rounded-xl h-[250px] tablet:h-[200px] desktop:h-[225px] overflow-hidden relative">
               <div className="relative w-full h-full">
-                <Image src={src} alt={src} fill className="object-cover" />
+                <Image
+                  src={src}
+                  alt=""
+                  fill
+                  sizes="(min-width: 1440px) 316px, (min-width: 1024px) 25vw, (min-width: 768px) 50vw, calc(100vw - 40px)"
+                  className="object-cover"
+                />
               </div>
             </div>
           </CarouselItem>

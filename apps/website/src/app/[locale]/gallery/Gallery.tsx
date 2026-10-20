@@ -1,7 +1,5 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { Fragment } from "react";
 import { GallerySlider } from "./GallerySlider";
@@ -19,8 +17,8 @@ export type GalleryProps = {
   sections: GallerySection[];
 };
 
-export function Gallery({ locale, sections }: GalleryProps) {
-  const t = useTranslations();
+export async function Gallery({ locale, sections }: GalleryProps) {
+  const t = await getTranslations({ locale });
 
   return (
     <div className="w-full flex flex-col items-center px-5 desktopLg:px-0 gap-5 desktop:gap-10 relative">

@@ -100,6 +100,7 @@ export const GallerySpecific = ({
                                 src={img.src}
                                 alt={img.src}
                                 fill
+                                sizes="(min-width: 1440px) 421px, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, calc(100vw - 40px)"
                                 className="object-cover max-h-[250px] rounded-xl transition-all"
                               />
                             </div>

@@ -1,7 +1,5 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import Link from "next/link";
 import { ContactForm } from "./ContactForm";
@@ -14,8 +12,8 @@ export type HomeProps = {
   cards: { src: string; title: string; slug: string }[];
 };
 
-export function Home({ locale, slides, cards }: HomeProps) {
-  const t = useTranslations();
+export async function Home({ locale, slides, cards }: HomeProps) {
+  const t = await getTranslations({ locale });
 
   return (
     <div>
@@ -38,6 +36,7 @@ export function Home({ locale, slides, cards }: HomeProps) {
                 alt={card.title}
                 className="object-cover rounded-xl"
                 fill
+                sizes="(min-width: 1440px) 316px, (min-width: 1024px) 22vw, (min-width: 768px) 75vw, 85vw"
               />
             </div>
             <div className="text-white text-xl">{card.title}</div>
