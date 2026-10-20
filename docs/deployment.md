@@ -1,6 +1,8 @@
 # Deployment
 
-The root `docker-compose.yaml` builds and runs the active production stack.
+Production website releases use [`.github/workflows/deployWebsite.yml`](../.github/workflows/deployWebsite.yml). The workflow follows the deployment pattern used by Subjektiv: GitHub Actions builds the Docker image, streams the compressed image over SSH, and recreates only the website service on the server.
+
+The root `docker-compose.yaml` defines the complete production stack.
 
 ## Services
 
@@ -23,7 +25,27 @@ Start from `.env.example` and provide production values for:
 
 Never commit the populated `.env` file.
 
-## Build and start
+## Website deployment
+
+Run **Deploy website** from the GitHub Actions page on the `main` branch. The workflow:
+
+1. builds `autosattlerei-guk-website:latest` on the GitHub runner;
+2. streams it to `DEPLOY_HOST` with `docker save | gzip | ssh`;
+3. fast-forwards `/root/projects/autosattlerei-guk` to `origin/main`;
+4. recreates only the Compose `website` service without building on the server;
+5. checks `http://127.0.0.1:3000/` before reporting success.
+
+Required GitHub configuration:
+
+- Secret `DEPLOY_SSH_KEY` — private SSH key authorized for the production root user.
+- Variable `DEPLOY_HOST` — production SSH hostname.
+- Variables `NEXT_PUBLIC_SERVER_URL`, `NEXT_PUBLIC_HOST_URL`, `NEXT_PUBLIC_GTM_ID`, `NEXT_PUBLIC_GA_ID`, and `NEXT_PUBLIC_GA_CONVERSION_ID` — build-time public website configuration.
+
+Runtime secrets remain on the server and are not copied into the image or workflow logs.
+
+## Full-stack manual start
+
+For initial provisioning or CMS changes:
 
 ```bash
 docker compose up -d --build

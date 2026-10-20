@@ -1,0 +1,117 @@
+name: Deploy website
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-website-production
+  cancel-in-progress: false
+
+jobs:
+  build-transfer-deploy:
+    name: Build, transfer, and deploy
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure SSH
+        env:
+          DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+        run: |
+          set -euo pipefail
+          test -n "$DEPLOY_HOST"
+          test -n "$DEPLOY_SSH_KEY"
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Build website image
+        run: |
+          set -euo pipefail
+          docker build --pull \
+            --file ./apps/website/Dockerfile.website \
+            --tag autosattlerei-guk-website:latest \
+            --build-arg NEXT_PUBLIC_SERVER_URL='${{ vars.NEXT_PUBLIC_SERVER_URL }}' \
+            --build-arg NEXT_PUBLIC_GTM_ID='${{ vars.NEXT_PUBLIC_GTM_ID }}' \
+            --build-arg NEXT_PUBLIC_GA_ID='${{ vars.NEXT_PUBLIC_GA_ID }}' \
+            --build-arg NEXT_PUBLIC_GA_CONVERSION_ID='${{ vars.NEXT_PUBLIC_GA_CONVERSION_ID }}' \
+            --build-arg CMS_URL=http://cms:3000 \
+            --build-arg NEXT_PUBLIC_HOST_URL='${{ vars.NEXT_PUBLIC_HOST_URL }}' \
+            .
+
+      - name: Transfer image to production
+        env:
+          DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+        run: |
+          set -euo pipefail
+          for attempt in 1 2 3 4 5; do
+            if docker image save autosattlerei-guk-website:latest \
+              | gzip -1 \
+              | ssh -i ~/.ssh/deploy_key root@"$DEPLOY_HOST" 'gunzip | docker image load'; then
+              exit 0
+            fi
+
+            if [ "$attempt" -eq 5 ]; then
+              echo "Image transfer failed after $attempt attempts" >&2
+              exit 1
+            fi
+
+            echo "Image transfer attempt $attempt failed; retrying in 5 seconds..."
+            sleep 5
+          done
+
+      - name: Update production website
+        env:
+          DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
+        run: |
+          set -euo pipefail
+          ssh -i ~/.ssh/deploy_key root@"$DEPLOY_HOST" 'bash -se' <<'REMOTE'
+          set -euo pipefail
+          cd /root/projects/autosattlerei-guk
+
+          git fetch origin main
+          git checkout main
+          git pull --ff-only origin main
+
+          # Keep production values on the server. Only read export statements;
+          # do not execute the legacy build command at the end of build.sh.
+          source <(grep '^export ' build.sh)
+
+          docker compose up -d \
+            --no-build \
+            --no-deps \
+            --force-recreate \
+            website
+
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent --show-error http://127.0.0.1:3000/ >/dev/null; then
+              docker image prune -f
+              docker compose ps website
+              exit 0
+            fi
+            sleep 2
+          done
+
+          echo 'Website health check failed' >&2
+          docker compose logs --tail=100 website >&2
+          exit 1
+          REMOTE
+
+      - name: Deployment summary
+        run: |
+          {
+            echo '## Website deployed'
+            echo
+            echo "- Commit: \`${GITHUB_SHA}\`"
+            echo "- Host: \`${{ vars.DEPLOY_HOST }}\`"
+            echo "- Image: \`autosattlerei-guk-website:latest\`"
+          } >> "$GITHUB_STEP_SUMMARY"
