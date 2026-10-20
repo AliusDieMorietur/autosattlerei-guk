@@ -26,8 +26,9 @@ const Poppins = localFont({
       style: "normal",
     },
   ],
-  display: "swap",
-  preload: false,
+  // Avoid rendering the system fallback and visibly swapping to Poppins.
+  display: "block",
+  preload: true,
 });
 
 export async function generateMetadata(props: {
