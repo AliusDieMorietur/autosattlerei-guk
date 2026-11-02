@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import { Gallery } from "./Gallery";
 import { serverApi } from "@/lib/api/server";
 import { cmsMediaUrl } from "@/lib/api/utils";
-import { buildAlternates, localeToOgLocale } from "@/lib/seo";
+import { buildAlternates, defaultSocialImage, localeToOgLocale } from "@/lib/seo";
 import { config } from "@/lib/config";
 
 export type GalleryPageProps = {
@@ -24,13 +24,14 @@ export const generateMetadata = async ({ params }: GalleryPageProps): Promise<Me
       url: `${config.hostUrl}/gallery`,
       type: "website",
       locale: ogLocale,
-      images: [{ url: `${config.hostUrl}/logo.png`, width: 512, height: 512, alt: "Autosattlerei Guk" }],
+      images: [defaultSocialImage],
     },
   };
 };
 
 const GalleryPage = async ({ params }: GalleryPageProps) => {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "gallery" });
   const cmsClient = serverApi();
 
   const result = await cmsClient.gallerySections();
@@ -40,8 +41,12 @@ const GalleryPage = async ({ params }: GalleryPageProps) => {
     title: section.title ?? "",
     description: section.description ?? "",
     slug: section.slug ?? "",
-    images: (section.images ?? []).map((img) => ({
+    images: (section.images ?? []).map((img, imageIndex) => ({
       src: cmsMediaUrl(img.media?.url ?? ""),
+      alt: t("workExample", {
+        title: section.title ?? t("workFallback"),
+        number: imageIndex + 1,
+      }),
     })),
     autoStartDelay: index * 333,
   }));

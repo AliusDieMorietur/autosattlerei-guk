@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { serverApi } from "@/lib/api/server";
 import { cmsMediaUrl } from "@/lib/api/utils";
 import { Blog, BlogPost } from "./Blog";
-import { buildAlternates, localeToOgLocale } from "@/lib/seo";
+import { buildAlternates, defaultSocialImage, localeToOgLocale } from "@/lib/seo";
 import { config } from "@/lib/config";
 import { getTranslations } from "next-intl/server";
 
@@ -24,7 +24,7 @@ export const generateMetadata = async ({ params }: BlogPageProps): Promise<Metad
       url: `${config.hostUrl}/blog`,
       type: "website",
       locale: ogLocale,
-      images: [{ url: `${config.hostUrl}/logo.png`, width: 512, height: 512, alt: "Autosattlerei Guk" }],
+      images: [defaultSocialImage],
     },
   };
 };

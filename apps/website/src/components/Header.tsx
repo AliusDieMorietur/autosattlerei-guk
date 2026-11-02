@@ -13,11 +13,7 @@ import {
   EnvelopeIcon as Mail,
 } from "@heroicons/react/24/solid";
 
-export type HeaderProps = {
-  locale: string;
-};
-
-export const Header = ({ locale }: HeaderProps) => {
+export const Header = () => {
   const t = useTranslations();
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -109,14 +105,14 @@ export const Header = ({ locale }: HeaderProps) => {
                 />
               </div>
               <Link href="/#home" onClick={() => setOpen(false)}>
-                <h1 className="text-lg desktop:text-2xl">
+                <span className="text-lg desktop:text-2xl font-medium">
                   {t("label.AutosattlereiGuk")}
-                </h1>
+                </span>
               </Link>
             </div>
             <div className="hidden desktop:flex items-center gap-6 text-lg">
               <Link href="/gallery">{t("button.OurServices")}</Link>
-              <Link href="/blog">Blog</Link>
+              <Link href="/blog">{t("button.Blog")}</Link>
               <Link href="/#contact-us">{t("button.ContactUs")}</Link>
             </div>
             <div className="flex desktop:hidden gap-3">
@@ -153,7 +149,7 @@ export const Header = ({ locale }: HeaderProps) => {
             {t("button.OurServices")}
           </Link>
           <Link href="/blog" onClick={() => setOpen(false)}>
-            Blog
+            {t("button.Blog")}
           </Link>
           <Link
             href="/#contact-us"

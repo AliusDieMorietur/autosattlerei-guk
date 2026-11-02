@@ -60,6 +60,8 @@
   },
   "button": {
     "Home": "Home",
+    "ReturnHome": "Return home",
+    "Blog": "Projects & News",
     "Gallery": "Gallery",
     "Contacts": "Contacts",
     "ContactUs": "Contact Us",
@@ -79,6 +81,17 @@
     "OurServices": "Our Services",
     "ClickToOpen": "Click to open"
   },
+  "blog": {
+    "heading": "Projects & News",
+    "empty": "No posts yet.",
+    "loading": "Loading more posts…"
+  },
+  "gallery": {
+    "notFound": "Not found",
+    "workFallback": "Upholstery work",
+    "workExample": "{title} – work example {number}",
+    "sectionDescription": "Autosattlerei Guk in Berlin and Brandenburg – {description}"
+  },
   "error": {
     "NameMin2": "Name must be at least 2 characters long.",
     "NameMax50": "Name must not exceed 50 characters.",
@@ -95,6 +108,7 @@
     "EnterDescription": "Enter description"
   },
   "meta": {
+    "homeHeading": "Custom automotive upholstery in Berlin and Brandenburg",
     "homeTitle": "Autosattlerei Guk Berlin",
     "homeDescription": "Autosattlerei Guk in Berlin – professional car interior upholstery. Reupholstering seats, steering wheels, door panels, headliners and full interiors. From classic cars to supercars.",
     "galleryTitle": "Gallery",

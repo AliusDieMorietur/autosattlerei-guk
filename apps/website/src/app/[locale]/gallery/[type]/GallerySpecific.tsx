@@ -6,12 +6,11 @@ import { cn } from "@/lib/utils";
 import { Pointer } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { redirect } from "next/navigation";
-import { Fragment, JSX, useState } from "react";
+import { Fragment, useState } from "react";
 
 export type GalleryItemData = {
   label?: string;
-  images: { src: string }[];
+  images: { src: string; alt: string }[];
   viewMore?: boolean;
 };
 
@@ -22,29 +21,19 @@ export type GallerySpecificData = {
 };
 
 export type GallerySpecificProps = {
-  locale: string;
-  type: string;
-  galleryData: GallerySpecificData | null;
+  galleryData: GallerySpecificData;
 };
 
-const splitIntoColumns = (images: { src: string }[], cols: number) => {
-  const result: { src: string }[][] = Array.from({ length: cols }, () => []);
+const splitIntoColumns = (images: { src: string; alt: string }[], cols: number) => {
+  const result: { src: string; alt: string }[][] = Array.from({ length: cols }, () => []);
   images.forEach((img, i) => result[i % cols].push(img));
   return result;
 };
 
-export const GallerySpecific = ({
-  locale,
-  type,
-  galleryData,
-}: GallerySpecificProps) => {
+export const GallerySpecific = ({ galleryData }: GallerySpecificProps) => {
   const t = useTranslations();
   const mode = useAppMode();
   const [opened, setOpen] = useState<number[]>([]);
-
-  if (!galleryData) {
-    return redirect(`/gallery`);
-  }
 
   const columns = {
     mobile: 1,
@@ -56,9 +45,9 @@ export const GallerySpecific = ({
     <>
       <div className="w-full flex flex-col items-center px-5 desktopLg:px-0 relative">
         <div className="w-full flex flex-col gap-2 py-1.5 mb-5 desktop:mb-8">
-          <div className="text-c7 text-xl desktop:text-2xl">
+          <h1 className="text-c7 text-xl desktop:text-2xl">
             {galleryData.label}
-          </div>
+          </h1>
           {galleryData.description && (
             <p className="text-white/70 text-sm whitespace-pre-line max-w-3xl">
               {galleryData.description}
@@ -98,7 +87,7 @@ export const GallerySpecific = ({
                             <div className="relative w-full h-[250px] rounded-xl">
                               <Image
                                 src={img.src}
-                                alt={img.src}
+                                alt={img.alt}
                                 fill
                                 sizes="(min-width: 1440px) 421px, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, calc(100vw - 40px)"
                                 className="object-cover max-h-[250px] rounded-xl transition-all"

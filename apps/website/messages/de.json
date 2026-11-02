@@ -4,8 +4,8 @@
     "AutosattlereiGuk": "Autosattlerei Guk",
     "autosattlereiGukMail": "autosattler.guk@gmail.com",
     "autosattlereiGukPhone": "0176-614-99059",
-    "autosattlereiGukIndex": "12555 Berlin",
-    "autosattlereiGukAddress": "Frankfurter Chaussee 73, 15370 Fredersdorf-vogelsdorf",
+    "autosattlereiGukIndex": "15370 Fredersdorf-Vogelsdorf",
+    "autosattlereiGukAddress": "Frankfurter Chaussee 73, 15370 Fredersdorf-Vogelsdorf",
     "autosattlereiGukWorkHours": "10.00-17.00",
     "Contacts": "Kontakte",
     "ContactUs": "Kontaktieren Sie uns",
@@ -60,6 +60,8 @@
   },
   "button": {
     "Home": "Startseite",
+    "ReturnHome": "Zurück zur Startseite",
+    "Blog": "Projekte & Neuigkeiten",
     "Gallery": "Galerie",
     "Contacts": "Kontakte",
     "ContactUs": "Kontaktieren Sie uns",
@@ -79,6 +81,17 @@
     "OurServices": "Unsere Dienstleistungen",
     "ClickToOpen": "Zum Öffnen klicken"
   },
+  "blog": {
+    "heading": "Projekte & Neuigkeiten",
+    "empty": "Noch keine Beiträge vorhanden.",
+    "loading": "Weitere Beiträge werden geladen…"
+  },
+  "gallery": {
+    "notFound": "Nicht gefunden",
+    "workFallback": "Autosattlerei-Arbeiten",
+    "workExample": "{title} – Arbeitsbeispiel {number}",
+    "sectionDescription": "Autosattlerei Guk in Berlin und Brandenburg – {description}"
+  },
   "error": {
     "NameMin2": "Der Name muss mindestens 2 Zeichen lang sein.",
     "NameMax50": "Der Name darf nicht länger als 50 Zeichen sein.",
@@ -95,12 +108,13 @@
     "EnterDescription": "Beschreibung eingeben"
   },
   "meta": {
-    "homeTitle": "Autosattlerei Guk Berlin",
-    "homeDescription": "Autosattlerei Guk in Berlin – professioneller Fahrzeuginnenausbau. Neubezug von Sitzen, Lenkrädern, Türverkleidungen, Dachhimmeln und kompletten Innenräumen. Von Oldtimern bis Supersportwagen.",
-    "galleryTitle": "Galerie",
-    "galleryDescription": "Entdecken Sie unsere Arbeiten: Innenräume, Lenkräder, Türverkleidungen und Dachhimmel – Autosattlerei Guk in Berlin.",
-    "blogTitle": "Blog",
-    "blogDescription": "Neuigkeiten und Projekte von Autosattlerei Guk in Berlin.",
+    "homeHeading": "Autosattlerei für individuellen Fahrzeuginnenausbau in Berlin und Brandenburg",
+    "homeTitle": "Autosattlerei Berlin & Brandenburg | Autosattlerei Guk",
+    "homeDescription": "Individueller Fahrzeuginnenausbau bei Berlin: Sitze, Lenkräder, Türverkleidungen, Dachhimmel und komplette Innenräume für Oldtimer bis Sportwagen.",
+    "galleryTitle": "Fahrzeuginnenausbau – Referenzen",
+    "galleryDescription": "Entdecken Sie unsere Autosattlerei-Arbeiten an Innenräumen, Sitzen, Lenkrädern, Türverkleidungen und Dachhimmeln in Berlin und Brandenburg.",
+    "blogTitle": "Projekte & Neuigkeiten",
+    "blogDescription": "Aktuelle Projekte, Restaurierungen und Einblicke in die Arbeit der Autosattlerei Guk für Berlin und Brandenburg.",
     "impressumTitle": "Impressum",
     "impressumDescription": "Impressum von Autosattlerei Guk in Berlin."
   }

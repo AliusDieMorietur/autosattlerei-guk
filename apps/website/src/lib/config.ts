@@ -1,7 +1,7 @@
 import z from "zod";
 
 const ConfigSchema = z.object({
-  hostUrl: z.string(),
+  hostUrl: z.string().url().transform((url) => url.replace(/\/$/, "")),
   gtmId: z.string().optional(),
   gaId: z.string().optional(),
   gaConversionId: z.string().optional(),

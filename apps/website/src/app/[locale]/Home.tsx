@@ -17,6 +17,7 @@ export async function Home({ locale, slides, cards }: HomeProps) {
 
   return (
     <div>
+      <h1 className="sr-only">{t("meta.homeHeading")}</h1>
       <div className="flex justify-center">
         <div className="w-full mb-10 relative desktop:w-[75%]">
           <div className="w-full flex justify-center rounded-xl overflow-hidden px-5 desktopLg:px-0">
@@ -51,7 +52,7 @@ export async function Home({ locale, slides, cards }: HomeProps) {
       <div id="contact-us" className="mb-[60px] desktop:mb-[120px]" />
       <div className="flex flex-col desktop:flex-row justify-center desktop:gap-16 p-5 desktop:p-0">
         <div className="flex flex-col justify-center w-full desktop:w-1/3">
-          <div className="text-white mb-2 text-2xl">{t("label.ContactUs")}</div>
+          <h2 className="text-white mb-2 text-2xl">{t("label.ContactUs")}</h2>
           <div className="text-c14 mb-4">{t("label.FeelFreeToContactUs")}</div>
           <div className="text-c14 mb-1">{t("label.Address")}</div>
           <Link

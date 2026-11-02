@@ -10,6 +10,13 @@ export const localeToOgLocale: Record<string, string> = {
   de: "de_DE",
 };
 
+export const defaultSocialImage = {
+  url: `${config.hostUrl}/og-image.jpg`,
+  width: 1200,
+  height: 675,
+  alt: "Individuell ausgestatteter Fahrzeuginnenraum von Autosattlerei Guk",
+};
+
 export function buildAlternates(_locale: string, pathSuffix: string = "") {
   return {
     canonical: `${config.hostUrl}${pathSuffix || "/"}`,

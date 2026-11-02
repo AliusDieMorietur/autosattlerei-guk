@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 export type BlogPostMedia = {
@@ -116,6 +117,7 @@ function PostCard({ post, locale }: { post: BlogPost; locale: string }) {
 }
 
 export function Blog({ initialPosts, initialHasNextPage, locale }: Props) {
+  const t = useTranslations("blog");
   const [posts, setPosts] = useState<BlogPost[]>(initialPosts);
   const [hasNextPage, setHasNextPage] = useState(initialHasNextPage);
   const [page, setPage] = useState(2);
@@ -152,9 +154,11 @@ export function Blog({ initialPosts, initialHasNextPage, locale }: Props) {
 
   return (
     <div className="w-full flex flex-col items-center px-5 desktopLg:px-0 gap-5 desktop:gap-8">
-      <div className="w-full text-c7 text-xl desktop:text-2xl py-1.5">Blog</div>
+      <h1 className="w-full text-c7 text-xl desktop:text-2xl py-1.5">
+        {t("heading")}
+      </h1>
       {posts.length === 0 && !loading && (
-        <div className="text-white/50 text-sm py-10">No posts yet.</div>
+        <div className="text-white/50 text-sm py-10">{t("empty")}</div>
       )}
       <div className="w-full flex flex-col gap-6 max-w-2xl">
         {posts.map((post) => (
@@ -163,7 +167,7 @@ export function Blog({ initialPosts, initialHasNextPage, locale }: Props) {
       </div>
       <div ref={sentinelRef} className="w-full h-4" />
       {loading && (
-        <div className="text-white/40 text-sm py-4">Loading...</div>
+        <div className="text-white/40 text-sm py-4">{t("loading")}</div>
       )}
     </div>
   );

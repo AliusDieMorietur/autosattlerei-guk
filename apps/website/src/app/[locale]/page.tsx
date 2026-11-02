@@ -1,5 +1,6 @@
+import { BUSINESS } from "@/lib/business";
 import { config } from "@/lib/config";
-import { buildAlternates, localeToOgLocale } from "@/lib/seo";
+import { buildAlternates, defaultSocialImage, localeToOgLocale } from "@/lib/seo";
 import { serverApi } from "@/lib/api/server";
 import { cmsMediaUrl } from "@/lib/api/utils";
 import { Home } from "./Home";
@@ -8,33 +9,43 @@ import { getTranslations } from "next-intl/server";
 
 const JSON_LD = {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  name: "Autosattlerei Guk",
-  description:
-    "Eine Werkstatt für das Neubeziehen von Fahrzeuginnenräumen. Arbeiten in allen Schwierigkeitsgraden. Vielfältige Arbeitsoptionen: Neubezug von Türverkleidungen, Sitzen, Lenkrädern, Armaturenbrettern, Dachhimmeln, Griffen, Schalthebeln und kompletten Innenräumen. Von Oldtimern bis hin zu Supersportwagen. Handwerkskunst auf höchstem Niveau.",
+  "@type": "AutoRepair",
+  "@id": `${config.hostUrl}/#business`,
+  name: BUSINESS.name,
+  legalName: BUSINESS.legalName,
+  description: BUSINESS.description,
   url: config.hostUrl,
   logo: `${config.hostUrl}/logo.png`,
   image: `${config.hostUrl}/logo.png`,
+  email: BUSINESS.email,
+  telephone: BUSINESS.phone,
+  priceRange: "€€",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "Seelenbinder str. 112",
-    addressLocality: "Berlin",
-    postalCode: "12555",
-    addressCountry: "DE",
+    ...BUSINESS.address,
   },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: "52.45498524061661",
-    longitude: "13.592589044619203",
-  },
-  openingHours: "Mo-Fr 10.00-17.00",
-  telephone: "0176-614-99059",
-  sameAs: ["https://www.tiktok.com/@autosattlerei.guk1"],
-  service: {
-    "@type": "Service",
-    name: "Autosattlerei Guk",
-    description:
-      "Eine Werkstatt für das Neubeziehen von Fahrzeuginnenräumen. Arbeiten in allen Schwierigkeitsgraden. Vielfältige Arbeitsoptionen: Neubezug von Türverkleidungen, Sitzen, Lenkrädern, Armaturenbrettern, Dachhimmeln, Griffen, Schalthebeln und kompletten Innenräumen. Von Oldtimern bis hin zu Supersportwagen. Handwerkskunst auf höchstem Niveau.",
+  openingHoursSpecification: BUSINESS.openingHours.map((hours) => ({
+    "@type": "OpeningHoursSpecification",
+    ...hours,
+  })),
+  areaServed: [
+    { "@type": "City", name: "Berlin" },
+    { "@type": "State", name: "Brandenburg" },
+  ],
+  sameAs: BUSINESS.socialProfiles,
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Autosattlerei-Leistungen",
+    itemListElement: [
+      "Fahrzeugsitze neu beziehen",
+      "Lenkräder neu beziehen",
+      "Türverkleidungen neu beziehen",
+      "Dachhimmel erneuern",
+      "Oldtimer-Innenräume restaurieren",
+    ].map((name) => ({
+      "@type": "Offer",
+      itemOffered: { "@type": "Service", name },
+    })),
   },
 };
 
@@ -47,7 +58,7 @@ export const generateMetadata = async ({ params }: HomePageProps): Promise<Metad
   const t = await getTranslations({ locale, namespace: "meta" });
   const ogLocale = localeToOgLocale[locale] ?? "de_DE";
   return {
-    title: t("homeTitle"),
+    title: { absolute: t("homeTitle") },
     description: t("homeDescription"),
     alternates: buildAlternates(locale),
     openGraph: {
@@ -56,7 +67,7 @@ export const generateMetadata = async ({ params }: HomePageProps): Promise<Metad
       url: config.hostUrl,
       type: "website",
       locale: ogLocale,
-      images: [{ url: `${config.hostUrl}/logo.png`, width: 512, height: 512, alt: "Autosattlerei Guk" }],
+      images: [defaultSocialImage],
     },
   };
 };
@@ -86,7 +97,7 @@ const HomePage = async ({ params }: HomePageProps) => {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD).replace(/</g, "\\u003c") }}
       />
       <Home locale={locale} slides={slides} cards={cards} />
     </>

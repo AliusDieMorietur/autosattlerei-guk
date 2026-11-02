@@ -22,7 +22,7 @@ export default function NotFound(props: {
   return (
     <div>
       <h2>{t("label.NotFound")}</h2>
-      <Link href="/">Return Home</Link>
+      <Link href="/">{t("button.ReturnHome")}</Link>
     </div>
   );
 }

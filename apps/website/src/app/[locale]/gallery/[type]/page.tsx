@@ -1,9 +1,11 @@
 import { GallerySpecific, GallerySpecificData } from "./GallerySpecific";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { serverApi } from "@/lib/api/server";
 import { cmsMediaUrl } from "@/lib/api/utils";
-import { buildAlternates, localeToOgLocale } from "@/lib/seo";
+import { buildAlternates, defaultSocialImage, localeToOgLocale } from "@/lib/seo";
 import { config } from "@/lib/config";
+import { getTranslations } from "next-intl/server";
 
 export type GallerySpecificPageProps = {
   params: Promise<{
@@ -16,6 +18,7 @@ export const generateMetadata = async ({
   params,
 }: GallerySpecificPageProps): Promise<Metadata> => {
   const { locale, type } = await params;
+  const t = await getTranslations({ locale, namespace: "gallery" });
   const cmsClient = serverApi();
   const result = await cmsClient.gallerySections({
     "where[slug][equals]": type,
@@ -25,13 +28,13 @@ export const generateMetadata = async ({
   const ogLocale = localeToOgLocale[locale] ?? "de_DE";
   if (!section) {
     return {
-      title: "Gallery",
-      alternates: buildAlternates(locale, `/gallery/${type}`),
+      title: t("notFound"),
+      robots: { index: false, follow: false },
     };
   }
-  const title = section.title ?? "";
+  const title = section.title ?? t("workFallback");
   const description = section.description
-    ? `Autosattlerei Guk in Berlin – ${section.description}`
+    ? t("sectionDescription", { description: section.description })
     : undefined;
   return {
     title,
@@ -43,7 +46,12 @@ export const generateMetadata = async ({
       url: `${config.hostUrl}/gallery/${type}`,
       type: "website",
       locale: ogLocale,
-      images: [{ url: `${config.hostUrl}/logo.png`, width: 512, height: 512, alt: "Autosattlerei Guk" }],
+      images: [{
+        url: section.images?.[0]?.media?.url
+          ? new URL(cmsMediaUrl(section.images[0].media.url), config.hostUrl).toString()
+          : defaultSocialImage.url,
+        alt: `${title} – Autosattlerei Guk`,
+      }],
     },
   };
 };
@@ -52,6 +60,7 @@ export default async function GallerySpecificPage({
   params,
 }: GallerySpecificPageProps) {
   const { locale, type } = await params;
+  const t = await getTranslations({ locale, namespace: "gallery" });
   const cmsClient = serverApi();
 
   const result = await cmsClient.gallerySections({
@@ -60,20 +69,18 @@ export default async function GallerySpecificPage({
   });
   const section = result.unwrapOr({ docs: [] }).docs[0];
 
-  let galleryData: GallerySpecificData | null = null;
+  if (!section) notFound();
 
-  if (section) {
-    const images = (section.images ?? []).map((img) => ({
-      src: cmsMediaUrl(img.media?.url ?? ""),
-    }));
-    galleryData = {
-      label: section.title ?? "",
-      description: section.description ?? "",
-      items: [{ images, viewMore: false }],
-    };
-  }
+  const label = section.title ?? t("workFallback");
+  const images = (section.images ?? []).map((img, index) => ({
+    src: cmsMediaUrl(img.media?.url ?? ""),
+    alt: t("workExample", { title: label, number: index + 1 }),
+  }));
+  const galleryData: GallerySpecificData = {
+    label,
+    description: section.description ?? "",
+    items: [{ images, viewMore: false }],
+  };
 
-  return (
-    <GallerySpecific locale={locale} type={type} galleryData={galleryData} />
-  );
+  return <GallerySpecific galleryData={galleryData} />;
 }
