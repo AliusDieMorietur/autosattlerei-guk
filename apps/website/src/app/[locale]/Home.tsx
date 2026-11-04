@@ -2,9 +2,10 @@ import { Button } from "@/components/ui/button";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import Link from "next/link";
-import { ContactForm } from "./ContactForm";
+import { ContactSection } from "./ContactSection";
 import { HomeSlider } from "./HomeSlider";
 import { Map } from "./Map";
+import { SERVICES } from "@/lib/services";
 
 export type HomeProps = {
   locale: string;
@@ -49,38 +50,25 @@ export async function Home({ locale, slides, cards }: HomeProps) {
           </div>
         ))}
       </div>
+      <section aria-labelledby="leistungen" className="px-5 desktopLg:px-0 mt-10">
+        <h2 id="leistungen" className="text-white text-2xl mb-4">
+          Unsere Leistungen
+        </h2>
+        <ul className="flex flex-wrap gap-3">
+          {SERVICES.map((service) => (
+            <li key={service.slug}>
+              <Link
+                href={`/leistungen/${service.slug}`}
+                className="inline-block bg-c9 text-white rounded-full px-4 py-2 hover:bg-c12 hover:text-c8"
+              >
+                {service.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
       <div id="contact-us" className="mb-[60px] desktop:mb-[120px]" />
-      <div className="flex flex-col desktop:flex-row justify-center desktop:gap-16 p-5 desktop:p-0">
-        <div className="flex flex-col justify-center w-full desktop:w-1/3">
-          <h2 className="text-white mb-2 text-2xl">{t("label.ContactUs")}</h2>
-          <div className="text-c14 mb-4">{t("label.FeelFreeToContactUs")}</div>
-          <div className="text-c14 mb-1">{t("label.Address")}</div>
-          <Link
-            href="/#address"
-            className="text-white mb-4 underline underline-offset-2"
-          >
-            {t("label.autosattlereiGukAddress")}
-          </Link>
-          <div className="text-c14 mb-1">{t("label.WorkingHours")}</div>
-          <div className="text-white">{t("label.MODO")}</div>
-          <div className="text-white mb-4">{t("label.FR")}</div>
-          <div className="text-c14 mb-1">{t("label.Phone")}</div>
-          <Link
-            href={`tel:${t("label.autosattlereiGukPhone").replace("-", "")}`}
-            className="text-white mb-4 underline underline-offset-2"
-          >
-            {t("label.autosattlereiGukPhone")}
-          </Link>
-          <div className="text-c14 mb-1">{t("label.Email")}</div>
-          <Link
-            href={`mailto:${t("label.autosattlereiGukMail")}`}
-            className="text-white mb-4 underline underline-offset-2"
-          >
-            {t("label.autosattlereiGukMail")}
-          </Link>
-        </div>
-        <ContactForm className="w-full desktop:w-1/3" />
-      </div>
+      <ContactSection locale={locale} />
       <div id="address" className="mb-[60px] desktop:mb-[120px]" />
       <div className="flex flex-col items-center justify-center p-4 gap-4">
         <Map />

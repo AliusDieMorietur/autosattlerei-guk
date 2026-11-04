@@ -1,8 +1,9 @@
 import type { MetadataRoute } from "next";
 import { config } from "@/lib/config";
 import { serverApi } from "@/lib/api/server";
+import { SERVICES } from "@/lib/services";
 
-const STATIC_PATHS = ["/", "/gallery", "/blog"] as const;
+const STATIC_PATHS = ["/", "/gallery", "/leistungen", "/blog"] as const;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const cmsClient = serverApi();
@@ -15,7 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entries: MetadataRoute.Sitemap = STATIC_PATHS.map((path) => ({
     url: `${config.hostUrl}${path === "/" ? "" : path}`,
     changeFrequency: path === "/" ? "weekly" : "monthly",
-    priority: path === "/" ? 1.0 : path === "/gallery" ? 0.9 : 0.7,
+    priority: path === "/" ? 1.0 : path === "/gallery" || path === "/leistungen" ? 0.9 : 0.7,
     alternates: {
       languages: {
         de: `${config.hostUrl}${path === "/" ? "" : path}`,
@@ -35,6 +36,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           "x-default": `${config.hostUrl}/gallery/${slug}`,
         },
       },
+    });
+  }
+
+  for (const service of SERVICES) {
+    const url = `${config.hostUrl}/leistungen/${service.slug}`;
+    entries.push({
+      url,
+      changeFrequency: "monthly",
+      priority: 0.8,
+      alternates: { languages: { de: url, "x-default": url } },
     });
   }
 
