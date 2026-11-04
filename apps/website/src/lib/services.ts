@@ -21,8 +21,6 @@ export type Service = {
   highlights: string[];
   faq: { question: string; answer: string }[];
   related: string[];
-  /** Existing CMS gallery slug with example photos, if any */
-  gallerySlug?: string;
   /**
    * Photos / videos for this service. Leave empty until material exists –
    * the media section is hidden automatically.
@@ -65,7 +63,6 @@ export const SERVICES: Service[] = [
       },
     ],
     related: ["sternenhimmel-einbauen", "ambientebeleuchtung-einbauen", "autositze-neu-beziehen"],
-    gallerySlug: "roof",
     media: [],
   },
   {
@@ -99,7 +96,6 @@ export const SERVICES: Service[] = [
       },
     ],
     related: ["dachhimmel-neu-beziehen", "ambientebeleuchtung-einbauen", "tuerverkleidungen-neu-beziehen"],
-    gallerySlug: "roof",
     media: [],
   },
   {
@@ -166,7 +162,6 @@ export const SERVICES: Service[] = [
       },
     ],
     related: ["sitzform-motorradsitze-veraendern", "sitzreparaturen", "autositze-neu-beziehen"],
-    gallerySlug: "moto-seat",
     media: [],
   },
   {
@@ -200,7 +195,6 @@ export const SERVICES: Service[] = [
       },
     ],
     related: ["motorradsitze-neu-beziehen", "sitzreparaturen", "autositze-neu-beziehen"],
-    gallerySlug: "moto-seat",
     media: [],
   },
   {
@@ -295,7 +289,6 @@ export const SERVICES: Service[] = [
       },
     ],
     related: ["neuen-teppichboden-in-oldtimern-verlegen", "sitzreparaturen", "autositze-neu-beziehen"],
-    gallerySlug: "salons",
     media: [],
   },
   {
@@ -324,7 +317,6 @@ export const SERVICES: Service[] = [
       },
     ],
     related: ["oldtimer-sitze-restaurieren", "tuerverkleidungen-neu-beziehen", "armaturenbrett-neu-beziehen"],
-    gallerySlug: "salons",
     media: [],
   },
   {
@@ -359,7 +351,6 @@ export const SERVICES: Service[] = [
       },
     ],
     related: ["sitzreparaturen", "originalsitzbezug-ersetzen", "lenkraeder-neu-beziehen"],
-    gallerySlug: "salons",
     media: [],
   },
   {
@@ -388,7 +379,6 @@ export const SERVICES: Service[] = [
       },
     ],
     related: ["autositze-neu-beziehen", "mittelkonsole-neu-beziehen", "armaturenbrett-neu-beziehen"],
-    gallerySlug: "wheel",
     media: [],
   },
   {
@@ -417,7 +407,6 @@ export const SERVICES: Service[] = [
       },
     ],
     related: ["ambientebeleuchtung-einbauen", "autositze-neu-beziehen", "mittelkonsole-neu-beziehen"],
-    gallerySlug: "door-panel",
     media: [],
   },
   {
@@ -446,7 +435,6 @@ export const SERVICES: Service[] = [
       },
     ],
     related: ["armaturenbrett-neu-beziehen", "tuerverkleidungen-neu-beziehen", "lenkraeder-neu-beziehen"],
-    gallerySlug: "salons",
     media: [],
   },
   {
@@ -480,7 +468,6 @@ export const SERVICES: Service[] = [
       },
     ],
     related: ["mittelkonsole-neu-beziehen", "lenkraeder-neu-beziehen", "tuerverkleidungen-neu-beziehen"],
-    gallerySlug: "dash-board",
     media: [],
   },
   {

@@ -3,7 +3,6 @@ import { config } from "@/lib/config";
 import { buildAlternates, defaultSocialImage, localeToOgLocale } from "@/lib/seo";
 import { SERVICES, getService } from "@/lib/services";
 import { LOCALES } from "@/i18n/routing";
-import { Button } from "@/components/ui/button";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -190,14 +189,6 @@ export default async function ServicePage({ params }: ServicePageProps) {
             )}
           </div>
         </section>
-      )}
-
-      {service.gallerySlug && (
-        <div className="mb-12">
-          <Link href={`/gallery/${service.gallerySlug}`}>
-            <Button className="bg-c12 text-c8 w-fit">Weitere Beispiele in der Galerie</Button>
-          </Link>
-        </div>
       )}
 
       <section aria-labelledby="ablauf" className="mb-12">
