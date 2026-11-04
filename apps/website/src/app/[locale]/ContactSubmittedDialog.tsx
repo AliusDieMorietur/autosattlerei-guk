@@ -32,10 +32,10 @@ export const ContactSubmittedDialog = ({
     >
       <DialogContent className="sm:max-w-[425px] h-[200px]">
         <div className="grow flex flex-col justify-center items-center pt-8">
-          <div className="text-c7 text-2xl">
+          <div className="gk-text-neutral-high text-2xl">
             {t("label.ThankYouForYourRequest")}
           </div>
-          <div className="text-c7">{t("label.WeWillContactYouSoon")}</div>
+          <div className="gk-text-neutral-high">{t("label.WeWillContactYouSoon")}</div>
         </div>
         <div className="flex justify-end items-end">
           <Button

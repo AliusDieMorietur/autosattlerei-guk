@@ -22,13 +22,13 @@ export const LanguageSelect = ({
       <SelectTrigger className="w-9 p-0 uppercase text-base">
         {value}
       </SelectTrigger>
-      <SelectContent className="bg-c2 border-white/10 border w-fit min-w-9">
+      <SelectContent className="gk-surface-neutral-primary gk-stroke-neutral-low border w-fit min-w-9">
         <SelectGroup>
           {LOCALES.map((locale) => (
             <SelectItem
               key={locale}
               value={locale}
-              className="text-c7 text-base w-fit cursor-pointer uppercase"
+              className="gk-text-neutral-high text-base w-fit cursor-pointer uppercase"
             >
               {locale}
             </SelectItem>
@@ -49,8 +49,8 @@ LanguageSelect.Horizontal = ({
         <div
           key={locale}
           className={cn("uppercase transition-all", {
-            "text-white/50": value !== locale,
-            "text-white": value === locale,
+            "gk-text-neutral-low": value !== locale,
+            "gk-text-neutral-xhigh": value === locale,
           })}
           onClick={() => onChange?.(locale)}
         >

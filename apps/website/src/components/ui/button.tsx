@@ -9,8 +9,8 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-c9 text-c7",
-        black: "bg-c2 text-c7",
+        default: "gk-fill-primary-xxhigh gk-text-neutral-high",
+        black: "gk-surface-neutral-primary gk-text-neutral-high",
         transparent: "",
       },
       size: {

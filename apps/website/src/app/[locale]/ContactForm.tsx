@@ -90,7 +90,7 @@ export const ContactForm = ({
 
   if (isError) {
     return (
-      <div className="p-4 my-4 bg-c9 rounded text-c7 w-fit text-center flex items-center">
+      <div className="p-4 my-4 gk-fill-primary-xxhigh rounded gk-text-neutral-high w-fit text-center flex items-center">
         {t("label.SthWentWrong")}
       </div>
     );
@@ -98,11 +98,11 @@ export const ContactForm = ({
 
   if (isSubmitted) {
     return (
-      <div className="p-4 my-4 bg-c9 rounded text-c7 w-fit flex flex-col items-center justify-center gap-2">
-        <div className="text-c7 text-2xl text-center">
+      <div className="p-4 my-4 gk-fill-primary-xxhigh rounded gk-text-neutral-high w-fit flex flex-col items-center justify-center gap-2">
+        <div className="gk-text-neutral-high text-2xl text-center">
           {t("label.ThankYouForYourRequest")}
         </div>
-        <div className="text-c5 text-center">
+        <div className="gk-text-neutral-low text-center">
           {t("label.WeWillContactYouSoon")}
         </div>
       </div>
@@ -111,7 +111,7 @@ export const ContactForm = ({
 
   return (
     <div className={cn("mt-4 flex flex-col justify-center", className)}>
-      <div className="p-4 my-4 bg-c9 rounded text-c7 w-full">
+      <div className="p-4 my-4 gk-fill-primary-xxhigh rounded gk-text-neutral-high w-full">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
@@ -126,7 +126,7 @@ export const ContactForm = ({
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage className="text-c10" />
+                  <FormMessage className="gk-text-colour-red" />
                 </FormItem>
               )}
             />
@@ -142,7 +142,7 @@ export const ContactForm = ({
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage className="text-c10" />
+                  <FormMessage className="gk-text-colour-red" />
                 </FormItem>
               )}
             />
@@ -160,7 +160,7 @@ export const ContactForm = ({
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage className="text-c10" />
+                  <FormMessage className="gk-text-colour-red" />
                 </FormItem>
               )}
             />
@@ -179,7 +179,7 @@ export const ContactForm = ({
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage className="text-c10" />
+                  <FormMessage className="gk-text-colour-red" />
                 </FormItem>
               )}
             />
@@ -238,7 +238,7 @@ export const ContactForm = ({
                         <Plus className="w-7 h-7" />
                       </Button>
                     )}
-                    <FormMessage className="text-c10" />
+                    <FormMessage className="gk-text-colour-red" />
                   </FormItem>
                 );
               }}

@@ -1,6 +1,26 @@
 import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { extendTailwindMerge } from "tailwind-merge";
 
+import { semanticTokenNames } from "@/theme/tokens";
+
+const semanticGroup = (prefix: string) =>
+  semanticTokenNames
+    .filter((token) => token.startsWith(`${prefix}-`))
+    .map((token) => `gk-${token}`);
+
+const twMerge = extendTailwindMerge({
+  extend: {
+    classGroups: {
+      "text-color": [...semanticGroup("text"), ...semanticGroup("icon")],
+      "bg-color": [
+        ...semanticGroup("surface"),
+        ...semanticGroup("fill"),
+        ...semanticGroup("divider"),
+      ],
+      "border-color": semanticGroup("stroke"),
+    },
+  },
+});
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }

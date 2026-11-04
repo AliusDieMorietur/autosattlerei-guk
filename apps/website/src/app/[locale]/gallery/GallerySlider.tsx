@@ -85,8 +85,8 @@ export const GallerySlider = ({
         {images.map((_, index) => (
           <div
             key={index}
-            className={cn("transition-all bg-c7 w-2 h-2 rounded-full", {
-              "bg-c12 w-6": index === currentSlide,
+            className={cn("transition-all gk-surface-inverted-primary w-2 h-2 rounded-full", {
+              "gk-fill-secondary-xxhigh w-6": index === currentSlide,
             })}
           />
         ))}

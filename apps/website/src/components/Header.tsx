@@ -43,7 +43,7 @@ export const Header = () => {
   return (
     <>
       <div className="w-full fixed z-[1000] flex flex-col items-center justify-center">
-        <div className="hidden w-full desktop:flex justify-center bg-c12 text-c8 px-6 py-1 text-base">
+        <div className="hidden w-full desktop:flex justify-center gk-fill-secondary-xxhigh gk-text-neutral-xhigh px-6 py-1 text-base">
           <div className="w-full max-w-desktopLg flex justify-between items-center">
             <div className="flex gap-8">
               <Link href={`mailto:${t("label.autosattlereiGukMail")}`}>
@@ -72,13 +72,13 @@ export const Header = () => {
             </div>
             <Link
               href="/impressum"
-              className="text-white underline underline-offset-2"
+              className="gk-text-neutral-xhigh underline underline-offset-2"
             >
               {t("label.Impressum")}
             </Link>
           </div>
         </div>
-        <div className="w-full flex justify-center bg-c2 text-white p-4 desktop:p-5 border-b border-white/10 desktop:border-none shadow-[0_8px_24px_#1C1C1C]">
+        <div className="w-full flex justify-center gk-surface-neutral-primary gk-text-neutral-xhigh p-4 desktop:p-5 border-b gk-stroke-neutral-low desktop:border-none shadow-[0_8px_24px_var(--gk-surface-neutral-primary)]">
           <div className="w-full max-w-desktopLg flex justify-between items-center">
             <div className="flex gap-4 items-center">
               <div
@@ -87,7 +87,7 @@ export const Header = () => {
               >
                 <Menu
                   className={cn(
-                    "transition-all duration-150 absolute w-6 h-6 text-white",
+                    "transition-all duration-150 absolute w-6 h-6 gk-text-neutral-xhigh",
                     {
                       "opacity-0 invisible": open,
                       "opacity-100 visible": !open,
@@ -96,7 +96,7 @@ export const Header = () => {
                 />
                 <X
                   className={cn(
-                    "transition-all duration-150 absolute w-6 h-6 text-white",
+                    "transition-all duration-150 absolute w-6 h-6 gk-text-neutral-xhigh",
                     {
                       "opacity-0 invisible": !open,
                       "opacity-100 visible": open,
@@ -118,7 +118,7 @@ export const Header = () => {
             <div className="flex desktop:hidden gap-3">
               <Link
                 href={`mailto:${t("label.autosattlereiGukMail")}`}
-                className="bg-c12 p-2 rounded-full"
+                className="gk-fill-secondary-xxhigh p-2 rounded-full"
               >
                 <Mail className="w-4 h-4" />
               </Link>
@@ -127,7 +127,7 @@ export const Header = () => {
                   "-",
                   ""
                 )}`}
-                className="bg-c12 p-2 rounded-full"
+                className="gk-fill-secondary-xxhigh p-2 rounded-full"
               >
                 <Phone className="w-4 h-4" />
               </Link>
@@ -137,7 +137,7 @@ export const Header = () => {
       </div>
       <div
         className={cn(
-          "text-white bg-c2 w-full h-full fixed z-[1000] top-[65px] flex flex-col transition-all duration-150",
+          "gk-text-neutral-xhigh gk-surface-neutral-primary w-full h-full fixed z-[1000] top-[65px] flex flex-col transition-all duration-150",
           {
             "opacity-100 visible": open,
             "opacity-0 invisible": !open,
@@ -153,7 +153,7 @@ export const Header = () => {
           </Link>
           <Link
             href="/#contact-us"
-            className="flex gap-2 items-center text-c13"
+            className="flex gap-2 items-center gk-text-colour-green"
             onClick={() => setOpen(false)}
           >
             {t("button.ContactUs")} <ArrowRight className="w-4 h-4" />
@@ -162,7 +162,7 @@ export const Header = () => {
             {t("button.Impressum")}
           </Link>
         </div>
-        <div className="flex flex-col gap-4 bg-c12 p-4">
+        <div className="flex flex-col gap-4 gk-fill-secondary-xxhigh p-4">
           {mobileButtons.map(({ link, title, icon }, index) =>
             link ? (
               <Link
@@ -186,7 +186,7 @@ export const Header = () => {
             )
           )}
         </div>
-        {pathname && <div className="px-4 py-2 text-white/50 uppercase">de</div>}
+        {pathname && <div className="px-4 py-2 gk-text-neutral-low uppercase">de</div>}
       </div>
     </>
   );

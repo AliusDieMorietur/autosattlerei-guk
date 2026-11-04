@@ -7,6 +7,7 @@ import { Pointer } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { Fragment, useState } from "react";
+import { surfaceFadeBottom } from "@/theme/tokens";
 
 export type GalleryItemData = {
   label?: string;
@@ -45,11 +46,11 @@ export const GallerySpecific = ({ galleryData }: GallerySpecificProps) => {
     <>
       <div className="w-full flex flex-col items-center px-5 desktopLg:px-0 relative">
         <div className="w-full flex flex-col gap-2 py-1.5 mb-5 desktop:mb-8">
-          <h1 className="text-c7 text-xl desktop:text-2xl">
+          <h1 className="gk-text-neutral-high text-xl desktop:text-2xl">
             {galleryData.label}
           </h1>
           {galleryData.description && (
-            <p className="text-white/70 text-sm whitespace-pre-line max-w-3xl">
+            <p className="gk-text-neutral-medium text-sm whitespace-pre-line max-w-3xl">
               {galleryData.description}
             </p>
           )}
@@ -61,7 +62,7 @@ export const GallerySpecific = ({ galleryData }: GallerySpecificProps) => {
               <Fragment key={i}>
                 <div className="flex flex-col gap-4">
                   {label && (
-                    <div className="w-full text-c7 tablet:text-start text-xl">
+                    <div className="w-full gk-text-neutral-high tablet:text-start text-xl">
                       {label}
                     </div>
                   )}
@@ -93,9 +94,9 @@ export const GallerySpecific = ({ galleryData }: GallerySpecificProps) => {
                                 className="object-cover max-h-[250px] rounded-xl transition-all"
                               />
                             </div>
-                            <div className="transition-all duration-150 opacity-0 invisible group-hover:opacity-100  group-hover:visible bg-black/60 absolute inset-0 rounded-xl flex flex-col justify-center items-center gap-1">
-                              <Pointer className="text-c8" />
-                              <div className="text-c8 text-[12px] leading-[16px] font-medium">
+                            <div className="transition-all duration-150 opacity-0 invisible group-hover:opacity-100  group-hover:visible gk-fill-inverted-medium absolute inset-0 rounded-xl flex flex-col justify-center items-center gap-1">
+                              <Pointer className="gk-text-neutral-xhigh" />
+                              <div className="gk-text-neutral-xhigh text-[12px] leading-[16px] font-medium">
                                 {t("button.ClickToOpen")}
                               </div>
                             </div>
@@ -108,7 +109,7 @@ export const GallerySpecific = ({ galleryData }: GallerySpecificProps) => {
                         className="absolute bottom-0 w-full h-[50px]"
                         style={{
                           background:
-                            "linear-gradient(180deg, rgba(28,28,28,0) 30%, rgba(28,28,28,0.9) 100%)",
+                            surfaceFadeBottom,
                         }}
                       />
                     )}
@@ -144,7 +145,7 @@ export const GallerySpecific = ({ galleryData }: GallerySpecificProps) => {
                   )}
                 </div>
                 {i !== galleryData.items.length - 1 && (
-                  <div className="w-full h-px bg-white/10" />
+                  <div className="w-full h-px gk-fill-neutral-low" />
                 )}
               </Fragment>
             );

@@ -115,42 +115,42 @@ export default async function ServicePage({ params }: ServicePageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
       />
 
-      <nav aria-label="Breadcrumb" className="text-sm text-c14 mb-6">
+      <nav aria-label="Breadcrumb" className="text-sm gk-text-neutral-low mb-6">
         <ol className="flex flex-wrap gap-2">
           <li>
-            <Link href="/" className="hover:text-white">Startseite</Link>
+            <Link href="/" className="hover:gk-text-neutral-xhigh">Startseite</Link>
           </li>
           <li aria-hidden>/</li>
           <li>
-            <Link href="/leistungen" className="hover:text-white">Leistungen</Link>
+            <Link href="/leistungen" className="hover:gk-text-neutral-xhigh">Leistungen</Link>
           </li>
           <li aria-hidden>/</li>
-          <li className="text-white/70" aria-current="page">{service.name}</li>
+          <li className="gk-text-neutral-medium" aria-current="page">{service.name}</li>
         </ol>
       </nav>
 
       <header className="max-w-3xl mb-10">
-        <h1 className="text-c7 text-2xl desktop:text-4xl mb-4">{service.name}</h1>
-        <p className="text-white/80 text-lg">{service.intro}</p>
+        <h1 className="gk-text-neutral-high text-2xl desktop:text-4xl mb-4">{service.name}</h1>
+        <p className="gk-text-neutral-medium text-lg">{service.intro}</p>
       </header>
 
       <div className="grid gap-10 desktop:grid-cols-[2fr_1fr] mb-12">
         <section aria-labelledby="beschreibung" className="flex flex-col gap-4">
-          <h2 id="beschreibung" className="text-white text-xl desktop:text-2xl">
+          <h2 id="beschreibung" className="gk-text-neutral-xhigh text-xl desktop:text-2xl">
             So arbeiten wir
           </h2>
           {service.description.map((paragraph, index) => (
-            <p key={index} className="text-white/70">{paragraph}</p>
+            <p key={index} className="gk-text-neutral-medium">{paragraph}</p>
           ))}
         </section>
         <section
           aria-labelledby="leistungsumfang"
-          className="bg-c9 rounded-xl p-5 h-fit"
+          className="gk-fill-primary-xxhigh rounded-xl p-5 h-fit"
         >
-          <h2 id="leistungsumfang" className="text-white text-lg mb-3">
+          <h2 id="leistungsumfang" className="gk-text-neutral-xhigh text-lg mb-3">
             Leistungsumfang
           </h2>
-          <ul className="flex flex-col gap-2 text-white/70 list-disc pl-5">
+          <ul className="flex flex-col gap-2 gk-text-neutral-medium list-disc pl-5">
             {service.highlights.map((item) => (
               <li key={item}>{item}</li>
             ))}
@@ -160,7 +160,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
 
       {service.media.length > 0 && (
         <section aria-labelledby="beispiele" className="mb-12">
-          <h2 id="beispiele" className="text-white text-xl desktop:text-2xl mb-4">
+          <h2 id="beispiele" className="gk-text-neutral-xhigh text-xl desktop:text-2xl mb-4">
             Beispiele
           </h2>
           <div className="grid gap-4 tablet:grid-cols-2 desktop:grid-cols-3">
@@ -192,29 +192,29 @@ export default async function ServicePage({ params }: ServicePageProps) {
       )}
 
       <section aria-labelledby="ablauf" className="mb-12">
-        <h2 id="ablauf" className="text-white text-xl desktop:text-2xl mb-4">
+        <h2 id="ablauf" className="gk-text-neutral-xhigh text-xl desktop:text-2xl mb-4">
           Ablauf
         </h2>
         <ol className="grid gap-4 tablet:grid-cols-2 desktop:grid-cols-4">
           {PROCESS_STEPS.map((step, index) => (
-            <li key={step.title} className="bg-c9 rounded-xl p-5">
-              <div className="text-c14 text-sm mb-1">Schritt {index + 1}</div>
-              <h3 className="text-white mb-2">{step.title}</h3>
-              <p className="text-white/70 text-sm">{step.text}</p>
+            <li key={step.title} className="gk-fill-primary-xxhigh rounded-xl p-5">
+              <div className="gk-text-neutral-low text-sm mb-1">Schritt {index + 1}</div>
+              <h3 className="gk-text-neutral-xhigh mb-2">{step.title}</h3>
+              <p className="gk-text-neutral-medium text-sm">{step.text}</p>
             </li>
           ))}
         </ol>
       </section>
 
       <section aria-labelledby="faq" className="mb-12 max-w-3xl">
-        <h2 id="faq" className="text-white text-xl desktop:text-2xl mb-4">
+        <h2 id="faq" className="gk-text-neutral-xhigh text-xl desktop:text-2xl mb-4">
           Häufige Fragen
         </h2>
         <div className="flex flex-col gap-4">
           {service.faq.map((item) => (
             <div key={item.question}>
-              <h3 className="text-white mb-1">{item.question}</h3>
-              <p className="text-white/70">{item.answer}</p>
+              <h3 className="gk-text-neutral-xhigh mb-1">{item.question}</h3>
+              <p className="gk-text-neutral-medium">{item.answer}</p>
             </div>
           ))}
         </div>
@@ -222,7 +222,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
 
       {related.length > 0 && (
         <section aria-labelledby="weitere-leistungen" className="mb-12">
-          <h2 id="weitere-leistungen" className="text-white text-xl desktop:text-2xl mb-4">
+          <h2 id="weitere-leistungen" className="gk-text-neutral-xhigh text-xl desktop:text-2xl mb-4">
             Weitere Leistungen
           </h2>
           <ul className="flex flex-wrap gap-3">
@@ -230,7 +230,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
               <li key={item.slug}>
                 <Link
                   href={`/leistungen/${item.slug}`}
-                  className="inline-block bg-c9 text-white rounded-full px-4 py-2 hover:bg-c12 hover:text-c8"
+                  className="inline-block gk-fill-primary-xxhigh gk-text-neutral-xhigh rounded-full px-4 py-2 hover:gk-fill-secondary-xxhigh hover:gk-text-neutral-xhigh"
                 >
                   {item.name}
                 </Link>

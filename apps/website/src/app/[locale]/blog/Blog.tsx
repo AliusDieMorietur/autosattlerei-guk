@@ -51,7 +51,7 @@ function getMediaLayout(item: BlogPostMedia) {
 
 function PostCard({ post, locale }: { post: BlogPost; locale: string }) {
   return (
-    <article className="flex flex-col gap-3 w-full border border-white/10 rounded-lg overflow-hidden bg-white/5">
+    <article className="flex flex-col gap-3 w-full border gk-stroke-neutral-low rounded-lg overflow-hidden gk-fill-neutral-xlow">
       {post.media.length > 0 && (
         <div className="flex flex-col gap-2 p-2">
           {post.media.map((item, index) => {
@@ -68,7 +68,7 @@ function PostCard({ post, locale }: { post: BlogPost; locale: string }) {
                     src={item.url}
                     controls
                     playsInline
-                    className="w-full h-full rounded-md bg-black object-cover"
+                    className="w-full h-full rounded-md gk-fill-inverted-xxhigh object-cover"
                   />
                 </div>
               );
@@ -85,7 +85,7 @@ function PostCard({ post, locale }: { post: BlogPost; locale: string }) {
                   <img
                     src={item.url}
                     alt={post.title}
-                    className="w-full h-full rounded-md bg-black object-cover"
+                    className="w-full h-full rounded-md gk-fill-inverted-xxhigh object-cover"
                   />
                 </div>
               );
@@ -97,13 +97,13 @@ function PostCard({ post, locale }: { post: BlogPost; locale: string }) {
       )}
       <div className="flex flex-col gap-2 px-4 pb-4">
         {post.title && (
-          <h2 className="text-c7 text-lg font-semibold">{post.title}</h2>
+          <h2 className="gk-text-neutral-high text-lg font-semibold">{post.title}</h2>
         )}
         {post.description && (
-          <p className="text-white/70 text-sm whitespace-pre-line">{post.description}</p>
+          <p className="gk-text-neutral-medium text-sm whitespace-pre-line">{post.description}</p>
         )}
         {post.publishedAt && (
-          <time className="text-white/40 text-xs" dateTime={post.publishedAt}>
+          <time className="gk-text-neutral-low text-xs" dateTime={post.publishedAt}>
             {new Date(post.publishedAt).toLocaleDateString(locale, {
               year: "numeric",
               month: "long",
@@ -154,11 +154,11 @@ export function Blog({ initialPosts, initialHasNextPage, locale }: Props) {
 
   return (
     <div className="w-full flex flex-col items-center px-5 desktopLg:px-0 gap-5 desktop:gap-8">
-      <h1 className="w-full text-c7 text-xl desktop:text-2xl py-1.5">
+      <h1 className="w-full gk-text-neutral-high text-xl desktop:text-2xl py-1.5">
         {t("heading")}
       </h1>
       {posts.length === 0 && !loading && (
-        <div className="text-white/50 text-sm py-10">{t("empty")}</div>
+        <div className="gk-text-neutral-low text-sm py-10">{t("empty")}</div>
       )}
       <div className="w-full flex flex-col gap-6 max-w-2xl">
         {posts.map((post) => (
@@ -167,7 +167,7 @@ export function Blog({ initialPosts, initialHasNextPage, locale }: Props) {
       </div>
       <div ref={sentinelRef} className="w-full h-4" />
       {loading && (
-        <div className="text-white/40 text-sm py-4">{t("loading")}</div>
+        <div className="gk-text-neutral-low text-sm py-4">{t("loading")}</div>
       )}
     </div>
   );

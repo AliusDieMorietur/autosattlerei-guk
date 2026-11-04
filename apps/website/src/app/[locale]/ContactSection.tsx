@@ -8,29 +8,29 @@ export async function ContactSection({ locale }: { locale: string }) {
   return (
     <div className="flex flex-col desktop:flex-row justify-center desktop:gap-16 p-5 desktop:p-0">
       <div className="flex flex-col justify-center w-full desktop:w-1/3">
-        <h2 className="text-white mb-2 text-2xl">{t("label.ContactUs")}</h2>
-        <div className="text-c14 mb-4">{t("label.FeelFreeToContactUs")}</div>
-        <div className="text-c14 mb-1">{t("label.Address")}</div>
+        <h2 className="gk-text-neutral-xhigh mb-2 text-2xl">{t("label.ContactUs")}</h2>
+        <div className="gk-text-neutral-low mb-4">{t("label.FeelFreeToContactUs")}</div>
+        <div className="gk-text-neutral-low mb-1">{t("label.Address")}</div>
         <Link
           href="/#address"
-          className="text-white mb-4 underline underline-offset-2"
+          className="gk-text-neutral-xhigh mb-4 underline underline-offset-2"
         >
           {t("label.autosattlereiGukAddress")}
         </Link>
-        <div className="text-c14 mb-1">{t("label.WorkingHours")}</div>
-        <div className="text-white">{t("label.MODO")}</div>
-        <div className="text-white mb-4">{t("label.FR")}</div>
-        <div className="text-c14 mb-1">{t("label.Phone")}</div>
+        <div className="gk-text-neutral-low mb-1">{t("label.WorkingHours")}</div>
+        <div className="gk-text-neutral-xhigh">{t("label.MODO")}</div>
+        <div className="gk-text-neutral-xhigh mb-4">{t("label.FR")}</div>
+        <div className="gk-text-neutral-low mb-1">{t("label.Phone")}</div>
         <Link
           href={`tel:${t("label.autosattlereiGukPhone").replace("-", "")}`}
-          className="text-white mb-4 underline underline-offset-2"
+          className="gk-text-neutral-xhigh mb-4 underline underline-offset-2"
         >
           {t("label.autosattlereiGukPhone")}
         </Link>
-        <div className="text-c14 mb-1">{t("label.Email")}</div>
+        <div className="gk-text-neutral-low mb-1">{t("label.Email")}</div>
         <Link
           href={`mailto:${t("label.autosattlereiGukMail")}`}
-          className="text-white mb-4 underline underline-offset-2"
+          className="gk-text-neutral-xhigh mb-4 underline underline-offset-2"
         >
           {t("label.autosattlereiGukMail")}
         </Link>

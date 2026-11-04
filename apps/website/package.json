@@ -7,6 +7,9 @@
     "build": "bun --bun next build",
     "start": "bun --bun next start",
     "lint": "bun --bun eslint .",
+    "generate:theme": "bun scripts/build-theme-css.ts",
+    "prebuild": "bun run generate:theme",
+    "predev": "bun run generate:theme",
     "check": "tsc --noEmit"
   },
   "dependencies": {

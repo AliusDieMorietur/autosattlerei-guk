@@ -41,10 +41,10 @@ export default async function ServicesPage({
   return (
     <div className="px-5 desktopLg:px-0">
       <header className="max-w-3xl mb-10">
-        <h1 className="text-c7 text-2xl desktop:text-4xl mb-4">
+        <h1 className="gk-text-neutral-high text-2xl desktop:text-4xl mb-4">
           Unsere Leistungen
         </h1>
-        <p className="text-white/80 text-lg">
+        <p className="gk-text-neutral-medium text-lg">
           Von der Sitzreparatur bis zur kompletten Oldtimer-Restaurierung:
           Das bieten wir in unserer Autosattlerei in Fredersdorf-Vogelsdorf bei Berlin an.
         </p>
@@ -54,10 +54,10 @@ export default async function ServicesPage({
           <li key={service.slug}>
             <Link
               href={`/leistungen/${service.slug}`}
-              className="flex flex-col h-full gap-2 bg-c9 rounded-xl p-5 hover:bg-c12 hover:text-c8 transition-colors"
+              className="flex flex-col h-full gap-2 gk-fill-primary-xxhigh rounded-xl p-5 hover:gk-fill-secondary-xxhigh hover:gk-text-neutral-xhigh transition-colors"
             >
-              <h2 className="text-white text-lg">{service.name}</h2>
-              <p className="text-white/70 text-sm">{service.intro}</p>
+              <h2 className="gk-text-neutral-xhigh text-lg">{service.name}</h2>
+              <p className="gk-text-neutral-medium text-sm">{service.intro}</p>
             </Link>
           </li>
         ))}

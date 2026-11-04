@@ -59,16 +59,16 @@ export const HomeSlider = ({
                 sizes="(min-width: 1440px) 1080px, (min-width: 1024px) 75vw, calc(100vw - 40px)"
                 priority={index === 0}
               />
-              <div className="absolute bg-black/70 top-0 left-0 bottom-0 right-0"></div>
+              <div className="absolute gk-fill-inverted-high top-0 left-0 bottom-0 right-0"></div>
               {(title || description) && (
                 <div className="w-[80%] tablet:w-[450px] desktop:w-[450px] absolute left-1/2 -translate-x-1/2 bottom-1/2 translate-y-1/2 desktop:bottom-[64px] desktop:left-[64px] desktop:translate-x-0 desktop:translate-y-0 z-[200] flex flex-col items-center desktop:items-start gap-2">
                   {title && (
-                    <div className="text-white text-lg tablet:text-2xl text-center tablet:text-start">
+                    <div className="gk-text-neutral-xhigh text-lg tablet:text-2xl text-center tablet:text-start">
                       {title}
                     </div>
                   )}
                   {description && (
-                    <div className="hidden tablet:block text-c14 text-lg text-center desktop:text-start">
+                    <div className="hidden tablet:block gk-text-neutral-low text-lg text-center desktop:text-start">
                       {description}
                     </div>
                   )}

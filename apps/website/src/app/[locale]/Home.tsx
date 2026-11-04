@@ -27,7 +27,7 @@ export async function Home({ locale, slides, cards }: HomeProps) {
         </div>
       </div>
       <section aria-labelledby="arbeiten">
-      <h2 id="arbeiten" className="text-white text-2xl mb-4 px-5 desktopLg:px-0">
+      <h2 id="arbeiten" className="gk-text-neutral-xhigh text-2xl mb-4 px-5 desktopLg:px-0">
         {t("label.cardsHeading")}
       </h2>
       <div className="flex overflow-x-auto flex-nowrap gap-6 desktopLg:gap-8 px-5 desktopLg:px-0 pb-4">
@@ -45,9 +45,9 @@ export async function Home({ locale, slides, cards }: HomeProps) {
                 sizes="(min-width: 1440px) 316px, (min-width: 1024px) 22vw, (min-width: 768px) 75vw, 85vw"
               />
             </div>
-            <div className="text-white text-xl">{card.title}</div>
+            <div className="gk-text-neutral-xhigh text-xl">{card.title}</div>
             <Link href={`/gallery/${card.slug}`}>
-              <Button className="bg-c9 text-c8 w-fit">
+              <Button className="gk-fill-primary-xxhigh gk-text-neutral-xhigh w-fit">
                 {t("button.ViewMore")}
               </Button>
             </Link>
@@ -56,7 +56,7 @@ export async function Home({ locale, slides, cards }: HomeProps) {
       </div>
       </section>
       <section aria-labelledby="leistungen" className="px-5 desktopLg:px-0 mt-10">
-        <h2 id="leistungen" className="text-white text-2xl mb-4">
+        <h2 id="leistungen" className="gk-text-neutral-xhigh text-2xl mb-4">
           Unsere Leistungen
         </h2>
         <ul className="flex flex-wrap gap-3">
@@ -64,7 +64,7 @@ export async function Home({ locale, slides, cards }: HomeProps) {
             <li key={service.slug}>
               <Link
                 href={`/leistungen/${service.slug}`}
-                className="inline-block bg-c9 text-white rounded-full px-4 py-2 hover:bg-c12 hover:text-c8"
+                className="inline-block gk-fill-primary-xxhigh gk-text-neutral-xhigh rounded-full px-4 py-2 hover:gk-fill-secondary-xxhigh hover:gk-text-neutral-xhigh"
               >
                 {service.name}
               </Link>

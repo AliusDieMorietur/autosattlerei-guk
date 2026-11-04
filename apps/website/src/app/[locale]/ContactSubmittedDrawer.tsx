@@ -33,10 +33,10 @@ export const ContactSubmittedDrawer = ({
     >
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle className="text-c7">
+          <DrawerTitle className="gk-text-neutral-high">
             {t("label.ThankYouForYourRequest")}
           </DrawerTitle>
-          <DrawerDescription className="text-c7">
+          <DrawerDescription className="gk-text-neutral-high">
             {t("label.WeWillContactYouSoon")}
           </DrawerDescription>
         </DrawerHeader>

@@ -1,3 +1,5 @@
+@import "../theme/tokens.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,7 +10,7 @@ body {
   margin: 0;
   width: 100%;
   height: 100%;
-  background-color: theme("colors.c2");
+  background-color: theme("colors.gk.surface-neutral-primary");
   scroll-behavior: smooth;
 }
 
@@ -24,7 +26,7 @@ body {
   }
 
   ::-webkit-scrollbar-thumb {
-    background: theme("colors.c14");
+    background: theme("colors.gk.fill-neutral-high");
     border-radius: 10px;
   }
 
