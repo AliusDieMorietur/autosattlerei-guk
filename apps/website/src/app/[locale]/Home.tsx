@@ -26,6 +26,10 @@ export async function Home({ locale, slides, cards }: HomeProps) {
           </div>
         </div>
       </div>
+      <section aria-labelledby="arbeiten">
+      <h2 id="arbeiten" className="text-white text-2xl mb-4 px-5 desktopLg:px-0">
+        {t("label.cardsHeading")}
+      </h2>
       <div className="flex overflow-x-auto flex-nowrap gap-6 desktopLg:gap-8 px-5 desktopLg:px-0 pb-4">
         {cards.map((card) => (
           <div
@@ -50,6 +54,7 @@ export async function Home({ locale, slides, cards }: HomeProps) {
           </div>
         ))}
       </div>
+      </section>
       <section aria-labelledby="leistungen" className="px-5 desktopLg:px-0 mt-10">
         <h2 id="leistungen" className="text-white text-2xl mb-4">
           Unsere Leistungen

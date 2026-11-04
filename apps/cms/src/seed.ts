@@ -39,9 +39,9 @@ const SERVICE_CARDS: ServiceCardSeed[] = [
   { image: 'cards/1.webp', slug: 'salons', title: 'Innenräume' },
   { image: 'cards/2.webp', slug: 'dash-board', title: 'Armaturenbretter' },
   { image: 'cards/3.webp', slug: 'roof', title: 'Himmel' },
-  { image: 'cards/4.webp', slug: 'wheel', title: 'Lenkräder' },
+  { image: 'cards/4.webp', slug: 'wheels', title: 'Lenkräder' },
   { image: 'cards/5.webp', slug: 'moto-seat', title: 'Motorradsitze' },
-  { image: 'cards/6.webp', slug: 'door-panel', title: 'Türverkleidungen' },
+  { image: 'cards/6.webp', slug: 'door-panels', title: 'Türverkleidungen' },
 ]
 
 const SLIDES: SlideSeed[] = [
@@ -91,7 +91,7 @@ const SLIDES: SlideSeed[] = [
 
 const GALLERY_SECTIONS: GallerySectionSeed[] = [
   {
-    slug: 'wheel',
+    slug: 'wheels',
     order: 1,
     title: 'Lenkräder',
     description:
@@ -102,7 +102,7 @@ const GALLERY_SECTIONS: GallerySectionSeed[] = [
     ],
   },
   {
-    slug: 'door-panel',
+    slug: 'door-panels',
     order: 2,
     title: 'Türverkleidungen',
     description:
@@ -113,7 +113,7 @@ const GALLERY_SECTIONS: GallerySectionSeed[] = [
     ],
   },
   {
-    slug: 'salon',
+    slug: 'salons',
     order: 3,
     title: 'Innenräume',
     description:
@@ -121,6 +121,27 @@ const GALLERY_SECTIONS: GallerySectionSeed[] = [
     imagePaths: [10, 5, 8, 16, 7, 11, 4].flatMap((qty, gi) =>
       Array.from({ length: qty }, (_, i) => `salon_slide/salon${gi + 1}/slide(${i + 1}).webp`),
     ),
+  },
+  {
+    slug: 'dash-board',
+    order: 4,
+    title: 'Armaturenbretter',
+    description: 'Showcases von neu bezogenen Armaturenbrettern aus unterschiedlichen Materialien.',
+    imagePaths: ['main_page/cards/2.webp'],
+  },
+  {
+    slug: 'roof',
+    order: 5,
+    title: 'Himmel',
+    description: 'Showcases von neu bezogenen Fahrzeughimmeln in verschiedenen Materialien und Ausführungen.',
+    imagePaths: ['main_page/cards/3.webp', 'main_page/main_page_card (3).webp'],
+  },
+  {
+    slug: 'moto-seat',
+    order: 6,
+    title: 'Motorradsitze',
+    description: 'Showcases von neu bezogenen Motorradsitzen in verschiedenen Materialien und Ausführungen.',
+    imagePaths: ['main_page/cards/5.webp', 'main_page/main_page_card (5).webp'],
   },
 ]
 
