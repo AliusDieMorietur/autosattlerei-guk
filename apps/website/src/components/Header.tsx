@@ -78,7 +78,7 @@ export const Header = () => {
             </Link>
           </div>
         </div>
-        <div className="w-full flex justify-center bg-c2 text-white p-4 desktop:p-5 border-b border-white/10 desktop:border-none">
+        <div className="w-full flex justify-center bg-c2 text-white p-4 desktop:p-5 border-b border-white/10 desktop:border-none shadow-[0_8px_24px_#1C1C1C]">
           <div className="w-full max-w-desktopLg flex justify-between items-center">
             <div className="flex gap-4 items-center">
               <div
