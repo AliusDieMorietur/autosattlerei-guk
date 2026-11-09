@@ -36,6 +36,7 @@ type GallerySectionSeed = {
 }
 
 const SERVICE_CARDS: ServiceCardSeed[] = [
+  { image: '../leistungen/sternenhimmel/sternenhimmel-foto-4.webp', slug: 'starlight', title: 'Sternenhimmel' },
   { image: 'cards/1.webp', slug: 'salons', title: 'Innenräume' },
   { image: 'cards/2.webp', slug: 'dash-board', title: 'Armaturenbretter' },
   { image: 'cards/3.webp', slug: 'roof', title: 'Himmel' },
@@ -45,6 +46,12 @@ const SERVICE_CARDS: ServiceCardSeed[] = [
 ]
 
 const SLIDES: SlideSeed[] = [
+  {
+    image: '../leistungen/sternenhimmel/sternenhimmel-foto-4.webp',
+    title: 'Sternenhimmel',
+    description:
+      'Tausende feine Lichtpunkte im Dachhimmel: Wir bauen Ihren individuellen Sternenhimmel ein, auf Wunsch kombiniert mit einem Neubezug.',
+  },
   {
     image: 'main_page_card (1).webp',
     title: 'Fahrzeuginnenausstattung',
@@ -62,12 +69,6 @@ const SLIDES: SlideSeed[] = [
     title: 'Himmelpolsterung',
     description:
       'Professioneller Ersatz und Aktualisierung der Himmelpolsterung. Schaffen Sie eine komfortable und stilvolle Atmosphäre in Ihrem Auto.',
-  },
-  {
-    image: '../leistungen/sternenhimmel/sternenhimmel-foto-4.webp',
-    title: 'Sternenhimmel',
-    description:
-      'Tausende feine Lichtpunkte im Dachhimmel: Wir bauen Ihren individuellen Sternenhimmel ein, auf Wunsch kombiniert mit einem Neubezug.',
   },
   {
     image: 'main_page_card (4).webp',
