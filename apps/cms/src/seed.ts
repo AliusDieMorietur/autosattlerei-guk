@@ -145,7 +145,7 @@ const GALLERY_SECTIONS: GallerySectionSeed[] = [
   },
   {
     slug: 'starlight',
-    order: 6,
+    order: 0,
     title: 'Sternenhimmel',
     description: 'Showcases von eingebauten Sternenhimmeln in Fahrzeugen, mit verschiedenen Lichtfarben und Dichten.',
     imagePaths: [1, 2, 3].map((i) => `leistungen/sternenhimmel/sternenhimmel-${i}.mp4`),
