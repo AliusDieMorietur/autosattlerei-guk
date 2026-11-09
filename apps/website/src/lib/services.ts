@@ -98,8 +98,11 @@ export const SERVICES: Service[] = [
     related: ["dachhimmel-neu-beziehen", "ambientebeleuchtung-einbauen", "tuerverkleidungen-neu-beziehen"],
     media: [
       { type: "video", src: "/leistungen/sternenhimmel/sternenhimmel-1.mp4", poster: "/leistungen/sternenhimmel/sternenhimmel-foto-1.webp", alt: "Sternenhimmel im Dachhimmel mit wechselnden Lichtfarben" },
+      { type: "image", src: "/leistungen/sternenhimmel/sternenhimmel-neu-1.webp", alt: "Fertiger Sternenhimmel mit Schiebedach und Rücksitzen" },
       { type: "video", src: "/leistungen/sternenhimmel/sternenhimmel-2.mp4", poster: "/leistungen/sternenhimmel/sternenhimmel-foto-4.webp", alt: "Fertiger Sternenhimmel in einem Van mit Schiebedach" },
+      { type: "image", src: "/leistungen/sternenhimmel/sternenhimmel-neu-2.webp", alt: "Sternenhimmel im Dachhimmel eines Vans, Blick auf die Sitze" },
       { type: "video", src: "/leistungen/sternenhimmel/sternenhimmel-3.mp4", poster: "/leistungen/sternenhimmel/sternenhimmel-foto-5.webp", alt: "Sternenhimmel im Innenraum eines Vans" },
+      { type: "image", src: "/leistungen/sternenhimmel/sternenhimmel-neu-3.webp", alt: "Sternenhimmel über der zweiten Sitzreihe" },
     ],
   },
   {

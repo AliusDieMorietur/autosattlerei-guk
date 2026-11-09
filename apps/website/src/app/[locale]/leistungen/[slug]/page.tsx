@@ -1,3 +1,4 @@
+import { MediaSlider } from "@/components/MediaSlider";
 import { BUSINESS } from "@/lib/business";
 import { config } from "@/lib/config";
 import { buildAlternates, defaultSocialImage, localeToOgLocale } from "@/lib/seo";
@@ -163,31 +164,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
           <h2 id="beispiele" className="gk-text-neutral-xhigh text-xl desktop:text-2xl mb-4">
             Beispiele
           </h2>
-          <div className="grid gap-4 tablet:grid-cols-2 desktop:grid-cols-3">
-            {service.media.map((item) =>
-              item.type === "video" ? (
-                <video
-                  key={item.src}
-                  src={item.src}
-                  poster={item.poster}
-                  aria-label={item.alt}
-                  controls
-                  preload="none"
-                  playsInline
-                  className="w-full rounded-xl aspect-[9/16] max-h-[70vh] object-cover bg-black"
-                />
-              ) : (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  key={item.src}
-                  src={item.src}
-                  alt={item.alt}
-                  loading="lazy"
-                  className="w-full rounded-xl aspect-[4/3] object-cover"
-                />
-              ),
-            )}
-          </div>
+          <MediaSlider className="max-w-xl mx-auto" items={service.media} />
         </section>
       )}
 
