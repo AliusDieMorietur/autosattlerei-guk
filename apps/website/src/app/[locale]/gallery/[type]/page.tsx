@@ -74,6 +74,7 @@ export default async function GallerySpecificPage({
   const label = section.title ?? t("workFallback");
   const images = (section.images ?? []).map((img, index) => ({
     src: cmsMediaUrl(img.media?.url ?? ""),
+      type: img.media?.mimeType?.startsWith("video/") ? ("video" as const) : ("image" as const),
     alt: t("workExample", { title: label, number: index + 1 }),
   }));
   const galleryData: GallerySpecificData = {

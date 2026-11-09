@@ -11,7 +11,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export type GallerySliderProps = {
-  images: { src: string; alt: string }[];
+  images: { src: string; alt: string; type?: "image" | "video" }[];
   autoPlayStartDelay?: number;
 };
 
@@ -62,20 +62,32 @@ export const GallerySlider = ({
       setApi={setApi}
     >
       <CarouselContent className="">
-        {images.map(({ src, alt }) => (
+        {images.map(({ src, alt, type }) => (
           <CarouselItem
             key={src}
             className="tablet:basis-1/2 desktop:basis-1/3 desktopLg:basis-1/4"
           >
             <div className="w-full rounded-xl h-[250px] tablet:h-[200px] desktop:h-[225px] overflow-hidden relative">
               <div className="relative w-full h-full">
-                <Image
-                  src={src}
-                  alt={alt}
-                  fill
-                  sizes="(min-width: 1440px) 316px, (min-width: 1024px) 25vw, (min-width: 768px) 50vw, calc(100vw - 40px)"
-                  className="object-cover"
-                />
+                {type === "video" ? (
+                  <video
+                    src={src}
+                    aria-label={alt}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                ) : (
+                  <Image
+                    src={src}
+                    alt={alt}
+                    fill
+                    sizes="(min-width: 1440px) 316px, (min-width: 1024px) 25vw, (min-width: 768px) 50vw, calc(100vw - 40px)"
+                    className="object-cover"
+                  />
+                )}
               </div>
             </div>
           </CarouselItem>

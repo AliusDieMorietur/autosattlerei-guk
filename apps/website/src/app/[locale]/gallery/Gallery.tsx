@@ -8,7 +8,7 @@ type GallerySection = {
   title: string;
   description?: string;
   slug: string;
-  images: { src: string; alt: string }[];
+  images: { src: string; alt: string; type?: "image" | "video" }[];
   autoStartDelay: number;
 };
 

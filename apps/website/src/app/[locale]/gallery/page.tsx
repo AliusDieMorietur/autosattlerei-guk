@@ -43,6 +43,7 @@ const GalleryPage = async ({ params }: GalleryPageProps) => {
     slug: section.slug ?? "",
     images: (section.images ?? []).map((img, imageIndex) => ({
       src: cmsMediaUrl(img.media?.url ?? ""),
+      type: img.media?.mimeType?.startsWith("video/") ? ("video" as const) : ("image" as const),
       alt: t("workExample", {
         title: section.title ?? t("workFallback"),
         number: imageIndex + 1,

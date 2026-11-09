@@ -11,7 +11,7 @@ import { surfaceFadeBottom } from "@/theme/tokens";
 
 export type GalleryItemData = {
   label?: string;
-  images: { src: string; alt: string }[];
+  images: { src: string; alt: string; type?: "image" | "video" }[];
   viewMore?: boolean;
 };
 
@@ -25,8 +25,10 @@ export type GallerySpecificProps = {
   galleryData: GallerySpecificData;
 };
 
-const splitIntoColumns = (images: { src: string; alt: string }[], cols: number) => {
-  const result: { src: string; alt: string }[][] = Array.from({ length: cols }, () => []);
+type GalleryImage = { src: string; alt: string; type?: "image" | "video" };
+
+const splitIntoColumns = (images: GalleryImage[], cols: number) => {
+  const result: GalleryImage[][] = Array.from({ length: cols }, () => []);
   images.forEach((img, i) => result[i % cols].push(img));
   return result;
 };
@@ -85,15 +87,28 @@ export const GallerySpecific = ({ galleryData }: GallerySpecificProps) => {
                             // className="relative group cursor-pointer"
                             // onClick={() => setCurrentSrc(img.src)}
                           >
-                            <div className="relative w-full h-[250px] rounded-xl">
-                              <Image
+                            {img.type === "video" ? (
+                              <video
                                 src={img.src}
-                                alt={img.alt}
-                                fill
-                                sizes="(min-width: 1440px) 421px, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, calc(100vw - 40px)"
-                                className="object-cover max-h-[250px] rounded-xl transition-all"
+                                aria-label={img.alt}
+                                controls
+                                muted
+                                loop
+                                playsInline
+                                preload="metadata"
+                                className="w-full aspect-[9/16] max-h-[520px] rounded-xl bg-black object-cover"
                               />
-                            </div>
+                            ) : (
+                              <div className="relative w-full h-[250px] rounded-xl">
+                                <Image
+                                  src={img.src}
+                                  alt={img.alt}
+                                  fill
+                                  sizes="(min-width: 1440px) 421px, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, calc(100vw - 40px)"
+                                  className="object-cover max-h-[250px] rounded-xl transition-all"
+                                />
+                              </div>
+                            )}
                             <div className="transition-all duration-150 opacity-0 invisible group-hover:opacity-100  group-hover:visible gk-fill-inverted-medium absolute inset-0 rounded-xl flex flex-col justify-center items-center gap-1">
                               <Pointer className="gk-text-neutral-xhigh" />
                               <div className="gk-text-neutral-xhigh text-[12px] leading-[16px] font-medium">

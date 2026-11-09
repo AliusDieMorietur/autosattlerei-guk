@@ -22,7 +22,7 @@ export type GallerySectionDoc = {
   description?: string;
   slug?: string;
   order?: number;
-  images?: { media?: { url?: string } }[];
+  images?: { media?: { url?: string; mimeType?: string } }[];
 };
 export type MediaDoc = {
   url?: string;

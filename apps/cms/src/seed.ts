@@ -36,7 +36,7 @@ type GallerySectionSeed = {
 }
 
 const SERVICE_CARDS: ServiceCardSeed[] = [
-  { image: '../leistungen/sternenhimmel/sternenhimmel-foto-4.webp', slug: 'starlight', title: 'Sternenhimmel' },
+  { image: '../leistungen/sternenhimmel/sternenhimmel-neu-3.webp', slug: 'starlight', title: 'Sternenhimmel' },
   { image: 'cards/1.webp', slug: 'salons', title: 'Innenräume' },
   { image: 'cards/2.webp', slug: 'dash-board', title: 'Armaturenbretter' },
   { image: 'cards/3.webp', slug: 'roof', title: 'Himmel' },
@@ -47,7 +47,7 @@ const SERVICE_CARDS: ServiceCardSeed[] = [
 
 const SLIDES: SlideSeed[] = [
   {
-    image: '../leistungen/sternenhimmel/sternenhimmel-foto-4.webp',
+    image: '../leistungen/sternenhimmel/sternenhimmel-neu-1.webp',
     title: 'Sternenhimmel',
     description:
       'Tausende feine Lichtpunkte im Dachhimmel: Wir bauen Ihren individuellen Sternenhimmel ein, auf Wunsch kombiniert mit einem Neubezug.',
@@ -148,7 +148,7 @@ const GALLERY_SECTIONS: GallerySectionSeed[] = [
     order: 6,
     title: 'Sternenhimmel',
     description: 'Showcases von eingebauten Sternenhimmeln in Fahrzeugen, mit verschiedenen Lichtfarben und Dichten.',
-    imagePaths: Array.from({ length: 6 }, (_, i) => `leistungen/sternenhimmel/sternenhimmel-foto-${i + 1}.webp`),
+    imagePaths: [1, 2, 3].map((i) => `leistungen/sternenhimmel/sternenhimmel-${i}.mp4`),
   },
   {
     slug: 'moto-seat',
@@ -173,7 +173,7 @@ async function login(): Promise<string> {
 async function uploadMedia(token: string, filePath: string, name: string, alt: string): Promise<number> {
   const buffer = fs.readFileSync(filePath)
   const formData = new FormData()
-  formData.append('file', new Blob([buffer], { type: 'image/webp' }), name)
+  formData.append('file', new Blob([buffer], { type: filePath.endsWith('.mp4') ? 'video/mp4' : 'image/webp' }), name)
   formData.append('_payload', JSON.stringify({ alt }))
 
   const res = await fetch(`${CMS_URL}/api/media`, {
