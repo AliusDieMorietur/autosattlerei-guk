@@ -64,6 +64,12 @@ const SLIDES: SlideSeed[] = [
       'Professioneller Ersatz und Aktualisierung der Himmelpolsterung. Schaffen Sie eine komfortable und stilvolle Atmosphäre in Ihrem Auto.',
   },
   {
+    image: '../leistungen/sternenhimmel/sternenhimmel-foto-4.webp',
+    title: 'Sternenhimmel',
+    description:
+      'Tausende feine Lichtpunkte im Dachhimmel: Wir bauen Ihren individuellen Sternenhimmel ein, auf Wunsch kombiniert mit einem Neubezug.',
+  },
+  {
     image: 'main_page_card (4).webp',
     title: 'Lenkradpolsterung',
     description:
@@ -137,8 +143,15 @@ const GALLERY_SECTIONS: GallerySectionSeed[] = [
     imagePaths: ['main_page/cards/3.webp', 'main_page/main_page_card (3).webp'],
   },
   {
-    slug: 'moto-seat',
+    slug: 'starlight',
     order: 6,
+    title: 'Sternenhimmel',
+    description: 'Showcases von eingebauten Sternenhimmeln in Fahrzeugen, mit verschiedenen Lichtfarben und Dichten.',
+    imagePaths: Array.from({ length: 6 }, (_, i) => `leistungen/sternenhimmel/sternenhimmel-foto-${i + 1}.webp`),
+  },
+  {
+    slug: 'moto-seat',
+    order: 7,
     title: 'Motorradsitze',
     description: 'Showcases von neu bezogenen Motorradsitzen in verschiedenen Materialien und Ausführungen.',
     imagePaths: ['main_page/cards/5.webp', 'main_page/main_page_card (5).webp'],

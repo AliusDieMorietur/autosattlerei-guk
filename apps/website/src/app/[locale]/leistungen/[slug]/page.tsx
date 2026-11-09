@@ -174,7 +174,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
                   controls
                   preload="none"
                   playsInline
-                  className="w-full rounded-xl aspect-video object-cover"
+                  className="w-full rounded-xl aspect-[9/16] max-h-[70vh] object-cover bg-black"
                 />
               ) : (
                 // eslint-disable-next-line @next/next/no-img-element
