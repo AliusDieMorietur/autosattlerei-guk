@@ -87,8 +87,8 @@ export function MediaSlider({
               aria-label={`${index + 1} / ${items.length}`}
               aria-current={index === current}
               onClick={() => setCurrent(index)}
-              className={`relative shrink-0 w-16 h-16 tablet:w-20 tablet:h-20 rounded-md overflow-hidden bg-black border-2 transition-opacity ${
-                index === current ? "border-[var(--gk-fill-secondary-xxhigh)] opacity-100" : "border-transparent opacity-60 hover:opacity-100"
+              className={`relative shrink-0 w-16 h-16 tablet:w-20 tablet:h-20 rounded-md overflow-hidden p-[3px] transition-colors ${
+                index === current ? "bg-[var(--gk-fill-secondary-xxhigh)]" : "bg-transparent opacity-60 hover:opacity-100"
               }`}
             >
               {item.type === "video" && !item.poster ? (
@@ -97,14 +97,14 @@ export function MediaSlider({
                   preload="metadata"
                   muted
                   playsInline
-                  className="w-full h-full object-cover pointer-events-none"
+                  className="w-full h-full rounded-[5px] bg-black object-cover pointer-events-none"
                 />
               ) : (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={item.type === "video" ? item.poster : item.src}
                   alt=""
-                  className="w-full h-full object-cover"
+                  className="w-full h-full rounded-[5px] bg-black object-cover"
                 />
               )}
               {item.type === "video" && (
