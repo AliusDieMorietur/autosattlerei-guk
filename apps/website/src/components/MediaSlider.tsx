@@ -36,7 +36,7 @@ export function MediaSlider({
 
   return (
     <div className={`flex flex-col gap-2 ${className}`}>
-      <div className="relative w-full aspect-[4/5] tablet:aspect-[4/3] max-h-[80vh] rounded-md overflow-hidden bg-black">
+      <div className="relative w-full aspect-[4/5] tablet:aspect-[4/3] max-h-[80vh] rounded-md overflow-hidden bg-black border gk-stroke-neutral-low">
         {active.type === "video" ? (
           <video
             key={active.src}
@@ -87,7 +87,7 @@ export function MediaSlider({
               aria-label={`${index + 1} / ${items.length}`}
               aria-current={index === current}
               onClick={() => setCurrent(index)}
-              className={`relative shrink-0 w-16 h-16 tablet:w-20 tablet:h-20 rounded-md overflow-hidden p-[3px] transition-colors ${
+              className={`relative shrink-0 w-16 h-16 tablet:w-20 tablet:h-20 rounded-md overflow-hidden p-[3px] border gk-stroke-neutral-low transition-colors ${
                 index === current ? "bg-[var(--gk-fill-secondary-xxhigh)]" : "bg-transparent opacity-60 hover:opacity-100"
               }`}
             >
