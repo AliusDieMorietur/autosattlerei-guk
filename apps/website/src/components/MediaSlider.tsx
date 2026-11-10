@@ -88,7 +88,7 @@ export function MediaSlider({
               aria-current={index === current}
               onClick={() => setCurrent(index)}
               className={`relative shrink-0 w-16 h-16 tablet:w-20 tablet:h-20 rounded-md overflow-hidden bg-black border-2 transition-opacity ${
-                index === current ? "border-[var(--gk-surface-neutral-primary)] opacity-100" : "border-transparent opacity-60 hover:opacity-100"
+                index === current ? "border-[var(--gk-fill-secondary-xxhigh)] opacity-100" : "border-transparent opacity-60 hover:opacity-100"
               }`}
             >
               {item.type === "video" && !item.poster ? (
